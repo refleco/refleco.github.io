@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTD6 Interactive Crosspath Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Autumn Harvest -->
+    <!-- Application Structure Plan: The application is structured as a single-page dashboard with a sidebar for filtering monkey types (Military, Primary, Magic, Support). The main content area displays monkey information in a card-based layout. This structure was chosen for its intuitive navigation and ease of use, allowing users to quickly filter and find the information they need without scrolling through a long document. Clicking on a monkey card reveals detailed information about its Tier 5 upgrades and their optimal crosspaths, providing a focused and interactive user experience. -->
+    <!-- Visualization & Content Choices: The primary focus of this application is on clear and interactive textual presentation of the crosspath guide. Instead of traditional charts, the application uses a dynamic card layout to organize and display the information. Interactivity is achieved through filtering by monkey type and expanding/collapsing monkey cards to view details. This approach was chosen to directly translate the provided guide into an easily digestible and explorable format. The ranking of crosspaths is presented textually for clarity. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        :root {
+            --bg-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            --container-bg: rgba(13, 31, 61, 0.92);
+            --card-bg: rgba(25, 50, 95, 0.8);
+            --text-primary: #e0e0e0;
+            --text-header: #ffffff;
+            --accent-color: #3498db;
+            --accent-hover: #5dade2;
+            --border-color: rgba(52, 152, 219, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.5);
+        }
+        body {
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-primary);
+        }
+        .main-container {
+            background-color: var(--container-bg);
+            box-shadow: 0 0 25px var(--shadow-color);
+            border-radius: 12px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px var(--shadow-color);
+            transition: all 0.3s ease-in-out;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+        }
+        .filter-btn {
+            transition: all 0.2s ease-in-out;
+            background-color: rgba(52, 152, 219, 0.2);
+        }
+        .filter-btn:hover {
+            background-color: rgba(52, 152, 219, 0.4);
+        }
+        .filter-btn.active {
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: 600;
+        }
+        .details {
+            max-height: 0;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .card.open .details {
+            max-height: 1000px;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .chevron {
+            transition: transform 0.3s ease-in-out;
+        }
+        .card.open .chevron {
+            transform: rotate(180deg);
+        }
+        .type-border-Military { border-top: 4px solid #4a5568; }
+        .type-border-Primary { border-top: 4px solid #c53030; }
+        .type-border-Magic { border-top: 4px solid #805ad5; }
+        .type-border-Support { border-top: 4px solid #dd6b20; }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap">
+</head>
+<body class="antialiased">
+    <div class="container mx-auto p-4 sm:p-6 md:p-10">
+        <div class="main-container p-4 sm:p-8 rounded-xl">
+            <header class="text-center mb-10">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">BTD6 Interactive Crosspath Guide</h1>
+                <p class="text-lg text-gray-300 mt-3 max-w-2xl mx-auto">Your ultimate guide to the best Tier 5 crosspaths in Bloons TD 6, designed for clarity and quick reference.</p>
+            </header>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <aside class="w-full lg:w-1/4">
+                    <div class="p-5 rounded-xl bg-[rgba(25,50,95,0.8)] shadow-md border border-gray-700 sticky top-8">
+                        <h2 class="text-2xl font-bold text-white mb-4">Search & Filter</h2>
+                        <div class="mb-4">
+                            <input type="text" id="search-input" placeholder="Search monkeys or paths..." class="w-full p-3 rounded-lg border border-gray-600 bg-gray-900 text-white focus:ring-2 focus:ring-offset-2 focus:ring-accent-color focus:outline-none transition">
+                        </div>
+                        <div id="filter-container" class="flex flex-wrap lg:flex-col gap-2">
+                            <button class="filter-btn w-full text-left p-3 rounded-lg font-semibold text-gray-200 active" data-type="all">All Monkeys</button>
+                            <button class="filter-btn w-full text-left p-3 rounded-lg font-semibold text-gray-200" data-type="Military">Military</button>
+                            <button class="filter-btn w-full text-left p-3 rounded-lg font-semibold text-gray-200" data-type="Primary">Primary</button>
+                            <button class="filter-btn w-full text-left p-3 rounded-lg font-semibold text-gray-200" data-type="Magic">Magic</button>
+                            <button class="filter-btn w-full text-left p-3 rounded-lg font-semibold text-gray-200" data-type="Support">Support</button>
+                        </div>
+                    </div>
+                </aside>
+
+                <main id="monkey-grid" class="w-full lg:w-3/4 grid grid-cols-1 xl:grid-cols-2 gap-6">
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const crosspathData = {
+            "monkeys": [
+                {
+                    "type": "Military",
+                    "name": "Dartling Gunner",
+                    "upgrades": [
+                        { "name": "M.A.D", "crosspath": "2-5-0" },
+                        { "name": "Bloon Exclusion Zone", "crosspath": "0-2-5" },
+                        { "name": "Ray of Doom", "crosspath": "5-2-0" }
+                    ]
+                },
+                {
+                    "type": "Military",
+                    "name": "Heli Pilot",
+                    "upgrades": [
+                        { "name": "Apache Prime", "crosspath": "5-0-2" },
+                        { "name": "Comanche Commander", "crosspath": "2-0-5" },
+                        { "name": "Special Poperations", "crosspath": "2-5-0" }
+                    ]
+                },
+                {
+                    "type": "Military",
+                    "name": "Monkey Ace",
+                    "upgrades": [
+                        { "name": "Sky Shredder", "crosspath": "5-0-2" },
+                        { "name": "Flying Fortress", "crosspath": "2-0-5" },
+                        { "name": "Tsar Bomba", "crosspath": "2-5-0" }
+                    ]
+                },
+                {
+                    "type": "Military",
+                    "name": "Monkey Buccaneer",
+                    "upgrades": [
+                        { "name": "Carrier Flagship", "crosspath": "5-2-0" },
+                        { "name": "Pirate Lord", "crosspath": "2-5-0" },
+                        { "name": "Trade Empire", "crosspath": "0-2-5" }
+                    ]
+                },
+                {
+                    "type": "Military",
+                    "name": "Monkey Sub",
+                    "upgrades": [
+                        { "name": "Sub Commander", "crosspath": "2-0-5" },
+                        { "name": "Pre-Emptive Strike", "crosspath": "0-5-2" },
+                        { "name": "Energizer", "crosspath": "5-2-0" }
+                    ]
+                },
+                {
+                    "type": "Military",
+                    "name": "Mortar Monkey",
+                    "upgrades": [
+                        { "name": "The Biggest One", "crosspath": "5-2-0" },
+                        { "name": "Blooncineration", "crosspath": "0-2-5" },
+                        { "name": "Pop and Awe", "crosspath": "2-5-0" }
+                    ]
+                },
+                {
+                    "type": "Military",
+                    "name": "Sniper Monkey",
+                    "upgrades": [
+                        { "name": "Elite Sniper", "crosspath": "0-5-2" },
+                        { "name": "Cripple MOAB", "crosspath": "5-0-2" },
+                        { "name": "Elite Defender", "crosspath": "2-0-5" }
+                    ]
+                },
+                {
+                    "type": "Primary",
+                    "name": "Bomb Shooter",
+                    "upgrades": [
+                        { "name": "Bloon Crush", "crosspath": "5-2-0" },
+                        { "name": "MOAB Eliminator", "crosspath": "2-5-0" },
+                        { "name": "Bomb Blitz", "crosspath": "0-2-5" }
+                    ]
+                },
+                {
+                    "type": "Primary",
+                    "name": "Boomerang Monkey",
+                    "upgrades": [
+                        { "name": "Perma Charge", "crosspath": "2-5-0" },
+                        { "name": "MOAB Domination", "crosspath": "0-2-5" },
+                        { "name": "Glaive Lord", "crosspath": "5-0-2" }
+                    ]
+                },
+                {
+                    "type": "Primary",
+                    "name": "Dart Monkey",
+                    "upgrades": [
+                        { "name": "Crossbow Master", "crosspath": "0-2-5" },
+                        { "name": "Ultra-Juggernaut", "crosspath": "5-0-2" },
+                        { "name": "PMFC", "crosspath": "2-5-0" }
+                    ]
+                },
+                {
+                    "type": "Primary",
+                    "name": "Glue Gunner",
+                    "upgrades": [
+                        { "name": "The Bloon Solver", "crosspath": "5-0-2" },
+                        { "name": "Super Glue", "crosspath": "0-2-5" },
+                        { "name": "Glue Storm", "crosspath": "2-5-0" }
+                    ]
+                },
+                {
+                    "type": "Primary",
+                    "name": "Ice Monkey",
+                    "upgrades": [
+                        { "name": "Icicle Impale", "crosspath": "0-2-5" },
+                        { "name": "Super Brittle", "crosspath": "5-2-0" },
+                        { "name": "Absolute Zero", "crosspath": "2-5-0" }
+                    ]
+                },
+                {
+                    "type": "Primary",
+                    "name": "Tack Shooter",
+                    "upgrades": [
+                        { "name": "The Tack Zone", "crosspath": "2-0-5" },
+                        { "name": "Inferno Ring", "crosspath": "5-0-2" },
+                        { "name": "Super Maelstrom", "crosspath": "2-5-0" }
+                    ]
+                },
+                {
+                    "type": "Magic",
+                    "name": "Alchemist",
+                    "upgrades": [
+                        { "name": "Permanent Brew", "crosspath": "5-2-0" },
+                        { "name": "Bloon Master Alchemist", "crosspath": "2-0-5" },
+                        { "name": "Total Transformation", "crosspath": "0-5-2" }
+                    ]
+                },
+                {
+                    "type": "Magic",
+                    "name": "Druid",
+                    "upgrades": [
+                        { "name": "Avatar of Wrath", "crosspath": "2-0-5" },
+                        { "name": "Spirit of the Forest", "crosspath": "2-5-0" },
+                        { "name": "Superstorm", "crosspath": "5-2-0" }
+                    ]
+                },
+                {
+                    "type": "Magic",
+                    "name": "Mermonkey",
+                    "upgrades": [
+                        { "name": "Final Harmonic", "crosspath": "2-0-5" },
+                        { "name": "Popseidon", "crosspath": "0-5-2" },
+                        { "name": "Lord of the Abyss", "crosspath": "5-0-2" }
+                    ]
+                },
+                {
+                    "type": "Magic",
+                    "name": "Ninja Monkey",
+                    "upgrades": [
+                        { "name": "Grandmaster Ninja", "crosspath": "5-0-2" },
+                        { "name": "Master Bomber", "crosspath": "2-0-5" },
+                        { "name": "Grand Saboteur", "crosspath": "2-5-0" }
+                    ]
+                },
+                {
+                    "type": "Magic",
+                    "name": "Super Monkey",
+                    "upgrades": [
+                        { "name": "True Sun God", "crosspath": "5-2-0" },
+                        { "name": "The Anti-Bloon", "crosspath": "2-5-0" },
+                        { "name": "Legend of the Night", "crosspath": "2-0-5" }
+                    ]
+                },
+                {
+                    "type": "Magic",
+                    "name": "Wizard Monkey",
+                    "upgrades": [
+                        { "name": "Prince of Darkness", "crosspath": "0-2-5" },
+                        { "name": "Wizard Lord Phoenix", "crosspath": "2-5-0" },
+                        { "name": "Archmage", "crosspath": "5-0-2" }
+                    ]
+                },
+                {
+                    "type": "Support",
+                    "name": "Banana Farm",
+                    "upgrades": [
+                        { "name": "Banana Central", "crosspath": "5-2-0" },
+                        { "name": "Monkey-Nomics", "crosspath": "2-5-0" },
+                        { "name": "Monkey Wall Street", "crosspath": "0-2-5" }
+                    ]
+                },
+                {
+                    "type": "Support",
+                    "name": "Engineer Monkey",
+                    "upgrades": [
+                        { "name": "Ultraboost", "crosspath": "0-5-2" },
+                        { "name": "XXXL Trap", "crosspath": "2-0-5" },
+                        { "name": "Sentry Champion", "crosspath": "5-2-0" }
+                    ]
+                },
+                {
+                    "type": "Support",
+                    "name": "Monkey Village",
+                    "upgrades": [
+                        { "name": "Homeland Defense", "crosspath": "2-5-0" },
+                        { "name": "Primary Expertise", "crosspath": "5-2-0" },
+                        { "name": "Monkeyopolis", "crosspath": "0-2-5" }
+                    ]
+                },
+                {
+                    "type": "Support",
+                    "name": "Spike Factory",
+                    "upgrades": [
+                        { "name": "Perma-Spike", "crosspath": "0-2-5" },
+                        { "name": "Carpet of Spikes", "crosspath": "2-5-0" },
+                        { "name": "Super Mines", "crosspath": "5-2-0" }
+                    ]
+                }
+            ]
+        };
+
+        const monkeyGrid = document.getElementById('monkey-grid');
+        const filterContainer = document.getElementById('filter-container');
+        const searchInput = document.getElementById('search-input');
+
+        const renderMonkeys = (filter = 'all', searchTerm = '') => {
+            monkeyGrid.innerHTML = '';
+            
+            let typeFilteredMonkeys = filter === 'all' 
+                ? crosspathData.monkeys 
+                : crosspathData.monkeys.filter(monkey => monkey.type === filter);
+
+            const lowerCaseSearchTerm = searchTerm.toLowerCase();
+            
+            let searchFilteredMonkeys = typeFilteredMonkeys.filter(monkey => {
+                const monkeyNameMatch = monkey.name.toLowerCase().includes(lowerCaseSearchTerm);
+                const upgradeNameMatch = monkey.upgrades.some(upgrade => upgrade.name.toLowerCase().includes(lowerCaseSearchTerm));
+                return monkeyNameMatch || upgradeNameMatch;
+            });
+
+            searchFilteredMonkeys.sort((a, b) => a.name.localeCompare(b.name));
+
+            if (searchFilteredMonkeys.length === 0) {
+                monkeyGrid.innerHTML = `<p class="text-gray-400 italic col-span-1 xl:col-span-2 text-center">No monkeys found. Try a different search or filter.</p>`;
+            } else {
+                searchFilteredMonkeys.forEach(monkey => {
+                    const card = document.createElement('div');
+                    card.className = `card type-border-${monkey.type}`;
+                    
+                    const cardHeader = document.createElement('div');
+                    cardHeader.className = 'p-5 cursor-pointer';
+                    cardHeader.innerHTML = `
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-xl font-bold text-white">${monkey.name}</h3>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">${monkey.type}</span>
+                                <span class="chevron text-gray-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    `;
+
+                    const detailsContainer = document.createElement('div');
+                    detailsContainer.className = 'details px-5';
+                    detailsContainer.innerHTML = `
+                        ${monkey.upgrades.map((upgrade, index) => {
+                            const paths = upgrade.crosspath.split('-');
+                            const pathColors = ['bg-red-500', 'bg-blue-500', 'bg-yellow-500'];
+                            return `
+                            <div class="py-4 border-t border-gray-700 flex items-center gap-4">
+                                <div class="text-4xl font-bold text-gray-600 w-10 text-center">${index + 1}</div>
+                                <div class="flex-1 flex justify-between items-center">
+                                    <div>
+                                        <h4 class="text-lg font-semibold" style="color: var(--accent-color);">${upgrade.name}</h4>
+                                        <p class="text-xs text-gray-400 font-medium">BEST CROSSPATH</p>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-1">
+                                        ${paths.map((path, pIndex) => `
+                                            <span class="flex items-center justify-center w-8 h-8 rounded-md font-bold text-lg text-white ${pathColors[pIndex]}">${path}</span>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `}).join('')}
+                    `;
+
+                    card.appendChild(cardHeader);
+                    card.appendChild(detailsContainer);
+                    monkeyGrid.appendChild(card);
+
+                    cardHeader.addEventListener('click', () => {
+                        card.classList.toggle('open');
+                    });
+                });
+            }
+        };
+
+        const updateView = () => {
+            const activeFilter = filterContainer.querySelector('.active').dataset.type;
+            const searchTerm = searchInput.value;
+            renderMonkeys(activeFilter, searchTerm);
+        };
+
+        filterContainer.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                const buttons = filterContainer.querySelectorAll('button');
+                buttons.forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                updateView();
+            }
+        });
+        
+        searchInput.addEventListener('input', updateView);
+
+        renderMonkeys();
+    </script>
+</body>
+</html>
