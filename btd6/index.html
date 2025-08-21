@@ -6,10 +6,9 @@
     <title>BTD6 Interactive Crosspath Guide</title>
     <link rel="icon" type="image/png" href="ninja.png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib-rb-1.2.1&auto-format&fit=crop&w=1950&q=80');
+            --bg-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib-rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
             --container-bg: rgba(13, 31, 61, 0.92);
             --card-bg: rgba(25, 50, 95, 0.8);
             --text-primary: #e0e0e0;
@@ -120,159 +119,159 @@
                 // Primary Monkeys
                 {
                     "type": "Primary", "name": "Dart Monkey", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "Ultra-Juggernaut", "crosspath": "5-0-2", "notes": "5-0-2 is generally better for the extra range and camo detection. 5-2-0 provides more attack speed, which is superior on maps with lots of walls for bouncing.", "canPopCamo": true, "canPopLead": true },
-                        { "name": "Plasma Monkey Fan Club", "crosspath": "2-5-0", "notes": "The 2-5-0 crosspath provides more pierce to the base Dart Monkey and all transformed monkeys, making it far more effective against dense bloon rounds.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Crossbow Master", "crosspath": "0-2-5", "notes": "Almost always 0-2-5. The attack speed from the middle path provides a massive DPS increase that far outweighs the small pierce bonus from the top path.", "canPopCamo": true, "canPopLead": true }
+                        { "rank": 2, "name": "Ultra-Juggernaut", "crosspath": "5-0-2", "notes": "5-0-2 is generally better for the extra range and camo detection. 5-2-0 provides more attack speed, which is superior on maps with lots of walls for bouncing.", "canPopCamo": true, "canPopLead": true },
+                        { "rank": 3, "name": "Plasma Monkey Fan Club", "crosspath": "2-5-0", "notes": "The 2-5-0 crosspath provides more pierce to the base Dart Monkey and all transformed monkeys, making it far more effective against dense bloon rounds.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 1, "name": "Crossbow Master", "crosspath": "0-2-5", "notes": "Almost always 0-2-5. The attack speed from the middle path provides a massive DPS increase that far outweighs the small pierce bonus from the top path.", "canPopCamo": true, "canPopLead": true }
                     ]
                 },
                 {
                     "type": "Primary", "name": "Boomerang Monkey", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "Glaive Lord", "crosspath": "5-2-0", "notes": "5-2-0 is superior for its increased attack speed. 5-0-2 only adds red hot rangs damage, which is negligible. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Perma Charge", "crosspath": "0-5-2", "notes": "0-5-2 provides valuable camo detection and more range via red hot rangs. The extra pierce from 2-5-0 is less impactful for its primary role.", "canPopCamo": true, "canPopLead": true },
-                        { "name": "MOAB Domination", "crosspath": "2-0-5", "notes": "2-0-5 gives more pierce, crucial for hitting more MOABs. The attack speed from 0-2-5 is less effective. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
+                        { "rank": 3, "name": "Glaive Lord", "crosspath": "5-2-0", "notes": "5-2-0 is superior for its increased attack speed. 5-0-2 only adds red hot rangs damage, which is negligible. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 2, "name": "Perma Charge", "crosspath": "0-5-2", "notes": "0-5-2 provides valuable camo detection and more range via red hot rangs. The extra pierce from 2-5-0 is less impactful for its primary role.", "canPopCamo": true, "canPopLead": true },
+                        { "rank": 1, "name": "MOAB Domination", "crosspath": "2-0-5", "notes": "2-0-5 gives more pierce, crucial for hitting more MOABs. The attack speed from 0-2-5 is less effective. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
                     ]
                 },
                 {
                     "type": "Primary", "name": "Bomb Shooter", "defaultCamo": false, "defaultLead": true, "upgrades": [
-                        { "name": "Bloon Crush", "crosspath": "5-2-0", "notes": "5-2-0 provides a significant attack speed boost, allowing it to stun-lock bloons more effectively. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "MOAB Eliminator", "crosspath": "2-5-0", "notes": "2-5-0 is better for more damage per bomb and faster reload speed on the ability. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Bomb Blitz", "crosspath": "0-2-5", "notes": "0-2-5 offers more pierce, which is vital for its passive ability to clear the screen. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
+                        { "rank": 1, "name": "Bloon Crush", "crosspath": "5-2-0", "notes": "5-2-0 provides a significant attack speed boost, allowing it to stun-lock bloons more effectively. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 2, "name": "MOAB Eliminator", "crosspath": "2-5-0", "notes": "2-5-0 is better for more damage per bomb and faster reload speed on the ability. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 3, "name": "Bomb Blitz", "crosspath": "0-2-5", "notes": "0-2-5 offers more pierce, which is vital for its passive ability to clear the screen. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
                     ]
                 },
                  {
                     "type": "Primary", "name": "Tack Shooter", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "Inferno Ring", "crosspath": "5-2-0", "notes": "5-2-0 provides much-needed extra range. The attack speed from 5-0-2 is less impactful due to the meteor's cooldown. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Super Maelstrom", "crosspath": "0-5-2", "notes": "0-5-2 gives more range and blade lifespan. Needs external lead popping power (e.g., Alchemist) and camo detection.", "canPopCamo": false, "canPopLead": false },
-                        { "name": "The Tack Zone", "crosspath": "2-0-5", "notes": "2-0-5 provides a substantial pierce increase. Needs external lead popping power and camo detection.", "canPopCamo": false, "canPopLead": false }
+                        { "rank": 2, "name": "Inferno Ring", "crosspath": "5-2-0", "notes": "5-2-0 provides much-needed extra range. The attack speed from 5-0-2 is less impactful due to the meteor's cooldown. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 3, "name": "Super Maelstrom", "crosspath": "0-5-2", "notes": "0-5-2 gives more range and blade lifespan. Needs external lead popping power (e.g., Alchemist) and camo detection.", "canPopCamo": false, "canPopLead": false },
+                        { "rank": 1, "name": "The Tack Zone", "crosspath": "2-0-5", "notes": "2-0-5 provides a substantial pierce increase. Needs external lead popping power and camo detection.", "canPopCamo": false, "canPopLead": false }
                     ]
                 },
                 {
                     "type": "Primary", "name": "Ice Monkey", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "Super Brittle", "crosspath": "5-2-0", "notes": "5-2-0 gives more range and affects more bloons. The refreeze from 5-0-2 is less useful. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Absolute Zero", "crosspath": "2-5-0", "notes": "2-5-0 provides a longer freeze duration and affects a larger area. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Icicle Impale", "crosspath": "0-2-5", "notes": "0-2-5 provides a much faster attack speed to permanently stall DDTs. 2-0-5 is only useful if you lack external camo detection.", "canPopCamo": false, "canPopLead": true }
+                        { "rank": 2, "name": "Super Brittle", "crosspath": "5-2-0", "notes": "5-2-0 gives more range and affects more bloons. The refreeze from 5-0-2 is less useful. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 3, "name": "Absolute Zero", "crosspath": "2-5-0", "notes": "2-5-0 provides a longer freeze duration and affects a larger area. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 1, "name": "Icicle Impale", "crosspath": "0-2-5", "notes": "0-2-5 provides a much faster attack speed to permanently stall DDTs. 2-0-5 is only useful if you lack external camo detection.", "canPopCamo": false, "canPopLead": true }
                     ]
                 },
                 {
                     "type": "Primary", "name": "Glue Gunner", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "The Bloon Solver", "crosspath": "5-0-2", "notes": "5-0-2 allows the glue to last longer. The glue splatter from 5-2-0 is redundant. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Glue Storm", "crosspath": "2-5-0", "notes": "2-5-0 makes the glue puddles last longer. Ability does not affect camo without external support.", "canPopCamo": false, "canPopLead": false },
-                        { "name": "Super Glue", "crosspath": "0-2-5", "notes": "0-2-5 provides more pierce to stun more bloons. Needs external camo detection and lead popping power.", "canPopCamo": false, "canPopLead": false }
+                        { "rank": 1, "name": "The Bloon Solver", "crosspath": "5-0-2", "notes": "5-0-2 allows the glue to last longer. The glue splatter from 5-2-0 is redundant. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 3, "name": "Glue Storm", "crosspath": "2-5-0", "notes": "2-5-0 makes the glue puddles last longer. Ability does not affect camo without external support.", "canPopCamo": false, "canPopLead": false },
+                        { "rank": 2, "name": "Super Glue", "crosspath": "0-2-5", "notes": "0-2-5 provides more pierce to stun more bloons. Needs external camo detection and lead popping power.", "canPopCamo": false, "canPopLead": false }
                     ]
                 },
                 // Military Monkeys
                 {
-                    "type": "Military", "name": "Sniper Monkey", "defaultCamo": false, "defaultLead": true, "upgrades": [
-                        { "name": "Cripple MOAB", "crosspath": "5-0-2", "notes": "5-0-2 provides faster firing speed, crucial for bosses. 5-2-0 is better for grouped MOABs due to shrapnel. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Elite Sniper", "crosspath": "0-5-2", "notes": "0-5-2 is almost always better. The shrapnel from the bottom path benefits more from Alchemist buffs and the supply drop ability.", "canPopCamo": true, "canPopLead": true },
-                        { "name": "Elite Defender", "crosspath": "2-0-5", "notes": "2-0-5 provides more pierce for better single-target damage. 0-2-5 is better for grouped bloon cleanup with buffs like Geraldo's sharpening stone.", "canPopCamo": false, "canPopLead": true }
+                    "type": "Military", "name": "Sniper Monkey", "defaultCamo": false, "defaultLead": false, "upgrades": [
+                        { "rank": 2, "name": "Cripple MOAB", "crosspath": "5-0-2", "notes": "5-0-2 provides faster firing speed, crucial for bosses. 5-2-0 is better for grouped MOABs due to shrapnel. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 1, "name": "Elite Sniper", "crosspath": "0-5-2", "notes": "0-5-2 is almost always better as shrapnel benefits more from buffs. This path does not pop lead without an Alchemist or MIB.", "canPopCamo": true, "canPopLead": false },
+                        { "rank": 3, "name": "Elite Defender", "crosspath": "2-0-5", "notes": "2-0-5 provides more pierce for better single-target damage. 0-2-5 is better for grouped bloon cleanup with buffs like Geraldo's sharpening stone.", "canPopCamo": false, "canPopLead": true }
                     ]
                 },
                 {
                     "type": "Military", "name": "Monkey Sub", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "Energizer", "crosspath": "5-2-0", "notes": "5-2-0 provides extra pierce. Needs external camo detection (e.g., from another tower via Advanced Intel) and lead popping (e.g., Alch).", "canPopCamo": false, "canPopLead": false },
-                        { "name": "Pre-Emptive Strike", "crosspath": "0-5-2", "notes": "0-5-2 allows the sub to hit camo bloons, which is essential for its global missile ability to target DDTs.", "canPopCamo": true, "canPopLead": true },
-                        { "name": "Sub Commander", "crosspath": "2-0-5", "notes": "2-0-5 is the clear winner, as the extra pierce is shared with all other subs in range. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
+                        { "rank": 3, "name": "Energizer", "crosspath": "5-2-0", "notes": "5-2-0 provides extra pierce. Mainly a support tower for cooldowns. Needs external camo detection and lead popping.", "canPopCamo": false, "canPopLead": false },
+                        { "rank": 2, "name": "Pre-Emptive Strike", "crosspath": "0-5-2", "notes": "0-5-2 allows the sub to hit camo bloons, which is essential for its global missile ability to target DDTs.", "canPopCamo": true, "canPopLead": true },
+                        { "rank": 1, "name": "Sub Commander", "crosspath": "2-0-5", "notes": "2-0-5 is the clear winner, as the extra pierce is shared with all other subs in range, enabling powerful sub armies. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
                     ]
                 },
                  {
                     "type": "Military", "name": "Monkey Buccaneer", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "Carrier Flagship", "crosspath": "5-2-0", "notes": "5-2-0 gives faster firing. Needs top path for lead popping. Needs external camo detection, but provides it to other water towers.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Pirate Lord", "crosspath": "0-5-2", "notes": "0-5-2 provides camo detection. Needs top path (1-5-0) for lead popping power.", "canPopCamo": true, "canPopLead": false },
-                        { "name": "Trade Empire", "crosspath": "0-2-5", "notes": "0-2-5 generates more money and has camo detection. Needs top path (2-0-5) for lead popping power.", "canPopCamo": true, "canPopLead": false }
+                        { "rank": 1, "name": "Carrier Flagship", "crosspath": "5-2-0", "notes": "5-2-0 gives faster firing. Needs top path for lead popping. Needs external camo detection, but provides it to other water towers.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 2, "name": "Pirate Lord", "crosspath": "0-5-2", "notes": "0-5-2 provides camo detection. Needs top path (1-5-0) for lead popping power.", "canPopCamo": true, "canPopLead": false },
+                        { "rank": 3, "name": "Trade Empire", "crosspath": "0-2-5", "notes": "0-2-5 generates more money and has camo detection. Needs top path (2-0-5) for lead popping power.", "canPopCamo": true, "canPopLead": false }
                     ]
                 },
                 {
                     "type": "Military", "name": "Monkey Ace", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "Sky Shredder", "crosspath": "5-0-2", "notes": "5-0-2 provides essential camo detection and faster darts. The centered path upgrade (5-2-0) is generally less useful.", "canPopCamo": true, "canPopLead": true },
-                        { "name": "Tsar Bomba", "crosspath": "2-5-0", "notes": "2-5-0 gives more bombs and faster firing. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Flying Fortress", "crosspath": "2-0-5", "notes": "2-0-5 provides more projectiles and is the superior damage path. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
+                        { "rank": 1, "name": "Sky Shredder", "crosspath": "5-0-2", "notes": "5-0-2 provides essential camo detection and faster darts. The centered path upgrade (5-2-0) is generally less useful.", "canPopCamo": true, "canPopLead": true },
+                        { "rank": 3, "name": "Tsar Bomba", "crosspath": "2-5-0", "notes": "2-5-0 gives more bombs and faster firing. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 2, "name": "Flying Fortress", "crosspath": "2-0-5", "notes": "2-0-5 provides more projectiles and is the superior damage path. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
                     ]
                 },
                 {
                     "type": "Military", "name": "Heli Pilot", "defaultCamo": true, "defaultLead": false, "upgrades": [
-                        { "name": "Apache Prime", "crosspath": "5-0-2", "notes": "5-0-2 provides crucial camo detection and faster darts. 5-2-0 is a viable alternative for more damage if you have other sources of camo detection.", "canPopCamo": true, "canPopLead": true },
-                        { "name": "Special Poperations", "crosspath": "0-5-2", "notes": "0-5-2 provides camo detection. The top path crosspath (2-5-0) is generally considered useless on this upgrade.", "canPopCamo": true, "canPopLead": true },
-                        { "name": "Comanche Commander", "crosspath": "2-0-5", "notes": "2-0-5 provides more projectiles and damage. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
+                        { "rank": 1, "name": "Apache Prime", "crosspath": "5-0-2", "notes": "5-0-2 provides crucial camo detection and faster darts. 5-2-0 is a viable alternative for more damage if you have other sources of camo detection.", "canPopCamo": true, "canPopLead": true },
+                        { "rank": 3, "name": "Special Poperations", "crosspath": "0-5-2", "notes": "0-5-2 provides camo detection. The top path crosspath (2-5-0) is generally considered useless on this upgrade.", "canPopCamo": true, "canPopLead": true },
+                        { "rank": 2, "name": "Comanche Commander", "crosspath": "2-0-5", "notes": "2-0-5 provides more projectiles and damage. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
                     ]
                 },
                 {
                     "type": "Military", "name": "Mortar Monkey", "defaultCamo": false, "defaultLead": true, "upgrades": [
-                        { "name": "The Biggest One", "crosspath": "5-2-0", "notes": "5-2-0 provides a faster firing rate. Needs external camo detection (or bottom path's Signal Flare).", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Pop and Awe", "crosspath": "2-5-0", "notes": "2-5-0 provides a stun effect and faster firing. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Blooncineration", "crosspath": "0-2-5", "notes": "0-2-5 provides a faster firing rate to maximize the fire's uptime. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
+                        { "rank": 1, "name": "The Biggest One", "crosspath": "5-2-0", "notes": "5-2-0 provides a faster firing rate. Needs external camo detection (or bottom path's Signal Flare).", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 2, "name": "Pop and Awe", "crosspath": "2-5-0", "notes": "2-5-0 provides a stun effect and faster firing. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 3, "name": "Blooncineration", "crosspath": "0-2-5", "notes": "0-2-5 provides a faster firing rate to maximize the fire's uptime. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
                     ]
                 },
                 {
-                    "type": "Military", "name": "Dartling Gunner", "defaultCamo": false, "defaultLead": true, "upgrades": [
-                        { "name": "Ray of Doom", "crosspath": "5-2-0", "notes": "5-2-0 provides faster swivel speed, essential for tracking fast bloons. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "M.A.D", "crosspath": "2-5-0", "notes": "2-5-0 provides faster firing speed, a massive DPS increase. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Bloon Exclusion Zone", "crosspath": "0-2-5", "notes": "0-2-5 provides faster firing speed for maximizing damage. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
+                    "type": "Military", "name": "Dartling Gunner", "defaultCamo": false, "defaultLead": false, "upgrades": [
+                        { "rank": 2, "name": "Ray of Doom", "crosspath": "5-2-0", "notes": "5-2-0 provides faster swivel speed, essential for tracking fast bloons. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 1, "name": "M.A.D", "crosspath": "2-5-0", "notes": "2-5-0 provides faster firing speed, a massive DPS increase. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 3, "name": "Bloon Exclusion Zone", "crosspath": "0-2-5", "notes": "0-2-5 provides faster firing speed for maximizing damage. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
                     ]
                 },
                 // Magic Monkeys
                 {
                     "type": "Magic", "name": "Wizard Monkey", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "Archmage", "crosspath": "5-0-2", "notes": "5-0-2 provides camo detection and is the more reliable choice. 5-2-0 only adds a fire breath attack that is often out of range.", "canPopCamo": true, "canPopLead": true },
-                        { "name": "Wizard Lord Phoenix", "crosspath": "2-5-0", "notes": "2-5-0 provides a more powerful phoenix ability. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Prince of Darkness", "crosspath": "0-2-5", "notes": "0-2-5 provides a faster attack speed, allowing it to summon undead bloons more quickly.", "canPopCamo": true, "canPopLead": true }
+                        { "rank": 2, "name": "Archmage", "crosspath": "5-0-2", "notes": "5-0-2 provides camo detection and is the more reliable choice. 5-2-0 only adds a fire breath attack that is often out of range.", "canPopCamo": true, "canPopLead": true },
+                        { "rank": 3, "name": "Wizard Lord Phoenix", "crosspath": "2-5-0", "notes": "2-5-0 provides a more powerful phoenix ability. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 1, "name": "Prince of Darkness", "crosspath": "0-2-5", "notes": "0-2-5 provides a faster attack speed, allowing it to summon undead bloons more quickly.", "canPopCamo": true, "canPopLead": true }
                     ]
                 },
                 {
                     "type": "Magic", "name": "Super Monkey", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "True Sun God", "crosspath": "5-2-0", "notes": "5-2-0 provides extra range. Needs external camo detection (or Ultravision crosspath).", "canPopCamo": false, "canPopLead": true },
-                        { "name": "The Anti-Bloon", "crosspath": "2-5-0", "notes": "2-5-0 provides more pierce. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Legend of the Night", "crosspath": "2-0-5", "notes": "2-0-5 provides more pierce. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
+                        { "rank": 1, "name": "True Sun God", "crosspath": "5-2-0", "notes": "5-2-0 provides extra range. Needs external camo detection (or Ultravision crosspath).", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 2, "name": "The Anti-Bloon", "crosspath": "2-5-0", "notes": "2-5-0 provides more pierce. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 3, "name": "Legend of the Night", "crosspath": "2-0-5", "notes": "2-0-5 provides more pierce. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
                     ]
                 },
                 {
                     "type": "Magic", "name": "Ninja Monkey", "defaultCamo": true, "defaultLead": false, "upgrades": [
-                        { "name": "Grandmaster Ninja", "crosspath": "5-0-2", "notes": "5-0-2 provides seeking shurikens. Needs an external buff (like Alchemist) to pop Lead bloons.", "canPopCamo": true, "canPopLead": false },
-                        { "name": "Grand Saboteur", "crosspath": "2-5-0", "notes": "2-5-0 provides a longer-lasting sabotage effect. Shurikens need an external buff to pop Lead bloons.", "canPopCamo": true, "canPopLead": false },
-                        { "name": "Master Bomber", "crosspath": "2-0-5", "notes": "2-0-5 provides a stun effect, and its bombs can pop Lead bloons naturally.", "canPopCamo": true, "canPopLead": true }
+                        { "rank": 1, "name": "Grandmaster Ninja", "crosspath": "5-0-2", "notes": "5-0-2 provides seeking shurikens. Needs an external buff (like Alchemist) to pop Lead bloons.", "canPopCamo": true, "canPopLead": false },
+                        { "rank": 3, "name": "Grand Saboteur", "crosspath": "2-5-0", "notes": "2-5-0 provides a longer-lasting sabotage effect. Shurikens need an external buff to pop Lead bloons.", "canPopCamo": true, "canPopLead": false },
+                        { "rank": 2, "name": "Master Bomber", "crosspath": "2-0-5", "notes": "2-0-5 provides a stun effect, and its bombs can pop Lead bloons naturally.", "canPopCamo": true, "canPopLead": true }
                     ]
                 },
                 {
                     "type": "Magic", "name": "Alchemist", "defaultCamo": false, "defaultLead": true, "upgrades": [
-                        { "name": "Permanent Brew", "crosspath": "5-2-0", "notes": "5-2-0 increases the duration of the buff potions. The Alchemist's own attack can pop Lead but not Camo.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Total Transformation", "crosspath": "0-5-2", "notes": "0-5-2 provides a faster attack speed to the transformed monster. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Bloon Master Alchemist", "crosspath": "1-0-5", "notes": "Shrinking potion is unaffected by crosspaths. 1-0-5 is for the preceding upgrade. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
+                        { "rank": 1, "name": "Permanent Brew", "crosspath": "5-2-0", "notes": "5-2-0 increases the duration of the buff potions. The Alchemist's own attack can pop Lead but not Camo.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 3, "name": "Total Transformation", "crosspath": "0-5-2", "notes": "0-5-2 provides a faster attack speed to the transformed monster. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 2, "name": "Bloon Master Alchemist", "crosspath": "1-0-5", "notes": "Shrinking potion is unaffected by crosspaths. 1-0-5 is for the preceding upgrade. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }
                     ]
                 },
                 {
                     "type": "Magic", "name": "Druid", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "Superstorm", "crosspath": "5-2-0", "notes": "5-2-0 provides more pierce. Needs top path for lead popping. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Spirit of the Forest", "crosspath": "1-5-0", "notes": "1-5-0 provides lead popping power. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Avatar of Wrath", "crosspath": "0-1-5", "notes": "0-1-5 is best when buffed by Poplusts. Needs external buffs for both Camo and Lead (e.g., MIB).", "canPopCamo": false, "canPopLead": false }
+                        { "rank": 2, "name": "Superstorm", "crosspath": "5-2-0", "notes": "5-2-0 provides more pierce. Needs top path for lead popping. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 3, "name": "Spirit of the Forest", "crosspath": "1-5-0", "notes": "1-5-0 provides lead popping power. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 1, "name": "Avatar of Wrath", "crosspath": "0-1-5", "notes": "0-1-5 is best when buffed by Poplusts. Needs external buffs for both Camo and Lead (e.g., MIB).", "canPopCamo": false, "canPopLead": false }
                     ]
                 },
                 // Support Monkeys
                 {
                     "type": "Support", "name": "Monkey Village", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "Primary Expertise", "crosspath": "5-2-0", "notes": "5-2-0 provides a primary training buff. Does not attack.", "canPopCamo": null, "canPopLead": null },
-                        { "name": "Homeland Defense", "crosspath": "2-5-0", "notes": "2-5-0 provides a larger radius for its ability. Does not attack.", "canPopCamo": null, "canPopLead": null },
-                        { "name": "Monkeyopolis", "crosspath": "0-2-5", "notes": "Generates income. Does not attack.", "canPopCamo": null, "canPopLead": null }
+                        { "rank": 2, "name": "Primary Expertise", "crosspath": "5-2-0", "notes": "5-2-0 provides a primary training buff. Does not attack.", "canPopCamo": null, "canPopLead": null },
+                        { "rank": 1, "name": "Homeland Defense", "crosspath": "2-5-0", "notes": "2-5-0 provides a larger radius for its powerful global ability. Does not attack.", "canPopCamo": null, "canPopLead": null },
+                        { "rank": 3, "name": "Monkeyopolis", "crosspath": "0-2-5", "notes": "Generates income. Does not attack.", "canPopCamo": null, "canPopLead": null }
                     ]
                 },
                 {
                     "type": "Support", "name": "Banana Farm", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "Banana Central", "crosspath": "5-2-0", "notes": "Generates income. Does not attack.", "canPopCamo": null, "canPopLead": null },
-                        { "name": "Monkey-Nomics", "crosspath": "2-5-0", "notes": "Generates income. Does not attack.", "canPopCamo": null, "canPopLead": null },
-                        { "name": "Monkey Wall Street", "crosspath": "0-2-5", "notes": "Generates income. Does not attack.", "canPopCamo": null, "canPopLead": null }
+                        { "rank": 2, "name": "Banana Central", "crosspath": "5-2-0", "notes": "Generates income. Does not attack.", "canPopCamo": null, "canPopLead": null },
+                        { "rank": 3, "name": "Monkey-Nomics", "crosspath": "2-5-0", "notes": "Generates income. Does not attack.", "canPopCamo": null, "canPopLead": null },
+                        { "rank": 1, "name": "Monkey Wall Street", "crosspath": "0-2-5", "notes": "Generates income. Does not attack.", "canPopCamo": null, "canPopLead": null }
                     ]
                 },
                 {
                     "type": "Support", "name": "Spike Factory", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "Super Mines", "crosspath": "5-2-0", "notes": "5-2-0 provides a faster production rate. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Carpet of Spikes", "crosspath": "2-5-0", "notes": "2-5-0 provides a faster production rate. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Perma-Spike", "crosspath": "0-2-5", "notes": "0-2-5 provides a much faster production rate. Needs external buffs for both Camo and Lead (e.g., MIB or 2-0-0 Alch).", "canPopCamo": false, "canPopLead": false }
+                        { "rank": 2, "name": "Super Mines", "crosspath": "5-2-0", "notes": "5-2-0 provides a faster production rate. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 3, "name": "Carpet of Spikes", "crosspath": "2-5-0", "notes": "2-5-0 provides a faster production rate. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 1, "name": "Perma-Spike", "crosspath": "0-2-5", "notes": "0-2-5 provides a much faster production rate. Needs external buffs for both Camo and Lead (e.g., MIB or 2-0-0 Alch).", "canPopCamo": false, "canPopLead": false }
                     ]
                 },
                 {
                     "type": "Support", "name": "Engineer Monkey", "defaultCamo": false, "defaultLead": false, "upgrades": [
-                        { "name": "Sentry Champion", "crosspath": "5-2-0", "notes": "5-2-0 provides extra damage to MOABs. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
-                        { "name": "Ultraboost", "crosspath": "0-5-2", "notes": "Crosspathing is not very impactful. 0-5-2 makes its foam slow bloons. Needs external camo and lead popping.", "canPopCamo": false, "canPopLead": false },
-                        { "name": "XXXL Trap", "crosspath": "2-0-5", "notes": "2-0-5 deploys traps much faster. Needs external camo detection to trap DDTs.", "canPopCamo": false, "canPopLead": true }
+                        { "rank": 2, "name": "Sentry Champion", "crosspath": "5-2-0", "notes": "5-2-0 provides extra damage to MOABs. Needs external camo detection.", "canPopCamo": false, "canPopLead": true },
+                        { "rank": 3, "name": "Ultraboost", "crosspath": "0-5-2", "notes": "Crosspathing is not very impactful. 0-5-2 makes its foam slow bloons. Needs external camo and lead popping.", "canPopCamo": false, "canPopLead": false },
+                        { "rank": 1, "name": "XXXL Trap", "crosspath": "2-0-5", "notes": "2-0-5 deploys traps much faster. Needs external camo detection to trap DDTs.", "canPopCamo": false, "canPopLead": true }
                     ]
                 }
             ]
@@ -331,8 +330,11 @@
 
                     const detailsContainer = document.createElement('div');
                     detailsContainer.className = 'details px-5';
+                    
+                    const sortedUpgrades = monkey.upgrades.sort((a, b) => a.rank - b.rank);
+
                     detailsContainer.innerHTML = `
-                        ${monkey.upgrades.map((upgrade, index) => {
+                        ${sortedUpgrades.map((upgrade) => {
                             const paths = upgrade.crosspath.split('-');
                             const pathColors = ['bg-red-600', 'bg-blue-600', 'bg-green-600'];
                             
@@ -342,6 +344,7 @@
                             return `
                             <div class="py-4 border-t border-gray-700">
                                 <div class="flex items-start gap-4">
+                                    <div class="text-4xl font-bold text-gray-600 w-10 text-center">#${upgrade.rank}</div>
                                     <div class="flex-1">
                                         <div class="flex justify-between items-start">
                                             <div>
@@ -352,13 +355,11 @@
                                                         ${leadIconHtml}
                                                     </div>
                                                 </div>
-                                                <p class="text-xs text-gray-400 font-medium uppercase tracking-wider">Primary Crosspath</p>
+                                                <p class="text-xs text-gray-400 font-medium uppercase tracking-wider">Best Crosspath</p>
                                             </div>
-                                            <div class="flex items-center gap-1 text-center text-lg font-bold text-white">
+                                            <div class="flex flex-col items-center gap-1 text-center text-lg font-bold text-white">
                                                 <span class="w-8 h-8 flex items-center justify-center rounded-md ${pathColors[0]}">${paths[0]}</span>
-                                                <span>-</span>
                                                 <span class="w-8 h-8 flex items-center justify-center rounded-md ${pathColors[1]}">${paths[1]}</span>
-                                                <span>-</span>
                                                 <span class="w-8 h-8 flex items-center justify-center rounded-md ${pathColors[2]}">${paths[2]}</span>
                                             </div>
                                         </div>
