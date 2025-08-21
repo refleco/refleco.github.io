@@ -1,358 +1,256 @@
-/* Global Styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Justin Wu | Portfolio</title>
+    <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/refleco/refleco.github.io/main/galaxy.jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
+    <style>
+        :root {
+            --bg-light: #f1f5f9;
+            --bg-dark: #0b1120;
+            --container-light: rgba(255, 255, 255, 0.7);
+            --container-dark: rgba(15, 23, 42, 0.7);
+            --card-light: #ffffff;
+            --card-dark: #1e293b;
+            --text-light-primary: #0f172a;
+            --text-dark-primary: #f1f5f9;
+            --text-light-secondary: #334155;
+            --text-dark-secondary: #94a3b8;
+            --accent-color: #22d3ee;
+            --accent-hover: #67e8f9;
+            --border-light: #e2e8f0;
+            --border-dark: #334155;
+        }
+        html.dark {
+            --bg-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1742&q=80');
+        }
+        html:not(.dark) {
+            --bg-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80');
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body {
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-light-primary);
+            background-color: var(--bg-light);
+            animation: fadeIn 1s ease-in-out;
+        }
+        .dark body {
+            color: var(--text-dark-primary);
+            background-color: var(--bg-dark);
+        }
+        .main-container {
+            background-color: var(--container-light);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .dark .main-container {
+            background-color: var(--container-dark);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .card {
+            background-color: var(--card-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            border: 1px solid var(--border-light);
+        }
+        .dark .card {
+            background-color: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+        .card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+            border-color: var(--accent-color);
+        }
+        .dark .card:hover {
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+        h2 {
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+        }
+        .icon {
+            color: var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+        .card:hover .icon {
+            transform: scale(1.2);
+        }
+        .tag {
+            background-color: rgba(34, 211, 238, 0.1);
+            color: var(--accent-color);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .tag:hover {
+            background-color: rgba(34, 211, 238, 0.2);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="transition-colors duration-300">
+    <div class="main-container max-w-4xl mx-auto my-8 p-6 sm:p-10 rounded-3xl shadow-2xl">
+        <header class="text-center mb-16">
+            <img src="https://raw.githubusercontent.com/refleco/refleco.github.io/main/galaxy.jpeg" alt="Galaxy Icon" class="w-36 h-36 rounded-full mx-auto mb-5 border-4 border-white dark:border-slate-600 shadow-xl transition-transform duration-300 hover:scale-105">
+            <h1 class="text-6xl font-black tracking-tighter">Justin Wu</h1>
+            <p class="text-2xl text-light-secondary dark:text-dark-secondary mt-3">High School Student | Programmer | Swimmer</p>
+        </header>
 
-body {
-  font-family: 'Roboto', sans-serif;
-  line-height: 1.6;
-  color: #e0e0e0;
-  background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-}
+        <main class="space-y-16">
+            <section id="about">
+                <h2 class="text-4xl font-bold pb-3 mb-6">About Me</h2>
+                <p class="text-xl leading-relaxed text-light-secondary dark:text-dark-secondary">I am a dedicated high school student with a strong passion for computational biology, computer science, and mathematics. I enjoy applying my problem-solving skills to challenging projects and research. My goal is to leverage technology and scientific inquiry to make a meaningful impact.</p>
+            </section>
 
-.container {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: rgba(13, 31, 61, 0.92);
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-  border-radius: 12px;
-  animation: fadeIn 1s ease-out;
-}
+            <section id="skills">
+                <h2 class="text-4xl font-bold pb-3 mb-6">Skills</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card p-8 rounded-2xl">
+                        <h3 class="text-2xl font-bold mb-5 flex items-center"><i class="fas fa-code icon mr-4 text-3xl"></i>Programming & Tech</h3>
+                        <ul class="space-y-4 text-lg text-light-secondary dark:text-dark-secondary">
+                            <li class="flex items-center"><i class="fab fa-java icon w-6 mr-4"></i> Java</li>
+                            <li class="flex items-center"><i class="fab fa-python icon w-6 mr-4"></i> Python</li>
+                            <li class="flex items-center"><i class="fas fa-chart-line icon w-6 mr-4"></i> R</li>
+                            <li class="flex items-center"><i class="fab fa-html5 icon w-6 mr-4"></i> HTML & CSS</li>
+                        </ul>
+                    </div>
+                    <div class="card p-8 rounded-2xl">
+                        <h3 class="text-2xl font-bold mb-5 flex items-center"><i class="fas fa-flask icon mr-4 text-3xl"></i>Sciences</h3>
+                        <ul class="space-y-4 text-lg text-light-secondary dark:text-dark-secondary">
+                            <li class="flex items-center"><i class="fas fa-dna icon w-6 mr-4"></i> Computational Genetics</li>
+                            <li class="flex items-center"><i class="fas fa-atom icon w-6 mr-4"></i> Chemistry</li>
+                            <li class="flex items-center"><i class="fas fa-leaf icon w-6 mr-4"></i> Biology</li>
+                            <li class="flex items-center"><i class="fas fa-drafting-compass icon w-6 mr-4"></i> Engineering Design</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+            <section id="experience">
+                <h2 class="text-4xl font-bold pb-3 mb-6">Research & Experience</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card p-8 rounded-2xl">
+                        <h3 class="text-xl font-bold">Volunteer | PENN Care</h3>
+                        <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">Organized community cleanup and setup for events with the Philadelphia Mayor's Philly Spring Cleanup Initiative. (June 2022 – Present)</p>
+                    </div>
+                    <div class="card p-8 rounded-2xl">
+                        <h3 class="text-xl font-bold">Volunteer | Penn Medicine Radnor</h3>
+                        <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">Greeted and directed patients, providing assistance to enhance their hospital experience. (Summer 2023)</p>
+                    </div>
+                </div>
+            </section>
 
-/* Header Styles */
-header {
-  text-align: center;
-  margin-bottom: 2rem;
-  padding-top: 1rem;
-}
+            <section id="projects">
+                <h2 class="text-4xl font-bold pb-3 mb-6">Projects</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                     <a href="btd6/" class="card block p-6 rounded-2xl group" id="btd6-link">
+                        <h3 class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">BTD6 Ranking</h3>
+                        <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">An interactive, single-page web application for ranking and exploring the best crosspaths in Bloons TD 6.</p>
+                    </a>
+                    <a href="https://github.com/refleco/Knights-Tour-Java" target="_blank" class="card block p-6 rounded-2xl group">
+                        <h3 class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">Knight's Tour (Java)</h3>
+                        <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">An implementation of the Knight's Tour problem using a backtracking algorithm to find a path on a chessboard.</p>
+                    </a>
+                    <a href="https://github.com/refleco/Game-of-Life-Python" target="_blank" class="card block p-6 rounded-2xl group">
+                        <h3 class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">Game of Life (Python)</h3>
+                        <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">A simulation of Conway's Game of Life, visualizing cellular automata with Python and Pygame.</p>
+                    </a>
+                </div>
+            </section>
+            
+            <section id="honors">
+                <h2 class="text-4xl font-bold pb-3 mb-6">Honors & Awards</h2>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <span class="tag font-semibold px-5 py-2 rounded-full text-md">USA Biology Olympiad (USABO) Semifinalist</span>
+                    <span class="tag font-semibold px-5 py-2 rounded-full text-md">FBLA National Competition - 10th Place</span>
+                    <span class="tag font-semibold px-5 py-2 rounded-full text-md">MathWorks Math Modeling Challenge - Top 25</span>
+                    <span class="tag font-semibold px-5 py-2 rounded-full text-md">Annenberg Medical Research Symposium - Best Research</span>
+                    <span class="tag font-semibold px-5 py-2 rounded-full text-md">AIME Qualifier (2x)</span>
+                    <span class="tag font-semibold px-5 py-2 rounded-full text-md">PA Science Olympiad - 3rd & 5th Place</span>
+                </div>
+            </section>
+            
+            <section id="leadership">
+                <h2 class="text-4xl font-bold pb-3 mb-6">Leadership & Activities</h2>
+                <div class="card p-8 rounded-2xl">
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-lg text-light-secondary dark:text-dark-secondary">
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>President, Biology Club</li>
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Secretary, Math Modeling Club</li>
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Officer, Computer Science Club</li>
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Co-Captain, JV Academic Team</li>
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Varsity Swim Team</li>
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Science Olympiad Team</li>
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Section Leader, Concert Band</li>
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Student Executive Council</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
 
-.icon-wrapper {
-  text-align: center;
-  margin-bottom: 1rem;
-}
+        <footer class="text-center mt-20 pt-10 border-t border-border-light dark:border-border-dark">
+            <div id="contact" class="flex justify-center items-center space-x-8 mb-6">
+                <a href="mailto:wujustin20@outlook.com" class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-transform duration-300 hover:scale-125 text-3xl"><i class="fas fa-envelope"></i></a>
+                <a href="https://github.com/refleco" target="_blank" class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-transform duration-300 hover:scale-125 text-3xl"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/justinwu80/" target="_blank" class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-transform duration-300 hover:scale-125 text-3xl"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <p class="text-md text-light-secondary dark:text-dark-secondary">&copy; 2025 Justin Wu | <a href="https://justinwu.me/" target="_blank" class="hover:underline">justinwu.me</a></p>
+        </footer>
+    </div>
+    
+    <button id="theme-toggle" class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-card shadow-lg flex items-center justify-center text-2xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-color border border-theme transition-transform duration-300 hover:scale-110">
+        <i id="theme-icon-light" class="fas fa-sun"></i>
+        <i id="theme-icon-dark" class="fas fa-moon hidden"></i>
+    </button>
 
-.circular-icon {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid #3498db;
-  box-shadow: 0 0 15px rgba(52, 152, 219, 0.6);
-  transition: transform 0.3s ease;
-}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // BTD6 Link Fix
+            const btd6Link = document.getElementById('btd6-link');
+            if (btd6Link) {
+                const currentPath = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
+                const isIndex = currentPath.endsWith('index.html');
+                const basePath = isIndex ? currentPath.substring(0, currentPath.lastIndexOf('/') + 1) : currentPath;
+                btd6Link.href = basePath + 'btd6/';
+            }
 
-.circular-icon:hover {
-  transform: scale(1.1);
-}
+            // Theme Toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIconLight = document.getElementById('theme-icon-light');
+            const themeIconDark = document.getElementById('theme-icon-dark');
 
-h1 {
-  font-size: 2.8rem;
-  color: #ffffff;
-  margin-bottom: 0.5rem;
-}
+            const applyTheme = (isDark) => {
+                if (isDark) {
+                    document.documentElement.classList.add('dark');
+                    themeIconLight.classList.add('hidden');
+                    themeIconDark.classList.remove('hidden');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    themeIconLight.classList.remove('hidden');
+                    themeIconDark.classList.add('hidden');
+                }
+            };
+            
+            themeToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('portfolio-theme', isDark ? 'dark' : 'light');
+                applyTheme(isDark);
+            });
 
-.tagline {
-  font-size: 1.2rem;
-  color: #bdc3c7;
-  font-weight: 300;
-}
-
-/* Navigation Styles */
-nav ul {
-  list-style-type: none;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(52, 152, 219, 0.3);
-}
-
-nav ul li {
-  margin: 0.5rem 1rem;
-}
-
-nav ul li a {
-  color: #3498db;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s ease;
-  padding: 5px 10px;
-  border-radius: 5px;
-}
-
-nav ul li a:hover {
-  color: #ffffff;
-  background-color: rgba(52, 152, 219, 0.5);
-}
-
-/* Section Styles */
-section {
-  margin-bottom: 2.5rem;
-}
-
-h2 {
-  font-size: 2rem;
-  color: #ffffff;
-  border-bottom: 2px solid #3498db;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-p {
-  font-size: 1.1rem;
-  color: #e0e0e0;
-  margin-bottom: 1rem;
-}
-
-/* Skills Section */
-.skill-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-}
-
-.skill-category h3 {
-  color: #3498db;
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-}
-
-.skill-category ul {
-  list-style-type: none;
-}
-
-.skill-category li {
-  margin-bottom: 0.75rem;
-  font-size: 1.1rem;
-}
-
-.skill-category li i {
-  margin-right: 0.75rem;
-  color: #3498db;
-  width: 20px; /* Align icons */
-  text-align: center;
-}
-
-/* Experience Section */
-.experience-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-.experience-item {
-    background-color: rgba(25, 50, 95, 0.8);
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.experience-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-.experience-item h3 {
-    color: #3498db;
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-}
-
-/* Projects Section */
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-}
-
-.project-item {
-  background-color: rgba(25, 50, 95, 0.8);
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-}
-
-.project-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.project-item h3 {
-  font-size: 1.3rem;
-  color: #ffffff;
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-/* Honors Section */
-.honors-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1rem;
-}
-
-.honor-item {
-    background-color: rgba(52, 152, 219, 0.15);
-    padding: 1rem;
-    border-radius: 8px;
-    border-left: 4px solid #3498db;
-    transition: background-color 0.3s ease;
-}
-
-.honor-item:hover {
-    background-color: rgba(52, 152, 219, 0.3);
-}
-
-/* Leadership Section */
-.leadership-list {
-    list-style-type: none;
-    padding-left: 0;
-    columns: 2;
-    column-gap: 2rem;
-}
-
-.leadership-list li {
-    margin-bottom: 0.75rem;
-    padding-left: 1.2rem;
-    position: relative;
-}
-
-.leadership-list li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: #3498db;
-}
-
-/* Contact Section */
-.contact-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  list-style-type: none;
-  gap: 1rem;
-}
-
-.contact-list li a {
-  background-color: rgba(52, 152, 219, 0.2);
-  margin: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 25px;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-  display: inline-block;
-  color: #e0e0e0;
-  font-weight: bold;
-}
-
-.contact-list li a:hover {
-  transform: translateY(-5px);
-  background-color: rgba(52, 152, 219, 0.4);
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.contact-list li i {
-  margin-right: 0.75rem;
-}
-
-/* General Link Styles */
-a {
-  color: #3498db;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: #5dade2;
-  text-decoration: underline;
-}
-
-/* Footer Styles */
-footer {
-  margin-top: 3rem;
-  text-align: center;
-  color: #a0a0a0;
-  border-top: 1px solid rgba(52, 152, 219, 0.3);
-  padding-top: 1.5rem;
-}
-
-.footer-links {
-    margin-bottom: 1rem;
-}
-
-.footer-links p {
-    margin-bottom: 0.5rem;
-}
-
-.footer-links a {
-    font-size: 1.1rem;
-    font-weight: bold;
-}
-
-.mirror-sites {
-    font-size: 0.9rem;
-    color: #888;
-}
-
-.mirror-sites a {
-    font-size: 0.9rem;
-    font-weight: normal;
-    color: #aaa;
-}
-
-.copyright {
-  font-size: 0.9rem;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .leadership-list {
-        columns: 1;
-    }
-}
-
-@media (max-width: 600px) {
-  .container {
-    margin: 1rem;
-    padding: 1rem;
-  }
-
-  h1 {
-    font-size: 2.2rem;
-  }
-
-  h2 {
-    font-size: 1.6rem;
-  }
-
-  .project-grid, .skill-grid, .honors-grid, .experience-grid {
-    grid-template-columns: 1fr;
-  }
-
-  nav ul {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  nav ul li {
-    margin: 0.5rem 0;
-  }
-  
-  .contact-list {
-    flex-direction: column;
-    align-items: center;
-  }
-}
+            const savedTheme = localStorage.getItem('portfolio-theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(savedTheme === 'dark' || (savedTheme === null && prefersDark));
+        });
+    </script>
+</body>
+</html>
