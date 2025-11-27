@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game of Life Demo | Justin Wu</title>
+    <link rel="icon" type="image/jpeg"
+        href="https://raw.githubusercontent.com/refleco/refleco.github.io/main/galaxy.jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .game-container {
+            background-color: var(--container-light);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .game-container {
+            background-color: var(--container-dark);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        canvas#game-canvas {
+            cursor: crosshair;
+            touch-action: none;
+        }
+    </style>
+</head>
+
+<body class="transition-colors duration-300">
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-content"></div>
+    </div>
+
+    <!-- Background Canvas -->
+    <canvas id="starfield"></canvas>
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 relative z-10 h-screen flex flex-col">
+        <div class="game-container shadow-2xl rounded-3xl p-6 flex-1 flex flex-col reveal">
+            <header class="flex justify-between items-center mb-6 flex-wrap gap-4">
+                <div class="flex items-center gap-4">
+                    <a href="../index.html"
+                        class="text-accent-color hover:text-accent-hover font-bold transition-colors text-lg"><i
+                            class="fas fa-arrow-left mr-2"></i>Back</a>
+                    <h1 class="text-3xl md:text-4xl font-black tracking-tighter">Conway's Game of Life</h1>
+                </div>
+                <div class="flex gap-3">
+                    <a href="https://github.com/refleco/Game-of-Life-Python" target="_blank"
+                        class="px-4 py-2 rounded-xl bg-gray-200 dark:bg-slate-700 hover:bg-accent-color hover:text-white dark:hover:bg-accent-color transition-colors font-bold text-sm flex items-center gap-2">
+                        <i class="fab fa-github"></i> View Source
+                    </a>
+                    <button id="theme-toggle"
+                        class="w-10 h-10 rounded-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-accent-color transition-colors">
+                        <i id="theme-icon-light" class="fas fa-sun text-yellow-500"></i>
+                        <i id="theme-icon-dark" class="fas fa-moon text-blue-300 hidden"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="flex-1 flex flex-col lg:flex-row gap-6 overflow-hidden">
+                <div
+                    class="flex-1 bg-black/20 rounded-xl overflow-hidden relative border border-theme shadow-inner flex justify-center items-center">
+                    <canvas id="game-canvas"></canvas>
+                </div>
+
+                <aside class="w-full lg:w-64 flex flex-col gap-4">
+                    <div class="p-4 rounded-xl bg-card border border-theme">
+                        <h2 class="text-xl font-bold mb-4 border-b-0">Controls</h2>
+                        <div class="flex flex-col gap-3">
+                            <button id="btn-play"
+                                class="w-full py-3 rounded-lg bg-accent-color text-white font-bold hover:bg-accent-hover transition-colors flex items-center justify-center gap-2">
+                                <i class="fas fa-play"></i> Play
+                            </button>
+                            <button id="btn-clear"
+                                class="w-full py-2 rounded-lg bg-red-500 text-white font-bold hover:bg-red-600 transition-colors flex items-center justify-center gap-2">
+                                <i class="fas fa-trash"></i> Clear
+                            </button>
+                            <button id="btn-random"
+                                class="w-full py-2 rounded-lg bg-blue-500 text-white font-bold hover:bg-blue-600 transition-colors flex items-center justify-center gap-2">
+                                <i class="fas fa-dice"></i> Randomize
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-card border border-theme">
+                        <h2 class="text-xl font-bold mb-4 border-b-0">Settings</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label
+                                    class="block text-sm font-bold text-light-secondary dark:text-dark-secondary mb-1">Speed</label>
+                                <input type="range" id="speed-slider" min="1" max="60" value="30"
+                                    class="w-full accent-accent-color">
+                            </div>
+                            <div>
+                                <p class="text-sm text-light-secondary dark:text-dark-secondary">
+                                    <span class="font-bold">Generation:</span> <span id="gen-count">0</span>
+                                </p>
+                                <p class="text-sm text-light-secondary dark:text-dark-secondary mt-1">
+                                    <span class="font-bold">Population:</span> <span id="pop-count">0</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-card border border-theme flex-1 overflow-y-auto">
+                        <h2 class="text-xl font-bold mb-2 border-b-0">Rules</h2>
+                        <ul class="text-sm text-light-secondary dark:text-dark-secondary list-disc pl-4 space-y-1">
+                            <li><span class="text-accent-color font-bold">Underpopulation:</span> Live cell with < 2
+                                    neighbors dies.</li>
+                            <li><span class="text-accent-color font-bold">Survival:</span> Live cell with 2 or 3
+                                neighbors lives.</li>
+                            <li><span class="text-accent-color font-bold">Overpopulation:</span> Live cell with > 3
+                                neighbors dies.</li>
+                            <li><span class="text-accent-color font-bold">Reproduction:</span> Dead cell with 3
+                                neighbors becomes alive.</li>
+                        </ul>
+                        <p class="text-xs mt-4 italic opacity-70">Click or drag on the grid to toggle cells!</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        const btnPlay = document.getElementById('btn-play');
+        const btnClear = document.getElementById('btn-clear');
+        const btnRandom = document.getElementById('btn-random');
+        const speedSlider = document.getElementById('speed-slider');
+        const genCountEl = document.getElementById('gen-count');
+        const popCountEl = document.getElementById('pop-count');
+
+        let cellSize = 10;
+        let cols, rows;
+        let grid = [];
+        let isPlaying = false;
+        let animationId;
+        let generation = 0;
+        let lastFrameTime = 0;
+        let fps = 30;
+
+        function resizeCanvas() {
+            const parent = canvas.parentElement;
+            canvas.width = parent.clientWidth;
+            canvas.height = parent.clientHeight;
+            cols = Math.floor(canvas.width / cellSize);
+            rows = Math.floor(canvas.height / cellSize);
+            resetGrid();
+            draw();
+        }
+
+        function resetGrid() {
+            grid = new Array(cols).fill(null).map(() => new Array(rows).fill(0));
+            generation = 0;
+            updateStats();
+        }
+
+        function randomizeGrid() {
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    grid[i][j] = Math.random() > 0.85 ? 1 : 0;
+                }
+            }
+            generation = 0;
+            draw();
+            updateStats();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim();
+
+            let population = 0;
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    if (grid[i][j] === 1) {
+                        ctx.fillRect(i * cellSize, j * cellSize, cellSize - 1, cellSize - 1);
+                        population++;
+                    }
+                }
+            }
+            popCountEl.textContent = population;
+        }
+
+        function update() {
+            let nextGrid = grid.map(arr => [...arr]);
+            let hasChanges = false;
+
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    let neighbors = countNeighbors(grid, i, j);
+                    let state = grid[i][j];
+
+                    if (state === 0 && neighbors === 3) {
+                        nextGrid[i][j] = 1;
+                        hasChanges = true;
+                    } else if (state === 1 && (neighbors < 2 || neighbors > 3)) {
+                        nextGrid[i][j] = 0;
+                        hasChanges = true;
+                    }
+                }
+            }
+
+            grid = nextGrid;
+            if (hasChanges) {
+                generation++;
+                updateStats();
+            }
+        }
+
+        function countNeighbors(grid, x, y) {
+            let sum = 0;
+            for (let i = -1; i < 2; i++) {
+                for (let j = -1; j < 2; j++) {
+                    let col = (x + i + cols) % cols;
+                    let row = (y + j + rows) % rows;
+                    sum += grid[col][row];
+                }
+            }
+            sum -= grid[x][y];
+            return sum;
+        }
+
+        function updateStats() {
+            genCountEl.textContent = generation;
+        }
+
+        function loop(timestamp) {
+            if (!isPlaying) return;
+
+            const interval = 1000 / fps;
+            if (timestamp - lastFrameTime > interval) {
+                update();
+                draw();
+                lastFrameTime = timestamp;
+            }
+            animationId = requestAnimationFrame(loop);
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            btnPlay.innerHTML = isPlaying ? '<i class="fas fa-pause"></i> Pause' : '<i class="fas fa-play"></i> Play';
+            btnPlay.classList.toggle('bg-accent-color');
+            btnPlay.classList.toggle('bg-yellow-500');
+            if (isPlaying) loop(0);
+            else cancelAnimationFrame(animationId);
+        }
+
+        // Event Listeners
+        window.addEventListener('resize', resizeCanvas);
+
+        btnPlay.addEventListener('click', togglePlay);
+
+        btnClear.addEventListener('click', () => {
+            if (isPlaying) togglePlay();
+            resetGrid();
+            draw();
+        });
+
+        btnRandom.addEventListener('click', () => {
+            randomizeGrid();
+        });
+
+        speedSlider.addEventListener('input', (e) => {
+            fps = parseInt(e.target.value);
+        });
+
+        // Drawing interaction
+        let isDrawing = false;
+
+        function handleInput(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX || e.touches[0].clientX;
+            const y = e.clientY || e.touches[0].clientY;
+            const col = Math.floor((x - rect.left) / cellSize);
+            const row = Math.floor((y - rect.top) / cellSize);
+
+            if (col >= 0 && col < cols && row >= 0 && row < rows) {
+                grid[col][row] = 1;
+                draw();
+            }
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            handleInput(e);
+        });
+        canvas.addEventListener('mousemove', (e) => {
+            if (isDrawing) handleInput(e);
+        });
+        window.addEventListener('mouseup', () => isDrawing = false);
+
+        canvas.addEventListener('touchstart', (e) => {
+            isDrawing = true;
+            handleInput(e);
+            e.preventDefault(); // Prevent scrolling
+        }, { passive: false });
+        canvas.addEventListener('touchmove', (e) => {
+            if (isDrawing) handleInput(e);
+            e.preventDefault();
+        }, { passive: false });
+        window.addEventListener('touchend', () => isDrawing = false);
+
+        // Init
+        resizeCanvas();
+        randomizeGrid();
+    </script>
+</body>
+
+</html>

@@ -171,10 +171,12 @@ h2 {
 }
 
 /* Typing Cursor */
-.typing-cursor::after {
+.typing-cursor::after,
+.typing-cursor-active::after {
     content: '|';
     animation: blink 1s step-end infinite;
     color: var(--accent-color);
+    margin-left: 2px;
 }
 
 @keyframes blink {

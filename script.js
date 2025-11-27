@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     initLoader();
     initTheme();
+    initSettings();
     initStarfield();
     initScrollReveal();
     initTypingEffect();
@@ -65,12 +66,13 @@ function initStarfield() {
     let width, height;
     let stars = [];
     let animationId;
-    
+
     // Configuration
-    const starCount = 150;
+    let starCount = parseInt(localStorage.getItem('star-count')) || 150;
+    let speedMultiplier = parseFloat(localStorage.getItem('star-speed')) || 1.0;
     const connectionDistance = 100;
     let mouse = { x: null, y: null };
-    
+
     // Colors
     let starColor = 'rgba(255, 255, 255, 0.8)';
     let lineColor = 'rgba(255, 255, 255, 0.1)';
@@ -91,22 +93,33 @@ function initStarfield() {
     // Listen for theme changes
     window.addEventListener('themeChanged', (e) => updateColors(e.detail.isDark));
 
+    // Listen for settings changes
+    window.addEventListener('settingsChanged', (e) => {
+        if (e.detail.starCount !== undefined) {
+            starCount = e.detail.starCount;
+            init(); // Re-init stars
+        }
+        if (e.detail.starSpeed !== undefined) {
+            speedMultiplier = e.detail.starSpeed;
+        }
+    });
+
     class Star {
         constructor() {
             this.x = Math.random() * width;
             this.y = Math.random() * height;
-            this.vx = (Math.random() - 0.5) * 0.5;
-            this.vy = (Math.random() - 0.5) * 0.5;
+            this.baseVx = (Math.random() - 0.5) * 0.5;
+            this.baseVy = (Math.random() - 0.5) * 0.5;
             this.size = Math.random() * 2;
         }
 
         update() {
-            this.x += this.vx;
-            this.y += this.vy;
+            this.x += this.baseVx * speedMultiplier;
+            this.y += this.baseVy * speedMultiplier;
 
             // Bounce off edges
-            if (this.x < 0 || this.x > width) this.vx *= -1;
-            if (this.y < 0 || this.y > height) this.vy *= -1;
+            if (this.x < 0 || this.x > width) this.baseVx *= -1;
+            if (this.y < 0 || this.y > height) this.baseVy *= -1;
 
             // Mouse interaction
             if (mouse.x != null) {
@@ -119,8 +132,8 @@ function initStarfield() {
                     const force = (150 - distance) / 150;
                     const directionX = forceDirectionX * force * 0.5; // Repel strength
                     const directionY = forceDirectionY * force * 0.5;
-                    this.vx -= directionX;
-                    this.vy -= directionY;
+                    this.baseVx -= directionX * 0.1; // Soften impact
+                    this.baseVy -= directionY * 0.1;
                 }
             }
         }
@@ -139,7 +152,7 @@ function initStarfield() {
         for (let i = 0; i < starCount; i++) {
             stars.push(new Star());
         }
-        animate();
+        if (!animationId) animate();
     }
 
     function resize() {
@@ -151,7 +164,7 @@ function initStarfield() {
 
     function animate() {
         ctx.clearRect(0, 0, width, height);
-        
+
         for (let i = 0; i < stars.length; i++) {
             stars[i].update();
             stars[i].draw();
@@ -177,8 +190,6 @@ function initStarfield() {
 
     window.addEventListener('resize', () => {
         resize();
-        // Re-initialize stars to fit new screen? Or just let them be. 
-        // Let's just update bounds.
     });
 
     window.addEventListener('mousemove', (e) => {
@@ -194,10 +205,86 @@ function initStarfield() {
     init();
 }
 
+// --- Settings Modal ---
+function initSettings() {
+    const toggleBtn = document.getElementById('settings-toggle');
+    const modal = document.getElementById('settings-modal');
+    const closeBtn = document.getElementById('close-settings');
+    const resetBtn = document.getElementById('reset-settings');
+
+    // Inputs
+    const starCountInput = document.getElementById('star-count');
+    const starSpeedInput = document.getElementById('star-speed');
+    const starCountVal = document.getElementById('star-count-val');
+    const starSpeedVal = document.getElementById('star-speed-val');
+
+    if (!toggleBtn || !modal) return;
+
+    // Load saved settings
+    const savedCount = localStorage.getItem('star-count') || 150;
+    const savedSpeed = localStorage.getItem('star-speed') || 1.0;
+
+    starCountInput.value = savedCount;
+    starSpeedInput.value = savedSpeed;
+    starCountVal.textContent = savedCount;
+    starSpeedVal.textContent = savedSpeed + 'x';
+
+    const openModal = () => {
+        modal.classList.remove('hidden');
+        // Trigger reflow
+        void modal.offsetWidth;
+        modal.classList.remove('opacity-0');
+        modal.querySelector('div').classList.remove('scale-95');
+        modal.querySelector('div').classList.add('scale-100');
+    };
+
+    const closeModal = () => {
+        modal.classList.add('opacity-0');
+        modal.querySelector('div').classList.remove('scale-100');
+        modal.querySelector('div').classList.add('scale-95');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    };
+
+    toggleBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    // Input Handlers
+    starCountInput.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value);
+        starCountVal.textContent = val;
+        localStorage.setItem('star-count', val);
+        window.dispatchEvent(new CustomEvent('settingsChanged', { detail: { starCount: val } }));
+    });
+
+    starSpeedInput.addEventListener('input', (e) => {
+        const val = parseFloat(e.target.value);
+        starSpeedVal.textContent = val + 'x';
+        localStorage.setItem('star-speed', val);
+        window.dispatchEvent(new CustomEvent('settingsChanged', { detail: { starSpeed: val } }));
+    });
+
+    resetBtn.addEventListener('click', () => {
+        starCountInput.value = 150;
+        starSpeedInput.value = 1.0;
+        starCountVal.textContent = 150;
+        starSpeedVal.textContent = '1.0x';
+
+        localStorage.setItem('star-count', 150);
+        localStorage.setItem('star-speed', 1.0);
+
+        window.dispatchEvent(new CustomEvent('settingsChanged', { detail: { starCount: 150, starSpeed: 1.0 } }));
+    });
+}
+
 // --- Scroll Reveal ---
 function initScrollReveal() {
     const reveals = document.querySelectorAll('.reveal');
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -214,23 +301,68 @@ function initScrollReveal() {
 
 // --- Typing Effect ---
 function initTypingEffect() {
-    const textElement = document.getElementById('typing-text');
-    if (!textElement) return;
-
-    const text = textElement.getAttribute('data-text');
-    textElement.innerText = '';
-    let i = 0;
-
-    function type() {
-        if (i < text.length) {
-            textElement.innerText += text.charAt(i);
-            i++;
-            setTimeout(type, 50 + Math.random() * 50); // Random typing speed
+    // 1. Main Subtitle (Looping/Cursor)
+    const mainSubtitle = document.getElementById('typing-text');
+    if (mainSubtitle) {
+        const text = mainSubtitle.getAttribute('data-text');
+        mainSubtitle.innerText = '';
+        let i = 0;
+        function typeMain() {
+            if (i < text.length) {
+                mainSubtitle.innerText += text.charAt(i);
+                i++;
+                setTimeout(typeMain, 50 + Math.random() * 50);
+            }
         }
+        setTimeout(typeMain, 1000);
     }
 
-    // Start typing after a small delay
-    setTimeout(type, 1000);
+    // 2. General Headers (One-time reveal)
+    const headers = document.querySelectorAll('h1, h2, h3');
+
+    const typeObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('typed')) {
+                entry.target.classList.add('typed');
+                typeElement(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    headers.forEach(header => {
+        // Skip the main title and subtitle as they are handled separately or don't need it
+        if (header.id === 'typing-text' || header.closest('header')) return;
+
+        // Prepare element
+        header.dataset.originalText = header.innerText;
+        header.innerText = ''; // Clear text
+        header.style.visibility = 'hidden'; // Hide initially
+        typeObserver.observe(header);
+    });
+
+    function typeElement(element) {
+        const text = element.dataset.originalText;
+        element.style.visibility = 'visible';
+        element.innerText = '';
+
+        // Add cursor
+        element.classList.add('typing-cursor-active');
+
+        let i = 0;
+        function typeChar() {
+            if (i < text.length) {
+                element.innerText += text.charAt(i);
+                i++;
+                setTimeout(typeChar, 30); // Faster speed for headers
+            } else {
+                // Remove cursor after done
+                setTimeout(() => {
+                    element.classList.remove('typing-cursor-active');
+                }, 500);
+            }
+        }
+        typeChar();
+    }
 }
 
 // --- 3D Tilt Effect ---
@@ -242,10 +374,10 @@ function initTiltEffect() {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            
+
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            
+
             const rotateX = ((y - centerY) / centerY) * -5; // Max rotation deg
             const rotateY = ((x - centerX) / centerX) * 5;
 
@@ -258,13 +390,17 @@ function initTiltEffect() {
     });
 }
 
-// --- BTD6 Link Fix (Legacy) ---
+// --- BTD6 Link Fix ---
 function fixBtd6Link() {
     const btd6Link = document.getElementById('btd6-link');
     if (btd6Link) {
-        const currentPath = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
-        const isIndex = currentPath.endsWith('index.html');
-        const basePath = isIndex ? currentPath.substring(0, currentPath.lastIndexOf('/') + 1) : currentPath;
+        // Ensure we don't double-stack index.html or get stuck in a loop
+        // If we are at /index.html, we want ./btd6/ which resolves to /btd6/
+        // The default href="btd6/" is usually correct for both / and /index.html
+        // But just in case, let's force an absolute-ish path relative to the current directory
+
+        const pathname = window.location.pathname;
+        const basePath = pathname.substring(0, pathname.lastIndexOf('/') + 1);
         btd6Link.href = basePath + 'btd6/';
     }
 }

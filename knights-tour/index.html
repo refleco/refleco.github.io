@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knight's Tour Demo | Justin Wu</title>
+    <link rel="icon" type="image/jpeg"
+        href="https://raw.githubusercontent.com/refleco/refleco.github.io/main/galaxy.jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .game-container {
+            background-color: var(--container-light);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .game-container {
+            background-color: var(--container-dark);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1;
+            border: 4px solid var(--border-light);
+        }
+
+        .dark .board {
+            border-color: var(--border-dark);
+        }
+
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: background-color 0.2s;
+        }
+
+        .cell.white {
+            background-color: #f0d9b5;
+            color: #b58863;
+        }
+
+        .cell.black {
+            background-color: #b58863;
+            color: #f0d9b5;
+        }
+
+        .cell.visited {
+            background-color: var(--accent-color) !important;
+            color: white !important;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .cell.current {
+            background-color: #ef4444 !important;
+            color: white !important;
+            transform: scale(1.1);
+            z-index: 10;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+            border-radius: 4px;
+        }
+
+        .knight-icon {
+            font-size: 2rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body class="transition-colors duration-300">
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-content"></div>
+    </div>
+
+    <!-- Background Canvas -->
+    <canvas id="starfield"></canvas>
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 relative z-10 min-h-screen flex flex-col">
+        <div class="game-container shadow-2xl rounded-3xl p-6 flex-1 flex flex-col reveal">
+            <header class="flex justify-between items-center mb-6 flex-wrap gap-4">
+                <div class="flex items-center gap-4">
+                    <a href="../index.html"
+                        class="text-accent-color hover:text-accent-hover font-bold transition-colors text-lg"><i
+                            class="fas fa-arrow-left mr-2"></i>Back</a>
+                    <h1 class="text-3xl md:text-4xl font-black tracking-tighter">Knight's Tour Visualization</h1>
+                </div>
+                <div class="flex gap-3">
+                    <a href="https://github.com/refleco/Knights-Tour-Java" target="_blank"
+                        class="px-4 py-2 rounded-xl bg-gray-200 dark:bg-slate-700 hover:bg-accent-color hover:text-white dark:hover:bg-accent-color transition-colors font-bold text-sm flex items-center gap-2">
+                        <i class="fab fa-github"></i> View Source
+                    </a>
+                    <button id="theme-toggle"
+                        class="w-10 h-10 rounded-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-accent-color transition-colors">
+                        <i id="theme-icon-light" class="fas fa-sun text-yellow-500"></i>
+                        <i id="theme-icon-dark" class="fas fa-moon text-blue-300 hidden"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="flex-1 flex flex-col lg:flex-row gap-8 items-center lg:items-start">
+                <div class="flex-1 w-full flex justify-center">
+                    <div id="chessboard" class="board rounded-lg overflow-hidden shadow-xl"></div>
+                </div>
+
+                <aside class="w-full lg:w-80 flex flex-col gap-4">
+                    <div class="p-6 rounded-xl bg-card border border-theme">
+                        <h2 class="text-xl font-bold mb-4 border-b-0">Controls</h2>
+                        <div class="flex flex-col gap-3">
+                            <button id="btn-start"
+                                class="w-full py-3 rounded-lg bg-accent-color text-white font-bold hover:bg-accent-hover transition-colors flex items-center justify-center gap-2">
+                                <i class="fas fa-play"></i> Start Tour
+                            </button>
+                            <button id="btn-reset"
+                                class="w-full py-2 rounded-lg bg-red-500 text-white font-bold hover:bg-red-600 transition-colors flex items-center justify-center gap-2">
+                                <i class="fas fa-undo"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-6 rounded-xl bg-card border border-theme">
+                        <h2 class="text-xl font-bold mb-4 border-b-0">Settings</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label
+                                    class="block text-sm font-bold text-light-secondary dark:text-dark-secondary mb-1">Animation
+                                    Speed</label>
+                                <input type="range" id="speed-slider" min="10" max="500" value="100"
+                                    class="w-full accent-accent-color" style="direction: rtl">
+                                <p class="text-xs text-right text-light-secondary dark:text-dark-secondary mt-1">Faster
+                                    <-----------> Slower</p>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-theme pt-4">
+                                <span
+                                    class="text-sm font-bold text-light-secondary dark:text-dark-secondary">Moves:</span>
+                                <span id="move-count" class="text-2xl font-black text-accent-color">0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span
+                                    class="text-sm font-bold text-light-secondary dark:text-dark-secondary">Status:</span>
+                                <span id="status-text"
+                                    class="text-sm font-bold text-light-primary dark:text-dark-primary">Ready</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 rounded-xl bg-card border border-theme flex-1">
+                        <h2 class="text-xl font-bold mb-2 border-b-0">About</h2>
+                        <p class="text-sm text-light-secondary dark:text-dark-secondary leading-relaxed">
+                            The Knight's Tour is a sequence of moves of a knight on a chessboard such that the knight
+                            visits every square exactly once.
+                        </p>
+                        <p class="text-sm text-light-secondary dark:text-dark-secondary leading-relaxed mt-2">
+                            This demo uses Warnsdorff's rule, a heuristic that chooses the move with the fewest onward
+                            moves, to find a solution efficiently.
+                        </p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        const boardEl = document.getElementById('chessboard');
+        const btnStart = document.getElementById('btn-start');
+        const btnReset = document.getElementById('btn-reset');
+        const speedSlider = document.getElementById('speed-slider');
+        const moveCountEl = document.getElementById('move-count');
+        const statusText = document.getElementById('status-text');
+
+        const N = 8;
+        let board = [];
+        let moves = 0;
+        let isRunning = false;
+        let delay = 100;
+        let path = [];
+        let currentStep = 0;
+
+        // Knight's moves
+        const dx = [2, 1, -1, -2, -2, -1, 1, 2];
+        const dy = [1, 2, 2, 1, -1, -2, -2, -1];
+
+        function initBoard() {
+            boardEl.innerHTML = '';
+            board = Array(N).fill().map(() => Array(N).fill(-1));
+
+            for (let i = 0; i < N; i++) {
+                for (let j = 0; j < N; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = `cell ${(i + j) % 2 === 0 ? 'white' : 'black'}`;
+                    cell.id = `cell-${i}-${j}`;
+                    boardEl.appendChild(cell);
+                }
+            }
+            moves = 0;
+            moveCountEl.textContent = 0;
+            statusText.textContent = 'Ready';
+            statusText.className = 'text-sm font-bold text-light-primary dark:text-dark-primary';
+        }
+
+        function isValid(x, y) {
+            return (x >= 0 && x < N && y >= 0 && y < N && board[x][y] === -1);
+        }
+
+        function getDegree(x, y) {
+            let count = 0;
+            for (let i = 0; i < 8; i++) {
+                if (isValid(x + dx[i], y + dy[i])) count++;
+            }
+            return count;
+        }
+
+        function solveKnightsTour() {
+            // Warnsdorff's algorithm
+            let x = Math.floor(Math.random() * N);
+            let y = Math.floor(Math.random() * N);
+
+            path = [{ x, y }];
+            board[x][y] = 0;
+
+            for (let i = 0; i < N * N - 1; i++) {
+                let minDeg = 9;
+                let nextX = -1, nextY = -1;
+                let start = Math.floor(Math.random() * 8);
+
+                for (let count = 0; count < 8; count++) {
+                    let idx = (start + count) % 8;
+                    let nx = x + dx[idx];
+                    let ny = y + dy[idx];
+
+                    if (isValid(nx, ny)) {
+                        let deg = getDegree(nx, ny);
+                        if (deg < minDeg) {
+                            minDeg = deg;
+                            nextX = nx;
+                            nextY = ny;
+                        }
+                    }
+                }
+
+                if (nextX === -1) return false; // Failed
+
+                board[nextX][nextY] = i + 1;
+                path.push({ x: nextX, y: nextY });
+                x = nextX;
+                y = nextY;
+            }
+            return true;
+        }
+
+        async function animateTour() {
+            isRunning = true;
+            btnStart.disabled = true;
+            btnStart.classList.add('opacity-50', 'cursor-not-allowed');
+            statusText.textContent = 'Running...';
+            statusText.className = 'text-sm font-bold text-accent-color';
+
+            // Clear board visually
+            document.querySelectorAll('.cell').forEach(c => {
+                c.classList.remove('visited', 'current');
+                c.innerHTML = '';
+            });
+
+            // Find a solution first (instant)
+            // We retry a few times if random start fails (Warnsdorff isn't perfect)
+            let solved = false;
+            for (let i = 0; i < 10; i++) {
+                initBoard(); // Reset internal board state
+                if (solveKnightsTour()) {
+                    solved = true;
+                    break;
+                }
+            }
+
+            if (!solved) {
+                statusText.textContent = 'Failed to find path. Retrying...';
+                setTimeout(animateTour, 500);
+                return;
+            }
+
+            // Animate the path
+            for (let i = 0; i < path.length; i++) {
+                if (!isRunning) break;
+
+                const { x, y } = path[i];
+                const cell = document.getElementById(`cell-${x}-${y}`);
+
+                // Remove knight from previous
+                const prevKnight = document.querySelector('.knight-icon');
+                if (prevKnight) prevKnight.remove();
+
+                // Mark previous as visited
+                if (i > 0) {
+                    const prev = path[i - 1];
+                    const prevCell = document.getElementById(`cell-${prev.x}-${prev.y}`);
+                    prevCell.classList.remove('current');
+                    prevCell.classList.add('visited');
+                    prevCell.textContent = i; // 1-based index for user
+                }
+
+                // Mark current
+                cell.classList.add('current');
+                cell.innerHTML = '<i class="fas fa-chess-knight knight-icon"></i>';
+
+                moveCountEl.textContent = i + 1;
+
+                await new Promise(r => setTimeout(r, delay));
+            }
+
+            if (isRunning) {
+                statusText.textContent = 'Completed!';
+                statusText.className = 'text-sm font-bold text-green-500';
+                btnStart.disabled = false;
+                btnStart.classList.remove('opacity-50', 'cursor-not-allowed');
+                isRunning = false;
+            }
+        }
+
+        btnStart.addEventListener('click', () => {
+            if (!isRunning) animateTour();
+        });
+
+        btnReset.addEventListener('click', () => {
+            isRunning = false;
+            btnStart.disabled = false;
+            btnStart.classList.remove('opacity-50', 'cursor-not-allowed');
+            initBoard();
+        });
+
+        speedSlider.addEventListener('input', (e) => {
+            delay = parseInt(e.target.value);
+        });
+
+        initBoard();
+    </script>
+</body>
+
+</html>
