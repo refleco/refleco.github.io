@@ -8,6 +8,23 @@
     <link rel="icon" type="image/jpeg"
         href="https://raw.githubusercontent.com/refleco/refleco.github.io/main/galaxy.jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'accent-color': 'var(--accent-color)',
+                        'accent-hover': 'var(--accent-hover)',
+                        'light-primary': 'var(--text-light-primary)',
+                        'dark-primary': 'var(--text-dark-primary)',
+                        'light-secondary': 'var(--text-light-secondary)',
+                        'dark-secondary': 'var(--text-dark-secondary)',
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="../styles.css">
