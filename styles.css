@@ -1,10 +1,10 @@
 :root {
     --bg-light: #f1f5f9;
     --bg-dark: #0b1120;
-    --container-light: rgba(255, 255, 255, 0.7);
-    --container-dark: rgba(15, 23, 42, 0.7);
-    --card-light: #ffffff;
-    --card-dark: #1e293b;
+    --container-light: rgba(255, 255, 255, 0.2);
+    --container-dark: rgba(15, 23, 42, 0.3);
+    --card-light: rgba(255, 255, 255, 0.6);
+    --card-dark: rgba(30, 41, 59, 0.6);
     --text-light-primary: #0f172a;
     --text-dark-primary: #f1f5f9;
     --text-light-secondary: #334155;
