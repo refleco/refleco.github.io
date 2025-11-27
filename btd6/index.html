@@ -112,21 +112,17 @@
                     <div class="p-6 rounded-2xl bg-card shadow-lg border border-theme">
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-2xl font-bold">Controls</h2>
-                            <button id="theme-toggle"
-                                class="w-10 h-10 rounded-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-accent-color transition-colors">
-                                <i id="theme-icon-light" class="fas fa-sun text-yellow-500"></i>
-                                <i id="theme-icon-dark" class="fas fa-moon text-blue-300 hidden"></i>
-                            </button>
+                            <h2 class="text-2xl font-bold">Controls</h2>
                         </div>
                         <div class="space-y-4">
                             <input type="text" id="search-input" placeholder="Search monkeys..."
-                                class="w-full p-3 rounded-xl border border-theme bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-accent-color focus:outline-none transition text-light-primary dark:text-dark-primary">
+                                class="w-full p-3 rounded-xl border border-theme bg-white dark:bg-slate-800 text-gray-900 dark:text-dark-primary focus:ring-2 focus:ring-accent-color focus:outline-none transition">
                             <div>
                                 <label for="sort-select"
                                     class="block text-sm font-medium text-gray-900 dark:text-dark-secondary mb-1">Sort
                                     by</label>
                                 <select id="sort-select"
-                                    class="w-full p-3 rounded-xl border border-theme bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-accent-color focus:outline-none transition text-light-primary dark:text-dark-primary">
+                                    class="w-full p-3 rounded-xl border border-theme bg-white dark:bg-slate-800 text-gray-900 dark:text-dark-primary focus:ring-2 focus:ring-accent-color focus:outline-none transition">
                                     <option value="name">Name</option>
                                     <option value="rank">Best Path Rank</option>
                                     <option value="type">Type</option>
@@ -158,6 +154,12 @@
             </div>
         </div>
     </div>
+
+    <button id="theme-toggle"
+        class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-card shadow-lg flex items-center justify-center text-2xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-color border border-theme transition-transform duration-300 hover:scale-110 z-50">
+        <i id="theme-icon-light" class="fas fa-sun text-yellow-500"></i>
+        <i id="theme-icon-dark" class="fas fa-moon text-blue-300 hidden"></i>
+    </button>
 
     <script src="../script.js"></script>
     <script>
@@ -306,10 +308,10 @@
             filterContainer.addEventListener('click', (e) => {
                 if (e.target.tagName === 'BUTTON') {
                     filterContainer.querySelectorAll('button').forEach(btn => {
-                        btn.classList.remove('active', 'bg-accent-color', 'text-gray-900', 'dark:text-white');
+                        btn.classList.remove('active', 'bg-accent-color', 'text-gray-900');
                         btn.classList.add('text-light-secondary', 'dark:text-dark-secondary');
                     });
-                    e.target.classList.add('active', 'bg-accent-color', 'text-gray-900', 'dark:text-white');
+                    e.target.classList.add('active', 'bg-accent-color', 'text-gray-900');
                     e.target.classList.remove('text-light-secondary', 'dark:text-dark-secondary');
                     renderMonkeys();
                 }
@@ -324,7 +326,7 @@
             // Style active button on load
             const activeButton = filterContainer.querySelector('.active');
             if (activeButton) {
-                activeButton.classList.add('bg-accent-color', 'text-gray-900', 'dark:text-white');
+                activeButton.classList.add('bg-accent-color', 'text-gray-900');
                 activeButton.classList.remove('text-light-secondary', 'dark:text-dark-secondary');
             }
         });
