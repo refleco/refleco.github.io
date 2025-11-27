@@ -8,231 +8,132 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
-    <style>
-        :root {
-            --bg-light: #f1f5f9;
-            --bg-dark: #0f172a;
-            --container-light: rgba(255, 255, 255, 0.8);
-            --container-dark: rgba(30, 41, 59, 0.8);
-            --card-light: #ffffff;
-            --card-dark: #1e293b;
-            --text-light-primary: #0f172a;
-            --text-dark-primary: #e2e8f0;
-            --text-light-secondary: #475569;
-            --text-dark-secondary: #94a3b8;
-            --accent-color: #38bdf8;
-            --accent-hover: #7dd3fc;
-            --border-light: #cbd5e1;
-            --border-dark: #334155;
-        }
-        html.dark {
-            --bg-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-        }
-        html:not(.dark) {
-            --bg-image: url('https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80');
-        }
-        body {
-            background-image: var(--bg-image);
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            font-family: 'Roboto', sans-serif;
-            color: var(--text-light-primary);
-            background-color: var(--bg-light);
-        }
-        .dark body {
-            color: var(--text-dark-primary);
-            background-color: var(--bg-dark);
-        }
-        .main-container {
-            background-color: var(--container-light);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        .dark .main-container {
-            background-color: var(--container-dark);
-        }
-        .card {
-            background-color: var(--card-light);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid var(--border-light);
-        }
-        .dark .card {
-            background-color: var(--card-dark);
-            border-color: var(--border-dark);
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .dark .card:hover {
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-        h2 {
-            border-bottom: 2px solid var(--accent-color);
-        }
-        .icon {
-            color: var(--accent-color);
-        }
-        .tag {
-            background-color: rgba(56, 189, 248, 0.1);
-            color: var(--accent-color);
-            border: 1px solid var(--accent-color);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="transition-colors duration-300">
-    <div class="main-container max-w-4xl mx-auto my-8 p-6 sm:p-10 rounded-2xl shadow-2xl">
-        <header class="text-center mb-12">
-            <img src="https://raw.githubusercontent.com/refleco/refleco.github.io/main/galaxy.jpeg" alt="Galaxy Icon" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white dark:border-slate-700 shadow-lg">
-            <h1 class="text-5xl font-extrabold tracking-tight">Justin Wu</h1>
-            <p class="text-xl text-light-secondary dark:text-dark-secondary mt-2">High School Student | Programmer | Swimmer</p>
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-content"></div>
+    </div>
+
+    <!-- Background Canvas -->
+    <canvas id="starfield"></canvas>
+
+    <div class="main-container max-w-4xl mx-auto my-8 p-6 sm:p-10 rounded-3xl shadow-2xl relative z-10">
+        <header class="text-center mb-16 reveal">
+            <img src="https://raw.githubusercontent.com/refleco/refleco.github.io/main/galaxy.jpeg" alt="Galaxy Icon" class="w-36 h-36 rounded-full mx-auto mb-5 border-4 border-white dark:border-slate-600 shadow-xl transition-transform duration-300 hover:scale-105">
+            <h1 class="text-6xl font-black tracking-tighter">Justin Wu</h1>
+            <p class="text-2xl text-light-secondary dark:text-dark-secondary mt-3">
+                <span id="typing-text" data-text="High School Student | Programmer | Swimmer"></span><span class="typing-cursor"></span>
+            </p>
         </header>
 
-        <main class="space-y-12">
-            <section id="about">
-                <h2 class="text-3xl font-bold pb-2 mb-6">About Me</h2>
-                <p class="text-lg leading-relaxed text-light-secondary dark:text-dark-secondary">I am a dedicated high school student with a strong passion for computational biology, computer science, and mathematics. I enjoy applying my problem-solving skills to challenging projects and research. My goal is to leverage technology and scientific inquiry to make a meaningful impact.</p>
+        <main class="space-y-16">
+            <section id="about" class="reveal">
+                <h2 class="text-4xl font-bold pb-3 mb-6">About Me</h2>
+                <p class="text-xl leading-relaxed text-light-secondary dark:text-dark-secondary">I am a dedicated high school student with a strong passion for computational biology, computer science, and mathematics. I enjoy applying my problem-solving skills to challenging projects and research. My goal is to leverage technology and scientific inquiry to make a meaningful impact.</p>
             </section>
 
-            <section id="skills">
-                <h2 class="text-3xl font-bold pb-2 mb-6">Skills</h2>
+            <section id="skills" class="reveal">
+                <h2 class="text-4xl font-bold pb-3 mb-6">Skills</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="card p-6 rounded-xl">
-                        <h3 class="text-2xl font-bold mb-4 flex items-center"><i class="fas fa-code icon mr-3"></i>Programming & Tech</h3>
-                        <ul class="space-y-3 text-lg text-light-secondary dark:text-dark-secondary">
-                            <li class="flex items-center"><i class="fab fa-java icon w-6 mr-3"></i> Java</li>
-                            <li class="flex items-center"><i class="fab fa-python icon w-6 mr-3"></i> Python</li>
-                            <li class="flex items-center"><i class="fas fa-chart-line icon w-6 mr-3"></i> R</li>
-                            <li class="flex items-center"><i class="fab fa-html5 icon w-6 mr-3"></i> HTML & CSS</li>
+                    <div class="card tilt-card p-8 rounded-2xl">
+                        <h3 class="text-2xl font-bold mb-5 flex items-center"><i class="fas fa-code icon mr-4 text-3xl"></i>Programming & Tech</h3>
+                        <ul class="space-y-4 text-lg text-light-secondary dark:text-dark-secondary">
+                            <li class="flex items-center"><i class="fab fa-java icon w-6 mr-4"></i> Java</li>
+                            <li class="flex items-center"><i class="fab fa-python icon w-6 mr-4"></i> Python</li>
+                            <li class="flex items-center"><i class="fas fa-chart-line icon w-6 mr-4"></i> R</li>
+                            <li class="flex items-center"><i class="fab fa-html5 icon w-6 mr-4"></i> HTML & CSS</li>
                         </ul>
                     </div>
-                    <div class="card p-6 rounded-xl">
-                        <h3 class="text-2xl font-bold mb-4 flex items-center"><i class="fas fa-flask icon mr-3"></i>Sciences</h3>
-                        <ul class="space-y-3 text-lg text-light-secondary dark:text-dark-secondary">
-                            <li class="flex items-center"><i class="fas fa-dna icon w-6 mr-3"></i> Computational Genetics</li>
-                            <li class="flex items-center"><i class="fas fa-atom icon w-6 mr-3"></i> Chemistry</li>
-                            <li class="flex items-center"><i class="fas fa-leaf icon w-6 mr-3"></i> Biology</li>
-                            <li class="flex items-center"><i class="fas fa-drafting-compass icon w-6 mr-3"></i> Engineering Design</li>
+                    <div class="card tilt-card p-8 rounded-2xl">
+                        <h3 class="text-2xl font-bold mb-5 flex items-center"><i class="fas fa-flask icon mr-4 text-3xl"></i>Sciences</h3>
+                        <ul class="space-y-4 text-lg text-light-secondary dark:text-dark-secondary">
+                            <li class="flex items-center"><i class="fas fa-dna icon w-6 mr-4"></i> Computational Genetics</li>
+                            <li class="flex items-center"><i class="fas fa-atom icon w-6 mr-4"></i> Chemistry</li>
+                            <li class="flex items-center"><i class="fas fa-leaf icon w-6 mr-4"></i> Biology</li>
+                            <li class="flex items-center"><i class="fas fa-drafting-compass icon w-6 mr-4"></i> Engineering Design</li>
                         </ul>
                     </div>
                 </div>
             </section>
 
-            <section id="experience">
-                <h2 class="text-3xl font-bold pb-2 mb-6">Research & Experience</h2>
+            <section id="experience" class="reveal">
+                <h2 class="text-4xl font-bold pb-3 mb-6">Research & Experience</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="card p-6 rounded-xl">
+                    <div class="card tilt-card p-8 rounded-2xl">
                         <h3 class="text-xl font-bold">Volunteer | PENN Care</h3>
                         <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">Organized community cleanup and setup for events with the Philadelphia Mayor's Philly Spring Cleanup Initiative. (June 2022 – Present)</p>
                     </div>
-                    <div class="card p-6 rounded-xl">
+                    <div class="card tilt-card p-8 rounded-2xl">
                         <h3 class="text-xl font-bold">Volunteer | Penn Medicine Radnor</h3>
                         <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">Greeted and directed patients, providing assistance to enhance their hospital experience. (Summer 2023)</p>
                     </div>
                 </div>
             </section>
 
-            <section id="projects">
-                <h2 class="text-3xl font-bold pb-2 mb-6">Projects</h2>
+            <section id="projects" class="reveal">
+                <h2 class="text-4xl font-bold pb-3 mb-6">Projects</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                     <a href="btd6/" class="card block p-6 rounded-xl group" id="btd6-link">
+                     <a href="btd6/" class="card tilt-card block p-6 rounded-2xl group" id="btd6-link">
                         <h3 class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">BTD6 Ranking</h3>
                         <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">An interactive, single-page web application for ranking and exploring the best crosspaths in Bloons TD 6.</p>
                     </a>
-                    <a href="https://github.com/refleco/Knights-Tour-Java" target="_blank" class="card block p-6 rounded-xl group">
+                    <a href="https://github.com/refleco/Knights-Tour-Java" target="_blank" class="card tilt-card block p-6 rounded-2xl group">
                         <h3 class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">Knight's Tour (Java)</h3>
                         <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">An implementation of the Knight's Tour problem using a backtracking algorithm to find a path on a chessboard.</p>
                     </a>
-                    <a href="https://github.com/refleco/Game-of-Life-Python" target="_blank" class="card block p-6 rounded-xl group">
+                    <a href="https://github.com/refleco/Game-of-Life-Python" target="_blank" class="card tilt-card block p-6 rounded-2xl group">
                         <h3 class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">Game of Life (Python)</h3>
                         <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">A simulation of Conway's Game of Life, visualizing cellular automata with Python and Pygame.</p>
                     </a>
                 </div>
             </section>
             
-            <section id="honors">
-                <h2 class="text-3xl font-bold pb-2 mb-6">Honors & Awards</h2>
-                <div class="flex flex-wrap justify-center gap-3">
-                    <span class="tag font-semibold px-4 py-2 rounded-full">USA Biology Olympiad (USABO) Semifinalist</span>
-                    <span class="tag font-semibold px-4 py-2 rounded-full">FBLA National Competition - 10th Place</span>
-                    <span class="tag font-semibold px-4 py-2 rounded-full">MathWorks Math Modeling Challenge - Top 25</span>
-                    <span class="tag font-semibold px-4 py-2 rounded-full">Annenberg Medical Research Symposium - Best Research</span>
-                    <span class="tag font-semibold px-4 py-2 rounded-full">AIME Qualifier (2x)</span>
-                    <span class="tag font-semibold px-4 py-2 rounded-full">PA Science Olympiad - 3rd & 5th Place</span>
+            <section id="honors" class="reveal">
+                <h2 class="text-4xl font-bold pb-3 mb-6">Honors & Awards</h2>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <span class="tag font-semibold px-5 py-2 rounded-full text-md">USA Biology Olympiad (USABO) Semifinalist</span>
+                    <span class="tag font-semibold px-5 py-2 rounded-full text-md">FBLA National Competition - 10th Place</span>
+                    <span class="tag font-semibold px-5 py-2 rounded-full text-md">MathWorks Math Modeling Challenge - Top 25</span>
+                    <span class="tag font-semibold px-5 py-2 rounded-full text-md">Annenberg Medical Research Symposium - Best Research</span>
+                    <span class="tag font-semibold px-5 py-2 rounded-full text-md">AIME Qualifier (2x)</span>
+                    <span class="tag font-semibold px-5 py-2 rounded-full text-md">PA Science Olympiad - 3rd & 5th Place</span>
                 </div>
             </section>
             
-            <section id="leadership">
-                <h2 class="text-3xl font-bold pb-2 mb-6">Leadership & Activities</h2>
-                <div class="card p-6 rounded-xl">
-                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-lg text-light-secondary dark:text-dark-secondary">
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>President, Biology Club</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>Secretary, Math Modeling Club</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>Officer, Computer Science Club</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>Co-Captain, JV Academic Team</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>Varsity Swim Team</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>Science Olympiad Team</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>Section Leader, Concert Band</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>Student Executive Council</li>
+            <section id="leadership" class="reveal">
+                <h2 class="text-4xl font-bold pb-3 mb-6">Leadership & Activities</h2>
+                <div class="card tilt-card p-8 rounded-2xl">
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-lg text-light-secondary dark:text-dark-secondary">
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>President, Biology Club</li>
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Secretary, Math Modeling Club</li>
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Officer, Computer Science Club</li>
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Co-Captain, JV Academic Team</li>
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Varsity Swim Team</li>
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Science Olympiad Team</li>
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Section Leader, Concert Band</li>
+                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Student Executive Council</li>
                     </ul>
                 </div>
             </section>
         </main>
 
-        <footer class="text-center mt-16 pt-8 border-t border-border-light dark:border-border-dark">
-            <div id="contact" class="flex justify-center items-center space-x-6 mb-6">
-                <a href="mailto:wujustin20@outlook.com" class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-colors text-2xl"><i class="fas fa-envelope"></i></a>
-                <a href="https://github.com/refleco" target="_blank" class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-colors text-2xl"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/justinwu80/" target="_blank" class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-colors text-2xl"><i class="fab fa-linkedin"></i></a>
+        <footer class="text-center mt-20 pt-10 border-t border-border-light dark:border-border-dark reveal">
+            <div id="contact" class="flex justify-center items-center space-x-8 mb-6">
+                <a href="mailto:wujustin20@outlook.com" class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-transform duration-300 hover:scale-125 text-3xl"><i class="fas fa-envelope"></i></a>
+                <a href="https://github.com/refleco" target="_blank" class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-transform duration-300 hover:scale-125 text-3xl"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/justinwu80/" target="_blank" class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-transform duration-300 hover:scale-125 text-3xl"><i class="fab fa-linkedin"></i></a>
             </div>
-            <p class="text-sm text-light-secondary dark:text-dark-secondary">&copy; 2025 Justin Wu | <a href="https://justinwu.me/" target="_blank" class="hover:underline">justinwu.me</a></p>
+            <p class="text-md text-light-secondary dark:text-dark-secondary">&copy; 2025 Justin Wu | <a href="https://justinwu.me/" target="_blank" class="hover:underline">justinwu.me</a></p>
         </footer>
     </div>
     
-    <button id="theme-toggle" class="fixed bottom-5 right-5 w-12 h-12 rounded-full bg-card shadow-lg flex items-center justify-center text-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-color border border-theme">
+    <button id="theme-toggle" class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-card shadow-lg flex items-center justify-center text-2xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-color border border-theme transition-transform duration-300 hover:scale-110 z-50">
         <i id="theme-icon-light" class="fas fa-sun"></i>
         <i id="theme-icon-dark" class="fas fa-moon hidden"></i>
     </button>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // BTD6 Link Fix
-            const btd6Link = document.getElementById('btd6-link');
-            if (btd6Link) {
-                const currentPath = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
-                const isIndex = currentPath.endsWith('index.html');
-                const basePath = isIndex ? currentPath.substring(0, currentPath.lastIndexOf('/') + 1) : currentPath;
-                btd6Link.href = basePath + 'btd6/';
-            }
-
-            // Theme Toggle
-            const themeToggle = document.getElementById('theme-toggle');
-            const themeIconLight = document.getElementById('theme-icon-light');
-            const themeIconDark = document.getElementById('theme-icon-dark');
-
-            const applyTheme = (isDark) => {
-                if (isDark) {
-                    document.documentElement.classList.add('dark');
-                    themeIconLight.classList.add('hidden');
-                    themeIconDark.classList.remove('hidden');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    themeIconLight.classList.remove('hidden');
-                    themeIconDark.classList.add('hidden');
-                }
-            };
-            
-            themeToggle.addEventListener('click', () => {
-                const isDark = document.documentElement.classList.toggle('dark');
-                localStorage.setItem('portfolio-theme', isDark ? 'dark' : 'light');
-                applyTheme(isDark);
-            });
-
-            const savedTheme = localStorage.getItem('portfolio-theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            applyTheme(savedTheme === 'dark' || (savedTheme === null && prefersDark));
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

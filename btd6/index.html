@@ -1,58 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BTD6 Interactive Crosspath Guide</title>
     <link rel="icon" type="image/png" href="ninja.png">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="../styles.css">
     <style>
-        :root {
-            --bg-light: #f0f4f8;
-            --bg-dark: #0d1a2e;
-            --container-light: #ffffff;
-            --container-dark: #1a2b47;
-            --card-light: #ffffff;
-            --card-dark: #2a3f5f;
-            --text-light-primary: #1e293b;
-            --text-dark-primary: #e0e6f0;
-            --text-light-secondary: #475569;
-            --text-dark-secondary: #94a3b8;
-            --accent-color: #4f46e5;
-            --accent-hover: #6366f1;
-            --border-light: #e2e8f0;
-            --border-dark: #3e4c6a;
-        }
-        html.dark {
-            --bg-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1742&q=80');
-        }
-        html:not(.dark) {
-            --bg-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80');
-        }
-
-        body {
-            background-image: var(--bg-image);
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            font-family: 'Roboto', sans-serif;
-            transition: background-color 0.3s ease;
-        }
-        .bg-theme { background-color: var(--bg-light); }
-        .dark .bg-theme { background-color: var(--bg-dark); }
-        .bg-container { background-color: var(--container-light); }
-        .dark .bg-container { background-color: var(--container-dark); }
-        .bg-card { background-color: var(--card-light); }
-        .dark .bg-card { background-color: var(--card-dark); }
-        .text-primary { color: var(--text-light-primary); }
-        .dark .text-primary { color: var(--text-dark-primary); }
-        .text-secondary { color: var(--text-light-secondary); }
-        .dark .text-secondary { color: var(--text-dark-secondary); }
-        .border-theme { border-color: var(--border-light); }
-        .dark .border-theme { border-color: var(--border-dark); }
-        .accent { color: var(--accent-color); }
-
+        /* BTD6 Specific Styles */
         .details {
             max-height: 0;
             transition: max-height 0.5s ease-out, padding 0.5s ease-out;
@@ -60,49 +19,98 @@
             padding-bottom: 0;
             overflow: hidden;
         }
+
         .card.open .details {
             max-height: 2000px;
             padding-top: 1rem;
             padding-bottom: 1rem;
         }
+
         .chevron {
             transition: transform 0.3s ease-in-out;
         }
+
         .card.open .chevron {
             transform: rotate(180deg);
         }
-        .type-border-Military { border-left: 5px solid #ef4444; }
-        .type-border-Primary { border-left: 5px solid #3b82f6; }
-        .type-border-Magic { border-left: 5px solid #a855f7; }
-        .type-border-Support { border-left: 5px solid #f97316; }
+
+        .type-border-Military {
+            border-left: 5px solid #ef4444;
+        }
+
+        .type-border-Primary {
+            border-left: 5px solid #3b82f6;
+        }
+
+        .type-border-Magic {
+            border-left: 5px solid #a855f7;
+        }
+
+        .type-border-Support {
+            border-left: 5px solid #f97316;
+        }
+
+        /* Override main container for this specific layout if needed */
+        .btd6-container {
+            background-color: var(--container-light);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .btd6-container {
+            background-color: var(--container-dark);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
     </style>
 </head>
-<body class="bg-theme text-primary antialiased">
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-        <div class="bg-container bg-opacity-80 backdrop-blur-sm shadow-2xl rounded-2xl p-4 sm:p-8">
-            <header class="text-center mb-10">
+
+<body class="transition-colors duration-300">
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-content"></div>
+    </div>
+
+    <!-- Background Canvas -->
+    <canvas id="starfield"></canvas>
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 relative z-10">
+        <div class="btd6-container shadow-2xl rounded-3xl p-4 sm:p-8">
+            <header class="text-center mb-10 reveal">
                 <div class="flex justify-center items-center mb-4 gap-4">
-                    <img src="ninja.png" alt="BTD6 Ninja" class="w-16 h-16">
-                    <h1 class="text-4xl md:text-5xl font-black text-primary tracking-tighter">BTD6 Crosspath Guide</h1>
+                    <img src="ninja.png" alt="BTD6 Ninja" class="w-20 h-20 drop-shadow-lg animate-bounce-slow">
+                    <h1 class="text-4xl md:text-6xl font-black tracking-tighter">BTD6 Crosspath Guide</h1>
                 </div>
-                <p class="text-lg text-secondary mt-2 max-w-3xl mx-auto">The ultimate interactive guide for Tier 5 crosspaths in Bloons TD 6. Find the best upgrade paths and dominate every map.</p>
+                <p class="text-xl text-light-secondary dark:text-dark-secondary mt-2 max-w-3xl mx-auto">The ultimate
+                    interactive guide for Tier 5 crosspaths in Bloons TD 6. Find the best upgrade paths and dominate
+                    every map.</p>
+                <div class="mt-6">
+                    <a href="../index.html"
+                        class="text-accent-color hover:text-accent-hover font-bold transition-colors"><i
+                            class="fas fa-arrow-left mr-2"></i>Back to Portfolio</a>
+                </div>
             </header>
 
             <div class="flex flex-col lg:flex-row gap-8">
-                <aside class="w-full lg:w-1/4 lg:sticky top-8 self-start">
-                    <div class="p-5 rounded-xl bg-card shadow-lg border border-theme">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-2xl font-bold text-primary">Controls</h2>
-                            <button id="theme-toggle" class="p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-color bg-gray-200 dark:bg-gray-700">
-                                <svg id="theme-icon-light" class="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                                <svg id="theme-icon-dark" class="w-5 h-5 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                <aside class="w-full lg:w-1/4 lg:sticky top-8 self-start reveal">
+                    <div class="p-6 rounded-2xl bg-card shadow-lg border border-theme">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-2xl font-bold">Controls</h2>
+                            <button id="theme-toggle"
+                                class="w-10 h-10 rounded-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-accent-color transition-colors">
+                                <i id="theme-icon-light" class="fas fa-sun text-yellow-500"></i>
+                                <i id="theme-icon-dark" class="fas fa-moon text-blue-300 hidden"></i>
                             </button>
                         </div>
                         <div class="space-y-4">
-                            <input type="text" id="search-input" placeholder="Search monkeys..." class="w-full p-3 rounded-lg border border-theme bg-theme focus:ring-2 focus:ring-accent-color focus:outline-none transition text-primary">
+                            <input type="text" id="search-input" placeholder="Search monkeys..."
+                                class="w-full p-3 rounded-xl border border-theme bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-accent-color focus:outline-none transition text-light-primary dark:text-dark-primary">
                             <div>
-                                <label for="sort-select" class="block text-sm font-medium text-secondary mb-1">Sort by</label>
-                                <select id="sort-select" class="w-full p-3 rounded-lg border border-theme bg-theme focus:ring-2 focus:ring-accent-color focus:outline-none transition text-primary">
+                                <label for="sort-select"
+                                    class="block text-sm font-medium text-light-secondary dark:text-dark-secondary mb-1">Sort
+                                    by</label>
+                                <select id="sort-select"
+                                    class="w-full p-3 rounded-xl border border-theme bg-gray-50 dark:bg-slate-800 focus:ring-2 focus:ring-accent-color focus:outline-none transition text-light-primary dark:text-dark-primary">
                                     <option value="name">Name</option>
                                     <option value="rank">Best Path Rank</option>
                                     <option value="type">Type</option>
@@ -110,22 +118,34 @@
                             </div>
                         </div>
                         <div id="filter-container" class="grid grid-cols-2 lg:grid-cols-1 gap-2 mt-6">
-                            <button class="filter-btn p-3 rounded-lg font-semibold text-secondary active text-left" data-type="all">All Monkeys</button>
-                            <button class="filter-btn p-3 rounded-lg font-semibold text-secondary text-left" data-type="Primary">Primary</button>
-                            <button class="filter-btn p-3 rounded-lg font-semibold text-secondary text-left" data-type="Military">Military</button>
-                            <button class="filter-btn p-3 rounded-lg font-semibold text-secondary text-left" data-type="Magic">Magic</button>
-                            <button class="filter-btn p-3 rounded-lg font-semibold text-secondary text-left" data-type="Support">Support</button>
+                            <button
+                                class="filter-btn p-3 rounded-xl font-semibold text-light-secondary dark:text-dark-secondary active text-left hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+                                data-type="all">All Monkeys</button>
+                            <button
+                                class="filter-btn p-3 rounded-xl font-semibold text-light-secondary dark:text-dark-secondary text-left hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+                                data-type="Primary">Primary</button>
+                            <button
+                                class="filter-btn p-3 rounded-xl font-semibold text-light-secondary dark:text-dark-secondary text-left hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+                                data-type="Military">Military</button>
+                            <button
+                                class="filter-btn p-3 rounded-xl font-semibold text-light-secondary dark:text-dark-secondary text-left hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+                                data-type="Magic">Magic</button>
+                            <button
+                                class="filter-btn p-3 rounded-xl font-semibold text-light-secondary dark:text-dark-secondary text-left hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+                                data-type="Support">Support</button>
                         </div>
                     </div>
                 </aside>
 
-                <main id="monkey-grid" class="w-full lg:w-3/4 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <main id="monkey-grid" class="w-full lg:w-3/4 grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
                 </main>
             </div>
         </div>
     </div>
 
+    <script src="../script.js"></script>
     <script>
+        // BTD6 Specific Data & Logic
         const crosspathData = {
             "monkeys": [
                 { "type": "Primary", "name": "Dart Monkey", "defaultCamo": false, "defaultLead": false, "upgrades": [{ "rank": 2, "name": "Ultra-Juggernaut", "crosspath": "5-0-2", "notes": "5-0-2 is generally better for the extra range and camo detection. 5-2-0 provides more attack speed, which is superior on maps with lots of walls for bouncing.", "canPopCamo": true, "canPopLead": true }, { "rank": 3, "name": "Plasma Monkey Fan Club", "crosspath": "2-5-0", "notes": "The 2-5-0 crosspath provides more pierce to the base Dart Monkey and all transformed monkeys, making it far more effective against dense bloon rounds.", "canPopCamo": false, "canPopLead": true }, { "rank": 1, "name": "Crossbow Master", "crosspath": "0-2-5", "notes": "Almost always 0-2-5. The attack speed from the middle path provides a massive DPS increase that far outweighs the small pierce bonus from the top path.", "canPopCamo": true, "canPopLead": true }] },
@@ -141,13 +161,13 @@
                 { "type": "Military", "name": "Heli Pilot", "defaultCamo": true, "defaultLead": false, "upgrades": [{ "rank": 1, "name": "Apache Prime", "crosspath": "5-0-2", "notes": "5-0-2 provides crucial camo detection and faster darts. 5-2-0 is a viable alternative for more damage if you have other sources of camo detection.", "canPopCamo": true, "canPopLead": true }, { "rank": 3, "name": "Special Poperations", "crosspath": "0-5-2", "notes": "0-5-2 provides camo detection. The top path crosspath (2-5-0) is generally considered useless on this upgrade.", "canPopCamo": true, "canPopLead": true }, { "rank": 2, "name": "Comanche Commander", "crosspath": "2-0-5", "notes": "2-0-5 provides more projectiles and damage. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }] },
                 { "type": "Military", "name": "Mortar Monkey", "defaultCamo": false, "defaultLead": true, "upgrades": [{ "rank": 1, "name": "The Biggest One", "crosspath": "5-2-0", "notes": "5-2-0 provides a faster firing rate. Needs external camo detection (or bottom path's Signal Flare).", "canPopCamo": false, "canPopLead": true }, { "rank": 2, "name": "Pop and Awe", "crosspath": "2-5-0", "notes": "2-5-0 provides a stun effect and faster firing. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }, { "rank": 3, "name": "Blooncineration", "crosspath": "0-2-5", "notes": "0-2-5 provides a faster firing rate to maximize the fire's uptime. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }] },
                 { "type": "Military", "name": "Dartling Gunner", "defaultCamo": false, "defaultLead": false, "upgrades": [{ "rank": 2, "name": "Ray of Doom", "crosspath": "5-2-0", "notes": "5-2-0 provides faster swivel speed, essential for tracking fast bloons. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }, { "rank": 1, "name": "M.A.D", "crosspath": "2-5-0", "notes": "2-5-0 provides faster firing speed, a massive DPS increase. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }, { "rank": 3, "name": "Bloon Exclusion Zone", "crosspath": "0-2-5", "notes": "0-2-5 provides faster firing speed for maximizing damage. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }] },
-                { "type": "Military", "name": "Desperado", "defaultCamo": false, "defaultLead": false, "upgrades": [ { "rank": 1, "name": "Six-Shooter", "crosspath": "5-0-2", "notes": "Placeholder notes for the top path of the Desperado monkey.", "canPopCamo": false, "canPopLead": false }, { "rank": 2, "name": "Fan the Hammer", "crosspath": "2-5-0", "notes": "Placeholder notes for the middle path of the Desperado monkey.", "canPopCamo": false, "canPopLead": false }, { "rank": 3, "name": "High Noon", "crosspath": "0-2-5", "notes": "Placeholder notes for the bottom path of the Desperado monkey.", "canPopCamo": false, "canPopLead": false } ] },
+                { "type": "Primary", "name": "Desperado", "defaultCamo": false, "defaultLead": false, "upgrades": [{ "rank": 1, "name": "Desert Phantom", "crosspath": "5-0-2", "notes": "5-0-2 increases attack speed based on proximity, making the Phantom's rapid fire even deadlier. Needs external camo detection.", "canPopCamo": false, "canPopLead": false }, { "rank": 2, "name": "Golden Justice", "crosspath": "2-5-0", "notes": "2-5-0 allows for marking more bloons for extra cash. The attack speed from top path is crucial for maximizing income.", "canPopCamo": false, "canPopLead": false }, { "rank": 3, "name": "Avenger", "crosspath": "0-2-5", "notes": "0-2-5 provides the shotgun with more pierce and knockback. Middle path buffs the ability cooldown.", "canPopCamo": false, "canPopLead": true }] },
                 { "type": "Magic", "name": "Wizard Monkey", "defaultCamo": false, "defaultLead": false, "upgrades": [{ "rank": 2, "name": "Archmage", "crosspath": "5-0-2", "notes": "5-0-2 provides camo detection and is the more reliable choice. 5-2-0 only adds a fire breath attack that is often out of range.", "canPopCamo": true, "canPopLead": true }, { "rank": 3, "name": "Wizard Lord Phoenix", "crosspath": "2-5-0", "notes": "2-5-0 provides a more powerful phoenix ability. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }, { "rank": 1, "name": "Prince of Darkness", "crosspath": "0-2-5", "notes": "0-2-5 provides a faster attack speed, allowing it to summon undead bloons more quickly.", "canPopCamo": true, "canPopLead": true }] },
                 { "type": "Magic", "name": "Super Monkey", "defaultCamo": false, "defaultLead": false, "upgrades": [{ "rank": 1, "name": "True Sun God", "crosspath": "5-2-0", "notes": "5-2-0 provides extra range. Needs external camo detection (or Ultravision crosspath).", "canPopCamo": false, "canPopLead": true }, { "rank": 2, "name": "The Anti-Bloon", "crosspath": "2-5-0", "notes": "2-5-0 provides more pierce. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }, { "rank": 3, "name": "Legend of the Night", "crosspath": "2-0-5", "notes": "2-0-5 provides more pierce. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }] },
                 { "type": "Magic", "name": "Ninja Monkey", "defaultCamo": true, "defaultLead": false, "upgrades": [{ "rank": 1, "name": "Grandmaster Ninja", "crosspath": "5-0-2", "notes": "5-0-2 provides seeking shurikens. Needs an external buff (like Alchemist) to pop Lead bloons.", "canPopCamo": true, "canPopLead": false }, { "rank": 3, "name": "Grand Saboteur", "crosspath": "2-5-0", "notes": "2-5-0 provides a longer-lasting sabotage effect. Shurikens need an external buff to pop Lead bloons.", "canPopCamo": true, "canPopLead": false }, { "rank": 2, "name": "Master Bomber", "crosspath": "2-0-5", "notes": "2-0-5 provides a stun effect, and its bombs can pop Lead bloons naturally.", "canPopCamo": true, "canPopLead": true }] },
                 { "type": "Magic", "name": "Alchemist", "defaultCamo": false, "defaultLead": true, "upgrades": [{ "rank": 1, "name": "Permanent Brew", "crosspath": "5-2-0", "notes": "5-2-0 increases the duration of the buff potions. The Alchemist's own attack can pop Lead but not Camo.", "canPopCamo": false, "canPopLead": true }, { "rank": 3, "name": "Total Transformation", "crosspath": "0-5-2", "notes": "0-5-2 provides a faster attack speed to the transformed monster. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }, { "rank": 2, "name": "Bloon Master Alchemist", "crosspath": "1-0-5", "notes": "Shrinking potion is unaffected by crosspaths. 1-0-5 is for the preceding upgrade. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }] },
                 { "type": "Magic", "name": "Druid", "defaultCamo": false, "defaultLead": false, "upgrades": [{ "rank": 2, "name": "Superstorm", "crosspath": "5-2-0", "notes": "5-2-0 provides more pierce. Needs top path for lead popping. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }, { "rank": 3, "name": "Spirit of the Forest", "crosspath": "1-5-0", "notes": "1-5-0 provides lead popping power. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }, { "rank": 1, "name": "Avatar of Wrath", "crosspath": "0-1-5", "notes": "0-1-5 is best when buffed by Poplusts. Needs external buffs for both Camo and Lead (e.g., MIB).", "canPopCamo": false, "canPopLead": false }] },
-                { "type": "Magic", "name": "Mermonkey", "defaultCamo": false, "defaultLead": false, "upgrades": [ { "rank": 2, "name": "Lord of the Abyss", "crosspath": "5-0-2", "notes": "5-0-2 is the most reliable damage crosspath. Middle path pierce is bugged. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }, { "rank": 1, "name": "Popseidon", "crosspath": "0-5-2", "notes": "0-5-2 provides seeking tridents, which is more useful for its widespread attacks. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }, { "rank": 3, "name": "Final Harmonic", "crosspath": "2-0-5", "notes": "2-0-5 increases the pull-in speed of the song, which is a direct buff to its main function. Needs external camo detection.", "canPopCamo": false, "canPopLead": true } ] },
+                { "type": "Magic", "name": "Mermonkey", "defaultCamo": false, "defaultLead": false, "upgrades": [{ "rank": 2, "name": "Lord of the Abyss", "crosspath": "5-0-2", "notes": "5-0-2 is the most reliable damage crosspath. Middle path pierce is bugged. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }, { "rank": 1, "name": "Popseidon", "crosspath": "0-5-2", "notes": "0-5-2 provides seeking tridents, which is more useful for its widespread attacks. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }, { "rank": 3, "name": "Final Harmonic", "crosspath": "2-0-5", "notes": "2-0-5 increases the pull-in speed of the song, which is a direct buff to its main function. Needs external camo detection.", "canPopCamo": false, "canPopLead": true }] },
                 { "type": "Magic", "name": "Beast Handler", "defaultCamo": false, "defaultLead": false, "upgrades": [{ "rank": 3, "name": "Giganotosaurus", "crosspath": "N/A", "notes": "Crosspathing does not affect the merged beast's stats, only the base handler's weak attack. Merge power is what matters.", "canPopCamo": true, "canPopLead": true }, { "rank": 2, "name": "Megalodon", "crosspath": "N/A", "notes": "Crosspathing does not affect the merged beast's stats. Merge power is what matters. Can only be placed on water.", "canPopCamo": true, "canPopLead": true }, { "rank": 1, "name": "Pouākai", "crosspath": "N/A", "notes": "Crosspathing does not affect the merged beast's stats. Extremely powerful global range and blowback ability.", "canPopCamo": true, "canPopLead": true }] },
                 { "type": "Support", "name": "Monkey Village", "defaultCamo": false, "defaultLead": false, "upgrades": [{ "rank": 2, "name": "Primary Expertise", "crosspath": "5-2-0", "notes": "5-2-0 provides a primary training buff. Does not attack.", "canPopCamo": null, "canPopLead": null }, { "rank": 1, "name": "Homeland Defense", "crosspath": "2-5-0", "notes": "2-5-0 provides a larger radius for its powerful global ability. Does not attack.", "canPopCamo": null, "canPopLead": null }, { "rank": 3, "name": "Monkeyopolis", "crosspath": "0-2-5", "notes": "Generates income. Does not attack.", "canPopCamo": null, "canPopLead": null }] },
                 { "type": "Support", "name": "Banana Farm", "defaultCamo": false, "defaultLead": false, "upgrades": [{ "rank": 2, "name": "Banana Central", "crosspath": "5-2-0", "notes": "Generates income. Does not attack.", "canPopCamo": null, "canPopLead": null }, { "rank": 3, "name": "Monkey-Nomics", "crosspath": "2-5-0", "notes": "Generates income. Does not attack.", "canPopCamo": null, "canPopLead": null }, { "rank": 1, "name": "Monkey Wall Street", "crosspath": "0-2-5", "notes": "Generates income. Does not attack.", "canPopCamo": null, "canPopLead": null }] },
@@ -161,14 +181,14 @@
             const filterContainer = document.getElementById('filter-container');
             const searchInput = document.getElementById('search-input');
             const sortSelect = document.getElementById('sort-select');
-            const themeToggle = document.getElementById('theme-toggle');
-            const themeIconLight = document.getElementById('theme-icon-light');
-            const themeIconDark = document.getElementById('theme-icon-dark');
+
+            // Note: Theme toggle logic is now handled by the global script.js
+            // We just need to make sure the UI reflects the state if needed, but script.js does that too.
 
             const camoIcon = `<img src="camo.png" class="w-6 h-6 inline-block" title="Can pop Camo Bloons" alt="Camo Icon">`;
             const leadIcon = `<img src="lead.png" class="w-6 h-6 inline-block" title="Can pop Lead Bloons" alt="Lead Icon">`;
 
-            const getIcon = (canPop, iconHtml) => canPop === true ? iconHtml : canPop === false ? `<div class="w-6 h-6 inline-block opacity-20">${iconHtml}</div>` : '';
+            const getIcon = (canPop, iconHtml) => canPop === true ? iconHtml : canPop === false ? `<div class="w-6 h-6 inline-block opacity-20 grayscale">${iconHtml}</div>` : '';
 
             const renderMonkeys = () => {
                 const filter = filterContainer.querySelector('.active').dataset.type;
@@ -198,54 +218,55 @@
                 }
 
                 if (filteredMonkeys.length === 0) {
-                    monkeyGrid.innerHTML = `<p class="text-secondary italic col-span-full text-center py-10">No monkeys found. Try a different search or filter.</p>`;
+                    monkeyGrid.innerHTML = `<p class="text-light-secondary dark:text-dark-secondary italic col-span-full text-center py-10">No monkeys found. Try a different search or filter.</p>`;
                     return;
                 }
 
                 filteredMonkeys.forEach(monkey => {
                     const card = document.createElement('div');
-                    card.className = `card bg-card shadow-lg rounded-lg border border-theme type-border-${monkey.type} transition-all duration-300`;
+                    // Added tilt-card class for 3D effect
+                    card.className = `card tilt-card bg-card shadow-lg rounded-2xl border border-theme type-border-${monkey.type} transition-all duration-300 overflow-hidden`;
 
                     const sortedUpgrades = [...monkey.upgrades].sort((a, b) => a.rank - b.rank);
 
                     card.innerHTML = `
-                        <div class="p-5 cursor-pointer header">
+                        <div class="p-6 cursor-pointer header hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
                             <div class="flex justify-between items-center">
-                                <div class="flex items-center gap-3">
-                                    <h3 class="text-xl font-bold text-primary">${monkey.name}</h3>
-                                    <div class="flex gap-1.5">
+                                <div class="flex items-center gap-4">
+                                    <h3 class="text-2xl font-bold text-light-primary dark:text-dark-primary">${monkey.name}</h3>
+                                    <div class="flex gap-2">
                                         ${getIcon(monkey.defaultCamo, camoIcon)}
                                         ${getIcon(monkey.defaultLead, leadIcon)}
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="text-xs font-bold text-secondary uppercase tracking-wider">${monkey.type}</span>
-                                    <span class="chevron text-secondary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                                <div class="flex items-center gap-3">
+                                    <span class="text-xs font-bold text-light-secondary dark:text-dark-secondary uppercase tracking-wider border border-theme px-2 py-1 rounded-md">${monkey.type}</span>
+                                    <span class="chevron text-light-secondary dark:text-dark-secondary">
+                                        <i class="fas fa-chevron-down text-xl"></i>
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="details px-5">
+                        <div class="details px-6 bg-gray-50 dark:bg-slate-800/50">
                             ${sortedUpgrades.map(upgrade => `
-                                <div class="py-4 border-t border-theme">
-                                    <div class="flex items-start gap-4">
-                                        <div class="text-5xl font-black accent w-12 text-center opacity-50">#${upgrade.rank}</div>
+                                <div class="py-5 border-t border-theme first:border-t-0">
+                                    <div class="flex items-start gap-5">
+                                        <div class="text-5xl font-black text-accent-color w-12 text-center opacity-40">#${upgrade.rank}</div>
                                         <div class="flex-1">
-                                            <div class="flex justify-between items-start">
+                                            <div class="flex justify-between items-start mb-2">
                                                 <div>
-                                                    <h4 class="text-lg font-semibold accent">${upgrade.name}</h4>
-                                                    <p class="text-xs text-secondary font-medium uppercase tracking-wider mt-1">Best Crosspath</p>
+                                                    <h4 class="text-xl font-bold text-accent-color">${upgrade.name}</h4>
+                                                    <p class="text-xs text-light-secondary dark:text-dark-secondary font-bold uppercase tracking-wider mt-1">Best Crosspath</p>
                                                 </div>
-                                                <div class="flex flex-col items-center gap-1 text-center text-lg font-bold text-white bg-gray-700 dark:bg-gray-800 p-2 rounded-lg">
-                                                    ${upgrade.crosspath.split('-').map((p, i) => `<span class="w-8 h-8 flex items-center justify-center rounded-md ${['bg-red-600', 'bg-blue-600', 'bg-green-600'][i]}">${p}</span>`).join('')}
+                                                <div class="flex flex-col items-center gap-1 text-center text-lg font-bold text-white bg-slate-700 dark:bg-slate-900 p-2 rounded-lg shadow-inner">
+                                                    ${upgrade.crosspath.split('-').map((p, i) => `<span class="w-8 h-8 flex items-center justify-center rounded-md ${['bg-red-500', 'bg-blue-500', 'bg-green-500'][i]} shadow-sm">${p}</span>`).join('')}
                                                 </div>
                                             </div>
-                                            <div class="flex items-center mt-2 gap-1.5">
+                                            <div class="flex items-center mt-2 gap-2 mb-3">
                                                 ${getIcon(upgrade.canPopCamo, camoIcon)}
                                                 ${getIcon(upgrade.canPopLead, leadIcon)}
                                             </div>
-                                            <p class="text-sm text-secondary mt-3">${upgrade.notes || ''}</p>
+                                            <p class="text-md text-light-secondary dark:text-dark-secondary leading-relaxed">${upgrade.notes || ''}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -256,56 +277,42 @@
                 });
 
                 document.querySelectorAll('.card .header').forEach(header => {
-                    header.addEventListener('click', () => {
+                    header.addEventListener('click', (e) => {
+                        // Prevent tilt effect from interfering with click if needed, but usually fine
                         header.parentElement.classList.toggle('open');
                     });
                 });
-            };
 
-            const applyTheme = (isDark) => {
-                if (isDark) {
-                    document.documentElement.classList.add('dark');
-                    themeIconLight.classList.add('hidden');
-                    themeIconDark.classList.remove('hidden');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    themeIconLight.classList.remove('hidden');
-                    themeIconDark.classList.add('hidden');
-                }
+                // Re-initialize tilt effect for new cards
+                if (window.initTiltEffect) window.initTiltEffect();
             };
-            
-            themeToggle.addEventListener('click', () => {
-                const isDark = document.documentElement.classList.toggle('dark');
-                localStorage.setItem('btd6guide-theme', isDark ? 'dark' : 'light');
-                applyTheme(isDark);
-            });
 
             filterContainer.addEventListener('click', (e) => {
                 if (e.target.tagName === 'BUTTON') {
                     filterContainer.querySelectorAll('button').forEach(btn => {
                         btn.classList.remove('active', 'bg-accent-color', 'text-white');
-                        btn.classList.add('text-secondary');
+                        btn.classList.add('text-light-secondary', 'dark:text-dark-secondary');
                     });
                     e.target.classList.add('active', 'bg-accent-color', 'text-white');
-                    e.target.classList.remove('text-secondary');
+                    e.target.classList.remove('text-light-secondary', 'dark:text-dark-secondary');
                     renderMonkeys();
                 }
             });
 
             searchInput.addEventListener('input', renderMonkeys);
             sortSelect.addEventListener('change', renderMonkeys);
-            
-            // Default to dark mode unless light is explicitly saved
-            const savedTheme = localStorage.getItem('btd6guide-theme');
-            applyTheme(savedTheme === 'light' ? false : true);
 
+            // Initial render
             renderMonkeys();
-            
+
             // Style active button on load
             const activeButton = filterContainer.querySelector('.active');
-            activeButton.classList.add('bg-accent-color', 'text-white');
-            activeButton.classList.remove('text-secondary');
+            if (activeButton) {
+                activeButton.classList.add('bg-accent-color', 'text-white');
+                activeButton.classList.remove('text-light-secondary', 'dark:text-dark-secondary');
+            }
         });
     </script>
 </body>
+
 </html>
