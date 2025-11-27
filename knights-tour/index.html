@@ -93,14 +93,14 @@
         <div class="game-container shadow-2xl rounded-3xl p-6 flex-1 flex flex-col reveal">
             <header class="flex justify-between items-center mb-6 flex-wrap gap-4">
                 <div class="flex items-center gap-4">
-                    <a href="../index.html"
+                    <a href="../"
                         class="text-accent-color hover:text-accent-hover font-bold transition-colors text-lg"><i
                             class="fas fa-arrow-left mr-2"></i>Back</a>
                     <h1 class="text-3xl md:text-4xl font-black tracking-tighter">Knight's Tour Visualization</h1>
                 </div>
                 <div class="flex gap-3">
                     <a href="https://github.com/refleco/Knights-Tour-Java" target="_blank"
-                        class="px-4 py-2 rounded-xl bg-gray-200 dark:bg-slate-700 hover:bg-accent-color hover:text-white dark:hover:bg-accent-color transition-colors font-bold text-sm flex items-center gap-2">
+                        class="px-4 py-2 rounded-xl bg-gray-300 text-gray-900 dark:bg-slate-700 dark:text-white hover:bg-accent-color hover:text-white dark:hover:bg-accent-color transition-colors font-bold text-sm flex items-center gap-2">
                         <i class="fab fa-github"></i> View Source
                     </a>
                     <button id="theme-toggle"
@@ -113,7 +113,7 @@
 
             <div class="flex-1 flex flex-col lg:flex-row gap-8 items-center lg:items-start">
                 <div class="flex-1 w-full flex justify-center">
-                    <div id="chessboard" class="board rounded-lg overflow-hidden shadow-xl"></div>
+                    <div id="chessboard" class="board rounded-lg overflow-hidden shadow-xl cursor-pointer"></div>
                 </div>
 
                 <aside class="w-full lg:w-80 flex flex-col gap-4">
@@ -129,6 +129,9 @@
                                 <i class="fas fa-undo"></i> Reset
                             </button>
                         </div>
+                        <p class="text-xs text-center text-light-secondary dark:text-dark-secondary mt-3">
+                            Click any square to set start position!
+                        </p>
                     </div>
 
                     <div class="p-6 rounded-xl bg-card border border-theme">
@@ -138,10 +141,14 @@
                                 <label
                                     class="block text-sm font-bold text-light-secondary dark:text-dark-secondary mb-1">Animation
                                     Speed</label>
-                                <input type="range" id="speed-slider" min="10" max="500" value="100"
-                                    class="w-full accent-accent-color" style="direction: rtl">
-                                <p class="text-xs text-right text-light-secondary dark:text-dark-secondary mt-1">Faster
-                                    <-----------> Slower</p>
+                                <!-- Value 1 = Slow (500ms), Value 100 = Fast (10ms) -->
+                                <input type="range" id="speed-slider" min="1" max="100" value="50"
+                                    class="w-full accent-accent-color">
+                                <div
+                                    class="flex justify-between text-xs text-light-secondary dark:text-dark-secondary mt-1">
+                                    <span>Slower</span>
+                                    <span>Faster</span>
+                                </div>
                             </div>
                             <div class="flex justify-between items-center border-t border-theme pt-4">
                                 <span
@@ -188,7 +195,7 @@
         let isRunning = false;
         let delay = 100;
         let path = [];
-        let currentStep = 0;
+        let startPos = { x: 0, y: 0 }; // Default start
 
         // Knight's moves
         const dx = [2, 1, -1, -2, -2, -1, 1, 2];
@@ -203,6 +210,14 @@
                     const cell = document.createElement('div');
                     cell.className = `cell ${(i + j) % 2 === 0 ? 'white' : 'black'}`;
                     cell.id = `cell-${i}-${j}`;
+
+                    // Click handler for setting start position
+                    cell.addEventListener('click', () => {
+                        if (!isRunning) {
+                            setStartPosition(i, j);
+                        }
+                    });
+
                     boardEl.appendChild(cell);
                 }
             }
@@ -210,6 +225,22 @@
             moveCountEl.textContent = 0;
             statusText.textContent = 'Ready';
             statusText.className = 'text-sm font-bold text-light-primary dark:text-dark-primary';
+
+            // Set initial knight
+            setStartPosition(startPos.x, startPos.y);
+        }
+
+        function setStartPosition(x, y) {
+            // Clear previous
+            document.querySelectorAll('.cell').forEach(c => {
+                c.innerHTML = '';
+                c.classList.remove('current', 'visited');
+            });
+
+            startPos = { x, y };
+            const cell = document.getElementById(`cell-${x}-${y}`);
+            cell.classList.add('current');
+            cell.innerHTML = '<i class="fas fa-chess-knight knight-icon"></i>';
         }
 
         function isValid(x, y) {
@@ -226,9 +257,11 @@
 
         function solveKnightsTour() {
             // Warnsdorff's algorithm
-            let x = Math.floor(Math.random() * N);
-            let y = Math.floor(Math.random() * N);
+            let x = startPos.x;
+            let y = startPos.y;
 
+            // Reset board logic
+            board = Array(N).fill().map(() => Array(N).fill(-1));
             path = [{ x, y }];
             board[x][y] = 0;
 
@@ -269,17 +302,15 @@
             statusText.textContent = 'Running...';
             statusText.className = 'text-sm font-bold text-accent-color';
 
-            // Clear board visually
+            // Clear board visually but keep start
             document.querySelectorAll('.cell').forEach(c => {
                 c.classList.remove('visited', 'current');
                 c.innerHTML = '';
             });
 
             // Find a solution first (instant)
-            // We retry a few times if random start fails (Warnsdorff isn't perfect)
             let solved = false;
-            for (let i = 0; i < 10; i++) {
-                initBoard(); // Reset internal board state
+            for (let i = 0; i < 50; i++) { // Increased retries
                 if (solveKnightsTour()) {
                     solved = true;
                     break;
@@ -288,7 +319,7 @@
 
             if (!solved) {
                 statusText.textContent = 'Failed to find path. Retrying...';
-                setTimeout(animateTour, 500);
+                setTimeout(animateTour, 100);
                 return;
             }
 
@@ -309,7 +340,7 @@
                     const prevCell = document.getElementById(`cell-${prev.x}-${prev.y}`);
                     prevCell.classList.remove('current');
                     prevCell.classList.add('visited');
-                    prevCell.textContent = i; // 1-based index for user
+                    prevCell.textContent = i;
                 }
 
                 // Mark current
@@ -317,6 +348,13 @@
                 cell.innerHTML = '<i class="fas fa-chess-knight knight-icon"></i>';
 
                 moveCountEl.textContent = i + 1;
+
+                // Calculate delay from slider (1-100) -> (500-10)
+                // High speed (100) -> Low delay (10)
+                // Low speed (1) -> High delay (500)
+                const speedVal = parseInt(speedSlider.value);
+                // Map 1..100 to 500..10
+                delay = 500 - ((speedVal - 1) * (490 / 99));
 
                 await new Promise(r => setTimeout(r, delay));
             }
@@ -341,10 +379,7 @@
             initBoard();
         });
 
-        speedSlider.addEventListener('input', (e) => {
-            delay = parseInt(e.target.value);
-        });
-
+        // Init
         initBoard();
     </script>
 </body>

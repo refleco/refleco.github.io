@@ -205,8 +205,169 @@ function initStarfield() {
     init();
 }
 
+// --- Typing Effect ---
+function initTypingEffect() {
+    // 1. Main Subtitle (Looping/Cursor)
+    const mainSubtitle = document.getElementById('typing-text');
+    if (mainSubtitle) {
+        const text = mainSubtitle.getAttribute('data-text');
+        mainSubtitle.innerText = '';
+        let i = 0;
+        function typeMain() {
+            if (i < text.length) {
+                mainSubtitle.innerText += text.charAt(i);
+                i++;
+                setTimeout(typeMain, 50 + Math.random() * 50);
+            }
+        }
+        setTimeout(typeMain, 1000);
+    }
+
+    // 2. General Text (One-time reveal)
+    // Target headers, paragraphs, list items, and spans that are NOT in cards, tags, or the main header
+    const elements = document.querySelectorAll('h1, h2, h3, p, li, span');
+
+    const typeObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('typed')) {
+                entry.target.classList.add('typed');
+                typeElement(entry.target);
+            }
+        });
+    }, { threshold: 0.1 }); // Lower threshold for better triggering
+
+    elements.forEach(el => {
+        // Filter out elements we don't want to animate
+        if (el.id === 'typing-text') return; // Main subtitle handled above
+        if (el.closest('header') && el.tagName !== 'H2') return; // Skip main header elements except section titles
+        if (el.closest('.card')) return; // Skip cards
+        if (el.closest('.tilt-card')) return; // Skip tilt cards
+        if (el.closest('.tag')) return; // Skip tags
+        if (el.closest('button')) return; // Skip buttons
+        if (el.closest('#settings-modal')) return; // Skip settings
+        if (el.classList.contains('typing-cursor')) return; // Skip cursor itself
+        if (el.innerText.trim() === '') return; // Skip empty
+
+        // Prepare element
+        el.dataset.originalText = el.innerText;
+        el.innerText = ''; // Clear text
+        el.style.visibility = 'hidden'; // Hide initially
+        typeObserver.observe(el);
+    });
+
+    function typeElement(element) {
+        const text = element.dataset.originalText;
+        element.style.visibility = 'visible';
+        element.innerText = '';
+
+        // Add cursor
+        element.classList.add('typing-cursor-active');
+
+        let i = 0;
+        // Adjust speed based on text length (longer text = faster typing)
+        const speed = Math.max(5, 30 - Math.floor(text.length / 50));
+
+        function typeChar() {
+            if (i < text.length) {
+                element.innerText += text.charAt(i);
+                i++;
+                setTimeout(typeChar, speed);
+            } else {
+                // Remove cursor after done
+                setTimeout(() => {
+                    element.classList.remove('typing-cursor-active');
+                }, 500);
+            }
+        }
+        typeChar();
+    }
+}
+
+// --- 3D Tilt Effect ---
+function initTiltEffect() {
+    const cards = document.querySelectorAll('.tilt-card');
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = ((y - centerY) / centerY) * -5; // Max rotation deg
+            const rotateY = ((x - centerX) / centerX) * 5;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+        });
+    });
+}
+
+// --- BTD6 Link Fix ---
+function fixBtd6Link() {
+    const btd6Link = document.getElementById('btd6-link');
+    if (btd6Link) {
+        // Ensure we don't double-stack index.html or get stuck in a loop
+        // If we are at /index.html, we want ./btd6/ which resolves to /btd6/
+        // The default href="btd6/" is usually correct for both / and /index.html
+        // But just in case, let's force an absolute-ish path relative to the current directory
+
+        const pathname = window.location.pathname;
+        const basePath = pathname.substring(0, pathname.lastIndexOf('/') + 1);
+        btd6Link.href = basePath + 'btd6/';
+    }
+}
+
 // --- Settings Modal ---
 function initSettings() {
+    // Inject Modal HTML if not present
+    if (!document.getElementById('settings-modal')) {
+        const modalHTML = `
+            <div id="settings-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+                <div class="bg-card border border-theme p-8 rounded-3xl shadow-2xl w-full max-w-md transform scale-95 transition-transform duration-300">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold border-b-0">Theme Settings</h2>
+                        <button id="close-settings" class="text-light-secondary dark:text-dark-secondary hover:text-accent-color transition-colors">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="flex justify-between text-sm font-bold text-light-secondary dark:text-dark-secondary mb-2">
+                                Star Count <span id="star-count-val" class="text-accent-color">100</span>
+                            </label>
+                            <input type="range" id="star-count" min="20" max="300" value="100" class="w-full accent-accent-color">
+                        </div>
+                        
+                        <div>
+                            <label class="flex justify-between text-sm font-bold text-light-secondary dark:text-dark-secondary mb-2">
+                                Star Speed <span id="star-speed-val" class="text-accent-color">1.0x</span>
+                            </label>
+                            <input type="range" id="star-speed" min="0.1" max="3.0" step="0.1" value="1.0" class="w-full accent-accent-color">
+                        </div>
+
+                        <div class="pt-4 border-t border-theme flex justify-end">
+                            <button id="reset-settings" class="text-sm font-bold text-red-500 hover:text-red-600 transition-colors">
+                                Reset to Defaults
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="settings-toggle"
+                class="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-card shadow-lg flex items-center justify-center text-2xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-color border border-theme transition-transform duration-300 hover:scale-110 z-50">
+                <i class="fas fa-cog text-light-secondary dark:text-dark-secondary"></i>
+            </button>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+
     const toggleBtn = document.getElementById('settings-toggle');
     const modal = document.getElementById('settings-modal');
     const closeBtn = document.getElementById('close-settings');
