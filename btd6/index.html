@@ -306,10 +306,10 @@
             filterContainer.addEventListener('click', (e) => {
                 if (e.target.tagName === 'BUTTON') {
                     filterContainer.querySelectorAll('button').forEach(btn => {
-                        btn.classList.remove('active', 'bg-accent-color', 'text-white');
+                        btn.classList.remove('active', 'bg-accent-color', 'text-gray-900', 'dark:text-white');
                         btn.classList.add('text-light-secondary', 'dark:text-dark-secondary');
                     });
-                    e.target.classList.add('active', 'bg-accent-color', 'text-white');
+                    e.target.classList.add('active', 'bg-accent-color', 'text-gray-900', 'dark:text-white');
                     e.target.classList.remove('text-light-secondary', 'dark:text-dark-secondary');
                     renderMonkeys();
                 }
@@ -324,7 +324,7 @@
             // Style active button on load
             const activeButton = filterContainer.querySelector('.active');
             if (activeButton) {
-                activeButton.classList.add('bg-accent-color', 'text-white');
+                activeButton.classList.add('bg-accent-color', 'text-gray-900', 'dark:text-white');
                 activeButton.classList.remove('text-light-secondary', 'dark:text-dark-secondary');
             }
         });
