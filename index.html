@@ -5,197 +5,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Justin Wu | Portfolio</title>
     <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/refleco/refleco.github.io/main/galaxy.jpeg">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
-    <style>
-        :root {
-            --bg-light: #f1f5f9;
-            --bg-dark: #0f172a;
-            --container-light: rgba(255, 255, 255, 0.8);
-            --container-dark: rgba(30, 41, 59, 0.8);
-            --card-light: #ffffff;
-            --card-dark: #1e293b;
-            --text-light-primary: #0f172a;
-            --text-dark-primary: #e2e8f0;
-            --text-light-secondary: #475569;
-            --text-dark-secondary: #94a3b8;
-            --accent-color: #38bdf8;
-            --accent-hover: #7dd3fc;
-            --border-light: #cbd5e1;
-            --border-dark: #334155;
-        }
-        html.dark {
-            --bg-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-        }
-        html:not(.dark) {
-            --bg-image: url('https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80');
-        }
-        body {
-            background-image: var(--bg-image);
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            font-family: 'Roboto', sans-serif;
-            color: var(--text-light-primary);
-            background-color: var(--bg-light);
-        }
-        .dark body {
-            color: var(--text-dark-primary);
-            background-color: var(--bg-dark);
-        }
-        .main-container {
-            background-color: var(--container-light);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        .dark .main-container {
-            background-color: var(--container-dark);
-        }
-        .card {
-            background-color: var(--card-light);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid var(--border-light);
-        }
-        .dark .card {
-            background-color: var(--card-dark);
-            border-color: var(--border-dark);
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .dark .card:hover {
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-        h2 {
-            border-bottom: 2px solid var(--accent-color);
-        }
-        .icon {
-            color: var(--accent-color);
-        }
-        .tag {
-            background-color: rgba(56, 189, 248, 0.1);
-            color: var(--accent-color);
-            border: 1px solid var(--accent-color);
-        }
-    </style>
 </head>
-<body class="transition-colors duration-300">
-    <div class="main-container max-w-4xl mx-auto my-8 p-6 sm:p-10 rounded-2xl shadow-2xl">
-        <header class="text-center mb-12">
-            <img src="https://raw.githubusercontent.com/refleco/refleco.github.io/main/galaxy.jpeg" alt="Galaxy Icon" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white dark:border-slate-700 shadow-lg">
-            <h1 class="text-5xl font-extrabold tracking-tight">Justin Wu</h1>
-            <p class="text-xl text-light-secondary dark:text-dark-secondary mt-2">High School Student | Programmer | Swimmer</p>
+<body class="transition-colors duration-300 bg-bg-light dark:bg-bg-dark text-text-light-primary dark:text-text-dark-primary overflow-x-hidden">
+    <canvas id="rust-canvas" class="fixed top-0 left-0 w-full h-full -z-10"></canvas>
+    
+    <div class="main-container max-w-5xl mx-auto my-8 p-6 sm:p-12 rounded-3xl shadow-2xl backdrop-blur-xl bg-white/70 dark:bg-slate-900/70 border border-white/20 dark:border-white/10 relative z-10">
+        <header class="text-center mb-16 relative">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-accent/20 rounded-full blur-3xl -z-10"></div>
+            <img src="https://raw.githubusercontent.com/refleco/refleco.github.io/main/galaxy.jpeg" alt="Galaxy Icon" class="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-white dark:border-slate-700 shadow-2xl hover:scale-105 transition-transform duration-500">
+            <h1 class="text-6xl md:text-7xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-400 dark:from-blue-400 dark:to-cyan-200 mb-4">Justin Wu</h1>
+            <p class="text-2xl text-slate-600 dark:text-slate-400 font-light">High School Student | Programmer | Swimmer</p>
         </header>
 
-        <main class="space-y-12">
-            <section id="about">
-                <h2 class="text-3xl font-bold pb-2 mb-6">About Me</h2>
-                <p class="text-lg leading-relaxed text-light-secondary dark:text-dark-secondary">I am a dedicated high school student with a strong passion for computational biology, computer science, and mathematics. I enjoy applying my problem-solving skills to challenging projects and research. My goal is to leverage technology and scientific inquiry to make a meaningful impact.</p>
+        <main class="space-y-20">
+            <section id="about" class="group">
+                <h2 class="text-4xl font-bold pb-4 mb-8 border-b-2 border-accent inline-block">About Me</h2>
+                <p class="text-xl leading-relaxed text-slate-700 dark:text-slate-300">
+                    I am a dedicated high school student with a strong passion for <span class="text-accent font-semibold">computational biology</span>, <span class="text-accent font-semibold">computer science</span>, and <span class="text-accent font-semibold">mathematics</span>. I enjoy applying my problem-solving skills to challenging projects and research. My goal is to leverage technology and scientific inquiry to make a meaningful impact.
+                </p>
             </section>
 
             <section id="skills">
-                <h2 class="text-3xl font-bold pb-2 mb-6">Skills</h2>
+                <h2 class="text-4xl font-bold pb-4 mb-8 border-b-2 border-accent inline-block">Skills</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="card p-6 rounded-xl">
-                        <h3 class="text-2xl font-bold mb-4 flex items-center"><i class="fas fa-code icon mr-3"></i>Programming & Tech</h3>
-                        <ul class="space-y-3 text-lg text-light-secondary dark:text-dark-secondary">
-                            <li class="flex items-center"><i class="fab fa-java icon w-6 mr-3"></i> Java</li>
-                            <li class="flex items-center"><i class="fab fa-python icon w-6 mr-3"></i> Python</li>
-                            <li class="flex items-center"><i class="fas fa-chart-line icon w-6 mr-3"></i> R</li>
-                            <li class="flex items-center"><i class="fab fa-html5 icon w-6 mr-3"></i> HTML & CSS</li>
+                    <div class="p-8 rounded-2xl bg-white/50 dark:bg-slate-800/50 hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 hover:-translate-y-2 shadow-lg border border-slate-200 dark:border-slate-700">
+                        <h3 class="text-2xl font-bold mb-6 flex items-center text-blue-600 dark:text-blue-400"><i class="fas fa-code mr-4 text-3xl"></i>Programming & Tech</h3>
+                        <ul class="space-y-4 text-lg text-slate-700 dark:text-slate-300">
+                            <li class="flex items-center"><i class="fab fa-java w-8 text-center mr-3 text-orange-500"></i> Java</li>
+                            <li class="flex items-center"><i class="fab fa-python w-8 text-center mr-3 text-blue-500"></i> Python</li>
+                            <li class="flex items-center"><i class="fas fa-chart-line w-8 text-center mr-3 text-blue-400"></i> R</li>
+                            <li class="flex items-center"><i class="fab fa-html5 w-8 text-center mr-3 text-orange-600"></i> HTML & CSS</li>
                         </ul>
                     </div>
-                    <div class="card p-6 rounded-xl">
-                        <h3 class="text-2xl font-bold mb-4 flex items-center"><i class="fas fa-flask icon mr-3"></i>Sciences</h3>
-                        <ul class="space-y-3 text-lg text-light-secondary dark:text-dark-secondary">
-                            <li class="flex items-center"><i class="fas fa-dna icon w-6 mr-3"></i> Computational Genetics</li>
-                            <li class="flex items-center"><i class="fas fa-atom icon w-6 mr-3"></i> Chemistry</li>
-                            <li class="flex items-center"><i class="fas fa-leaf icon w-6 mr-3"></i> Biology</li>
-                            <li class="flex items-center"><i class="fas fa-drafting-compass icon w-6 mr-3"></i> Engineering Design</li>
+                    <div class="p-8 rounded-2xl bg-white/50 dark:bg-slate-800/50 hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 hover:-translate-y-2 shadow-lg border border-slate-200 dark:border-slate-700">
+                        <h3 class="text-2xl font-bold mb-6 flex items-center text-green-600 dark:text-green-400"><i class="fas fa-flask mr-4 text-3xl"></i>Sciences</h3>
+                        <ul class="space-y-4 text-lg text-slate-700 dark:text-slate-300">
+                            <li class="flex items-center"><i class="fas fa-dna w-8 text-center mr-3 text-red-500"></i> Computational Genetics</li>
+                            <li class="flex items-center"><i class="fas fa-atom w-8 text-center mr-3 text-purple-500"></i> Chemistry</li>
+                            <li class="flex items-center"><i class="fas fa-leaf w-8 text-center mr-3 text-green-500"></i> Biology</li>
+                            <li class="flex items-center"><i class="fas fa-drafting-compass w-8 text-center mr-3 text-slate-500"></i> Engineering Design</li>
                         </ul>
                     </div>
                 </div>
             </section>
 
             <section id="experience">
-                <h2 class="text-3xl font-bold pb-2 mb-6">Research & Experience</h2>
+                <h2 class="text-4xl font-bold pb-4 mb-8 border-b-2 border-accent inline-block">Research & Experience</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="card p-6 rounded-xl">
-                        <h3 class="text-xl font-bold">Volunteer | PENN Care</h3>
-                        <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">Organized community cleanup and setup for events with the Philadelphia Mayor's Philly Spring Cleanup Initiative. (June 2022 – Present)</p>
+                    <div class="p-8 rounded-2xl bg-white/50 dark:bg-slate-800/50 hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 hover:-translate-y-2 shadow-lg border border-slate-200 dark:border-slate-700">
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">Volunteer | PENN Care</h3>
+                        <p class="text-md text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">Organized community cleanup and setup for events with the Philadelphia Mayor's Philly Spring Cleanup Initiative. (June 2022 – Present)</p>
                     </div>
-                    <div class="card p-6 rounded-xl">
-                        <h3 class="text-xl font-bold">Volunteer | Penn Medicine Radnor</h3>
-                        <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">Greeted and directed patients, providing assistance to enhance their hospital experience. (Summer 2023)</p>
+                    <div class="p-8 rounded-2xl bg-white/50 dark:bg-slate-800/50 hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 hover:-translate-y-2 shadow-lg border border-slate-200 dark:border-slate-700">
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">Volunteer | Penn Medicine Radnor</h3>
+                        <p class="text-md text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">Greeted and directed patients, providing assistance to enhance their hospital experience. (Summer 2023)</p>
                     </div>
                 </div>
             </section>
 
             <section id="projects">
-                <h2 class="text-3xl font-bold pb-2 mb-6">Projects</h2>
+                <h2 class="text-4xl font-bold pb-4 mb-8 border-b-2 border-accent inline-block">Projects</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                     <a href="btd6/" class="card block p-6 rounded-xl group" id="btd6-link">
-                        <h3 class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">BTD6 Ranking</h3>
-                        <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">An interactive, single-page web application for ranking and exploring the best crosspaths in Bloons TD 6.</p>
+                     <a href="btd6/" class="block p-8 rounded-2xl bg-white/50 dark:bg-slate-800/50 hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 hover:-translate-y-2 shadow-lg border border-slate-200 dark:border-slate-700 group" id="btd6-link">
+                        <h3 class="text-xl font-bold group-hover:text-accent transition-colors mb-3">BTD6 Ranking</h3>
+                        <p class="text-md text-slate-600 dark:text-slate-400">An interactive, single-page web application for ranking and exploring the best crosspaths in Bloons TD 6.</p>
                     </a>
-                    <a href="https://github.com/refleco/Knights-Tour-Java" target="_blank" class="card block p-6 rounded-xl group">
-                        <h3 class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">Knight's Tour (Java)</h3>
-                        <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">An implementation of the Knight's Tour problem using a backtracking algorithm to find a path on a chessboard.</p>
+                    <a href="https://github.com/refleco/Knights-Tour-Java" target="_blank" class="block p-8 rounded-2xl bg-white/50 dark:bg-slate-800/50 hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 hover:-translate-y-2 shadow-lg border border-slate-200 dark:border-slate-700 group">
+                        <h3 class="text-xl font-bold group-hover:text-accent transition-colors mb-3">Knight's Tour (Java)</h3>
+                        <p class="text-md text-slate-600 dark:text-slate-400">An implementation of the Knight's Tour problem using a backtracking algorithm to find a path on a chessboard.</p>
                     </a>
-                    <a href="https://github.com/refleco/Game-of-Life-Python" target="_blank" class="card block p-6 rounded-xl group">
-                        <h3 class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">Game of Life (Python)</h3>
-                        <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">A simulation of Conway's Game of Life, visualizing cellular automata with Python and Pygame.</p>
+                    <a href="https://github.com/refleco/Game-of-Life-Python" target="_blank" class="block p-8 rounded-2xl bg-white/50 dark:bg-slate-800/50 hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 hover:-translate-y-2 shadow-lg border border-slate-200 dark:border-slate-700 group">
+                        <h3 class="text-xl font-bold group-hover:text-accent transition-colors mb-3">Game of Life (Python)</h3>
+                        <p class="text-md text-slate-600 dark:text-slate-400">A simulation of Conway's Game of Life, visualizing cellular automata with Python and Pygame.</p>
                     </a>
                 </div>
             </section>
             
             <section id="honors">
-                <h2 class="text-3xl font-bold pb-2 mb-6">Honors & Awards</h2>
-                <div class="flex flex-wrap justify-center gap-3">
-                    <span class="tag font-semibold px-4 py-2 rounded-full">USA Biology Olympiad (USABO) Semifinalist</span>
-                    <span class="tag font-semibold px-4 py-2 rounded-full">FBLA National Competition - 10th Place</span>
-                    <span class="tag font-semibold px-4 py-2 rounded-full">MathWorks Math Modeling Challenge - Top 25</span>
-                    <span class="tag font-semibold px-4 py-2 rounded-full">Annenberg Medical Research Symposium - Best Research</span>
-                    <span class="tag font-semibold px-4 py-2 rounded-full">AIME Qualifier (2x)</span>
-                    <span class="tag font-semibold px-4 py-2 rounded-full">PA Science Olympiad - 3rd & 5th Place</span>
+                <h2 class="text-4xl font-bold pb-4 mb-8 border-b-2 border-accent inline-block">Honors & Awards</h2>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <span class="px-6 py-3 rounded-full bg-accent/10 text-accent-hover border border-accent/30 font-semibold hover:bg-accent/20 transition-colors cursor-default">USA Biology Olympiad (USABO) Semifinalist</span>
+                    <span class="px-6 py-3 rounded-full bg-accent/10 text-accent-hover border border-accent/30 font-semibold hover:bg-accent/20 transition-colors cursor-default">FBLA National Competition - 10th Place</span>
+                    <span class="px-6 py-3 rounded-full bg-accent/10 text-accent-hover border border-accent/30 font-semibold hover:bg-accent/20 transition-colors cursor-default">MathWorks Math Modeling Challenge - Top 25</span>
+                    <span class="px-6 py-3 rounded-full bg-accent/10 text-accent-hover border border-accent/30 font-semibold hover:bg-accent/20 transition-colors cursor-default">Annenberg Medical Research Symposium - Best Research</span>
+                    <span class="px-6 py-3 rounded-full bg-accent/10 text-accent-hover border border-accent/30 font-semibold hover:bg-accent/20 transition-colors cursor-default">AIME Qualifier (2x)</span>
+                    <span class="px-6 py-3 rounded-full bg-accent/10 text-accent-hover border border-accent/30 font-semibold hover:bg-accent/20 transition-colors cursor-default">PA Science Olympiad - 3rd & 5th Place</span>
                 </div>
             </section>
             
             <section id="leadership">
-                <h2 class="text-3xl font-bold pb-2 mb-6">Leadership & Activities</h2>
-                <div class="card p-6 rounded-xl">
-                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-lg text-light-secondary dark:text-dark-secondary">
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>President, Biology Club</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>Secretary, Math Modeling Club</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>Officer, Computer Science Club</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>Co-Captain, JV Academic Team</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>Varsity Swim Team</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>Science Olympiad Team</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>Section Leader, Concert Band</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-3"></i>Student Executive Council</li>
+                <h2 class="text-4xl font-bold pb-4 mb-8 border-b-2 border-accent inline-block">Leadership & Activities</h2>
+                <div class="p-8 rounded-2xl bg-white/50 dark:bg-slate-800/50 shadow-lg border border-slate-200 dark:border-slate-700">
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6 text-lg text-slate-700 dark:text-slate-300">
+                        <li class="flex items-center"><i class="fas fa-star w-6 mr-4 text-yellow-400"></i>President, Biology Club</li>
+                        <li class="flex items-center"><i class="fas fa-star w-6 mr-4 text-yellow-400"></i>Secretary, Math Modeling Club</li>
+                        <li class="flex items-center"><i class="fas fa-star w-6 mr-4 text-yellow-400"></i>Officer, Computer Science Club</li>
+                        <li class="flex items-center"><i class="fas fa-star w-6 mr-4 text-yellow-400"></i>Co-Captain, JV Academic Team</li>
+                        <li class="flex items-center"><i class="fas fa-star w-6 mr-4 text-yellow-400"></i>Varsity Swim Team</li>
+                        <li class="flex items-center"><i class="fas fa-star w-6 mr-4 text-yellow-400"></i>Science Olympiad Team</li>
+                        <li class="flex items-center"><i class="fas fa-star w-6 mr-4 text-yellow-400"></i>Section Leader, Concert Band</li>
+                        <li class="flex items-center"><i class="fas fa-star w-6 mr-4 text-yellow-400"></i>Student Executive Council</li>
                     </ul>
                 </div>
             </section>
         </main>
 
-        <footer class="text-center mt-16 pt-8 border-t border-border-light dark:border-border-dark">
-            <div id="contact" class="flex justify-center items-center space-x-6 mb-6">
-                <a href="mailto:wujustin20@outlook.com" class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-colors text-2xl"><i class="fas fa-envelope"></i></a>
-                <a href="https://github.com/refleco" target="_blank" class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-colors text-2xl"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/justinwu80/" target="_blank" class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-colors text-2xl"><i class="fab fa-linkedin"></i></a>
+        <footer class="text-center mt-24 pt-12 border-t border-slate-200 dark:border-slate-800">
+            <div id="contact" class="flex justify-center items-center space-x-10 mb-8">
+                <a href="mailto:wujustin20@outlook.com" class="text-slate-500 dark:text-slate-400 hover:text-accent transition-all duration-300 hover:scale-125 text-3xl"><i class="fas fa-envelope"></i></a>
+                <a href="https://github.com/refleco" target="_blank" class="text-slate-500 dark:text-slate-400 hover:text-accent transition-all duration-300 hover:scale-125 text-3xl"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/justinwu80/" target="_blank" class="text-slate-500 dark:text-slate-400 hover:text-accent transition-all duration-300 hover:scale-125 text-3xl"><i class="fab fa-linkedin"></i></a>
             </div>
-            <p class="text-sm text-light-secondary dark:text-dark-secondary">&copy; 2025 Justin Wu | <a href="https://justinwu.me/" target="_blank" class="hover:underline">justinwu.me</a></p>
+            <p class="text-md text-slate-500 dark:text-slate-500">&copy; 2025 Justin Wu | <a href="https://justinwu.me/" target="_blank" class="hover:underline hover:text-accent">justinwu.me</a></p>
         </footer>
     </div>
     
-    <button id="theme-toggle" class="fixed bottom-5 right-5 w-12 h-12 rounded-full bg-card shadow-lg flex items-center justify-center text-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-color border border-theme">
+    <button id="theme-toggle" class="fixed bottom-8 right-8 w-16 h-16 rounded-full bg-white dark:bg-slate-800 shadow-2xl flex items-center justify-center text-2xl focus:outline-none focus:ring-4 focus:ring-accent/50 border border-slate-200 dark:border-slate-700 transition-all duration-300 hover:scale-110 z-50 text-yellow-500 dark:text-blue-400">
         <i id="theme-icon-light" class="fas fa-sun"></i>
         <i id="theme-icon-dark" class="fas fa-moon hidden"></i>
     </button>
 
+    <script type="module" src="/src/main.js"></script>
     <script>
+        // Legacy script for theme toggle and link fix, adapted for module
         document.addEventListener('DOMContentLoaded', function() {
             // BTD6 Link Fix
             const btd6Link = document.getElementById('btd6-link');
