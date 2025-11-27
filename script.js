@@ -460,71 +460,7 @@ function initScrollReveal() {
     reveals.forEach(element => observer.observe(element));
 }
 
-// --- Typing Effect ---
-function initTypingEffect() {
-    // 1. Main Subtitle (Looping/Cursor)
-    const mainSubtitle = document.getElementById('typing-text');
-    if (mainSubtitle) {
-        const text = mainSubtitle.getAttribute('data-text');
-        mainSubtitle.innerText = '';
-        let i = 0;
-        function typeMain() {
-            if (i < text.length) {
-                mainSubtitle.innerText += text.charAt(i);
-                i++;
-                setTimeout(typeMain, 50 + Math.random() * 50);
-            }
-        }
-        setTimeout(typeMain, 1000);
-    }
 
-    // 2. General Headers (One-time reveal)
-    const headers = document.querySelectorAll('h1, h2, h3');
-
-    const typeObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !entry.target.classList.contains('typed')) {
-                entry.target.classList.add('typed');
-                typeElement(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    headers.forEach(header => {
-        // Skip the main title and subtitle as they are handled separately or don't need it
-        if (header.id === 'typing-text' || header.closest('header')) return;
-
-        // Prepare element
-        header.dataset.originalText = header.innerText;
-        header.innerText = ''; // Clear text
-        header.style.visibility = 'hidden'; // Hide initially
-        typeObserver.observe(header);
-    });
-
-    function typeElement(element) {
-        const text = element.dataset.originalText;
-        element.style.visibility = 'visible';
-        element.innerText = '';
-
-        // Add cursor
-        element.classList.add('typing-cursor-active');
-
-        let i = 0;
-        function typeChar() {
-            if (i < text.length) {
-                element.innerText += text.charAt(i);
-                i++;
-                setTimeout(typeChar, 30); // Faster speed for headers
-            } else {
-                // Remove cursor after done
-                setTimeout(() => {
-                    element.classList.remove('typing-cursor-active');
-                }, 500);
-            }
-        }
-        typeChar();
-    }
-}
 
 // --- 3D Tilt Effect ---
 function initTiltEffect() {
