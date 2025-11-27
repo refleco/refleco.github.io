@@ -112,7 +112,6 @@
                     <div class="p-6 rounded-2xl bg-card shadow-lg border border-theme">
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-2xl font-bold">Controls</h2>
-                            <h2 class="text-2xl font-bold">Controls</h2>
                         </div>
                         <div class="space-y-4">
                             <input type="text" id="search-input" placeholder="Search monkeys..."
@@ -308,10 +307,10 @@
             filterContainer.addEventListener('click', (e) => {
                 if (e.target.tagName === 'BUTTON') {
                     filterContainer.querySelectorAll('button').forEach(btn => {
-                        btn.classList.remove('active', 'bg-accent-color', 'text-gray-900');
+                        btn.classList.remove('active', 'bg-accent-color', 'text-gray-900', 'dark:text-white');
                         btn.classList.add('text-light-secondary', 'dark:text-dark-secondary');
                     });
-                    e.target.classList.add('active', 'bg-accent-color', 'text-gray-900');
+                    e.target.classList.add('active', 'bg-accent-color', 'text-gray-900', 'dark:text-white');
                     e.target.classList.remove('text-light-secondary', 'dark:text-dark-secondary');
                     renderMonkeys();
                 }
@@ -326,7 +325,7 @@
             // Style active button on load
             const activeButton = filterContainer.querySelector('.active');
             if (activeButton) {
-                activeButton.classList.add('bg-accent-color', 'text-gray-900');
+                activeButton.classList.add('bg-accent-color', 'text-gray-900', 'dark:text-white');
                 activeButton.classList.remove('text-light-secondary', 'dark:text-dark-secondary');
             }
         });
