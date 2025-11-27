@@ -211,6 +211,7 @@
         let board = [];
         let moves = 0;
         let isRunning = false;
+        let isPaused = false;
         let delay = 100;
         let path = [];
         let startPos = { x: 0, y: 0 }; // Default start
@@ -315,8 +316,11 @@
 
         async function animateTour() {
             isRunning = true;
-            btnStart.disabled = true;
-            btnStart.classList.add('opacity-50', 'cursor-not-allowed');
+            isPaused = false;
+            btnStart.innerHTML = '<i class="fas fa-pause"></i> Pause';
+            btnStart.classList.remove('bg-[#22d3ee]', 'hover:bg-accent-hover', 'text-gray-900');
+            btnStart.classList.add('bg-yellow-500', 'hover:bg-yellow-600', 'text-white');
+
             statusText.textContent = 'Running...';
             statusText.className = 'text-sm font-bold text-accent-color';
 
@@ -375,25 +379,48 @@
                 delay = 500 - ((speedVal - 1) * (490 / 99));
 
                 await new Promise(r => setTimeout(r, delay));
+
+                while (isPaused) {
+                    if (!isRunning) break;
+                    await new Promise(r => setTimeout(r, 100));
+                }
             }
 
             if (isRunning) {
                 statusText.textContent = 'Completed!';
                 statusText.className = 'text-sm font-bold text-green-500';
-                btnStart.disabled = false;
-                btnStart.classList.remove('opacity-50', 'cursor-not-allowed');
+                statusText.className = 'text-sm font-bold text-green-500';
+                btnStart.innerHTML = '<i class="fas fa-play"></i> Start Tour';
+                btnStart.classList.add('bg-[#22d3ee]', 'hover:bg-accent-hover', 'text-gray-900');
+                btnStart.classList.remove('bg-yellow-500', 'hover:bg-yellow-600', 'text-white');
                 isRunning = false;
             }
         }
 
         btnStart.addEventListener('click', () => {
-            if (!isRunning) animateTour();
+            if (!isRunning) {
+                animateTour();
+            } else {
+                isPaused = !isPaused;
+                if (isPaused) {
+                    btnStart.innerHTML = '<i class="fas fa-play"></i> Resume';
+                    statusText.textContent = 'Paused';
+                    statusText.className = 'text-sm font-bold text-yellow-500';
+                } else {
+                    btnStart.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                    statusText.textContent = 'Running...';
+                    statusText.className = 'text-sm font-bold text-accent-color';
+                }
+            }
         });
 
         btnReset.addEventListener('click', () => {
             isRunning = false;
-            btnStart.disabled = false;
-            btnStart.classList.remove('opacity-50', 'cursor-not-allowed');
+            isRunning = false;
+            isPaused = false;
+            btnStart.innerHTML = '<i class="fas fa-play"></i> Start Tour';
+            btnStart.classList.add('bg-[#22d3ee]', 'hover:bg-accent-hover', 'text-gray-900');
+            btnStart.classList.remove('bg-yellow-500', 'hover:bg-yellow-600', 'text-white');
             initBoard();
         });
 

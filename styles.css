@@ -1,8 +1,8 @@
 :root {
     --bg-light: #f1f5f9;
     --bg-dark: #0b1120;
-    --container-light: rgba(255, 255, 255, 0.2);
-    --container-dark: rgba(15, 23, 42, 0.3);
+    --container-light: rgba(255, 255, 255, 0.1);
+    --container-dark: rgba(0, 0, 0, 0.5);
     --card-light: rgba(255, 255, 255, 0.6);
     --card-dark: rgba(30, 41, 59, 0.6);
     --text-light-primary: #0f172a;
