@@ -1,0 +1,51 @@
+/* BTD6 Specific Styles */
+.details {
+    max-height: 0;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+}
+
+.card.open .details {
+    max-height: 2000px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.chevron {
+    transition: transform 0.3s ease-in-out;
+}
+
+.card.open .chevron {
+    transform: rotate(180deg);
+}
+
+.type-border-Military {
+    border-left: 5px solid #ef4444;
+}
+
+.type-border-Primary {
+    border-left: 5px solid #3b82f6;
+}
+
+.type-border-Magic {
+    border-left: 5px solid #a855f7;
+}
+
+.type-border-Support {
+    border-left: 5px solid #f97316;
+}
+
+/* Override main container for this specific layout if needed */
+.btd6-container {
+    background-color: var(--container-light);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .btd6-container {
+    background-color: var(--container-dark);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
