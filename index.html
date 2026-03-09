@@ -27,7 +27,7 @@
             <img src="https://raw.githubusercontent.com/refleco/refleco.github.io/main/galaxy.jpeg" alt="Galaxy Icon"
                 class="w-36 h-36 rounded-full mx-auto mb-5 border-4 border-white dark:border-slate-600 shadow-xl transition-transform duration-300 hover:scale-105">
             <h1 class="text-6xl font-black tracking-tighter"><a href="https://justinwu.me/"
-                    class="hover:text-accent-color transition-colors">Justin Wu</a></h1>
+                    class="gradient-name">Justin Wu</a></h1>
             <p class="text-2xl text-light-secondary dark:text-dark-secondary mt-3">
                 <span id="typing-text" data-text="High School Student | Programmer | Swimmer"></span><span
                     class="typing-cursor"></span>
@@ -75,15 +75,16 @@
                 <h2 class="text-4xl font-bold pb-3 mb-6">Research & Experience</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="card tilt-card p-8 rounded-2xl">
-                        <h3 class="text-xl font-bold">Volunteer | PENN Care</h3>
+                        <h3 class="text-xl font-bold flex items-center"><i class="fas fa-hands-helping icon mr-3"></i>Volunteer | PENN Care</h3>
                         <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">Organized community
-                            cleanup and setup for events with the Philadelphia Mayor's Philly Spring Cleanup Initiative.
-                            (June 2022 – Present)</p>
+                            cleanup and setup for events with the Philadelphia Mayor's Philly Spring Cleanup Initiative.</p>
+                        <span class="date-badge">June 2022 – Present</span>
                     </div>
                     <div class="card tilt-card p-8 rounded-2xl">
-                        <h3 class="text-xl font-bold">Volunteer | Penn Medicine Radnor</h3>
+                        <h3 class="text-xl font-bold flex items-center"><i class="fas fa-hospital icon mr-3"></i>Volunteer | Penn Medicine Radnor</h3>
                         <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">Greeted and directed
-                            patients, providing assistance to enhance their hospital experience. (Summer 2023)</p>
+                            patients, providing assistance to enhance their hospital experience.</p>
+                        <span class="date-badge">Summer 2023</span>
                     </div>
                 </div>
             </section>
@@ -91,27 +92,38 @@
             <section id="projects" class="reveal">
                 <h2 class="text-4xl font-bold pb-3 mb-6">Projects</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <a href="btd6/" class="card tilt-card block p-6 rounded-2xl group" id="btd6-link">
+                    <a href="btd6/" class="card tilt-card project-card block p-6 rounded-2xl group" id="btd6-link">
+                        <span class="project-icon">🎈</span>
                         <h3
                             class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">
                             BTD6 Ranking</h3>
-                        <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">An interactive,
-                            single-page web application for ranking and exploring the best crosspaths in Bloons TD 6.
-                        </p>
+                        <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">An interactive guide for
+                            ranking and exploring the best crosspaths in Bloons TD 6.</p>
+                        <div class="project-tech">
+                            <span>HTML</span><span>CSS</span><span>JavaScript</span>
+                        </div>
                     </a>
-                    <a href="knights-tour/" class="card tilt-card block p-6 rounded-2xl group">
+                    <a href="knights-tour/" class="card tilt-card project-card block p-6 rounded-2xl group">
+                        <span class="project-icon">♞</span>
                         <h3
                             class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">
-                            Knight's Tour (Java)</h3>
-                        <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">An implementation of the
-                            Knight's Tour problem using a backtracking algorithm to find a path on a chessboard.</p>
+                            Knight's Tour</h3>
+                        <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">Visualizing the Knight's
+                            Tour problem using Warnsdorff's backtracking algorithm on a chessboard.</p>
+                        <div class="project-tech">
+                            <span>Java</span><span>Canvas API</span><span>Algorithms</span>
+                        </div>
                     </a>
-                    <a href="game-of-life/" class="card tilt-card block p-6 rounded-2xl group">
+                    <a href="game-of-life/" class="card tilt-card project-card block p-6 rounded-2xl group">
+                        <span class="project-icon">🧬</span>
                         <h3
                             class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">
-                            Game of Life (Python)</h3>
+                            Game of Life</h3>
                         <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">A simulation of Conway's
-                            Game of Life, visualizing cellular automata with Python and Pygame.</p>
+                            Game of Life, visualizing cellular automata with interactive controls.</p>
+                        <div class="project-tech">
+                            <span>Python</span><span>Pygame</span><span>Canvas API</span>
+                        </div>
                     </a>
                 </div>
             </section>
@@ -137,53 +149,54 @@
                 <div class="card tilt-card p-8 rounded-2xl">
                     <ul
                         class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-lg text-light-secondary dark:text-dark-secondary">
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>President, Biology Club
-                        </li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Secretary, Math Modeling
-                            Club</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Officer, Computer Science
-                            Club</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Co-Captain, JV Academic
-                            Team</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Varsity Swim Team</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Science Olympiad Team
-                        </li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Section Leader, Concert
-                            Band</li>
-                        <li class="flex items-center"><i class="fas fa-star icon w-6 mr-4"></i>Student Executive Council
-                        </li>
+                        <li class="leadership-item flex items-center"><i class="fas fa-crown icon w-6 mr-4"></i>President, Biology Club</li>
+                        <li class="leadership-item flex items-center"><i class="fas fa-pen icon w-6 mr-4"></i>Secretary, Math Modeling Club</li>
+                        <li class="leadership-item flex items-center"><i class="fas fa-laptop-code icon w-6 mr-4"></i>Officer, Computer Science Club</li>
+                        <li class="leadership-item flex items-center"><i class="fas fa-users icon w-6 mr-4"></i>Co-Captain, JV Academic Team</li>
+                        <li class="leadership-item flex items-center"><i class="fas fa-swimmer icon w-6 mr-4"></i>Varsity Swim Team</li>
+                        <li class="leadership-item flex items-center"><i class="fas fa-microscope icon w-6 mr-4"></i>Science Olympiad Team</li>
+                        <li class="leadership-item flex items-center"><i class="fas fa-music icon w-6 mr-4"></i>Section Leader, Concert Band</li>
+                        <li class="leadership-item flex items-center"><i class="fas fa-building icon w-6 mr-4"></i>Student Executive Council</li>
                     </ul>
                 </div>
             </section>
         </main>
 
-        <footer class="text-center mt-20 pt-10 border-t border-border-light dark:border-border-dark reveal">
-            <div id="contact" class="flex justify-center items-center space-x-8 mb-6">
+        <footer class="text-center mt-20 pt-10 reveal">
+            <div class="section-divider mb-10"></div>
+            <p class="text-sm font-medium text-light-secondary dark:text-dark-secondary mb-6 tracking-wide uppercase">Let's Connect</p>
+            <div id="contact" class="flex justify-center items-center space-x-6 mb-8">
                 <a href="mailto:wujustin20@outlook.com"
-                    class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-transform duration-300 hover:scale-125 text-3xl"><i
-                        class="fas fa-envelope"></i></a>
+                    class="footer-link text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover text-2xl"
+                    aria-label="Email"><i class="fas fa-envelope"></i></a>
                 <a href="https://github.com/refleco" target="_blank"
-                    class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-transform duration-300 hover:scale-125 text-3xl"><i
-                        class="fab fa-github"></i></a>
+                    class="footer-link text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover text-2xl"
+                    aria-label="GitHub"><i class="fab fa-github"></i></a>
                 <a href="https://www.linkedin.com/in/justinwu80/" target="_blank"
-                    class="text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover transition-transform duration-300 hover:scale-125 text-3xl"><i
-                        class="fab fa-linkedin"></i></a>
+                    class="footer-link text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover text-2xl"
+                    aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
             </div>
-            <p class="text-md text-light-secondary dark:text-dark-secondary">&copy; 2025 <a href="https://justinwu.me/"
-                    class="hover:text-accent-color transition-colors">Justin Wu</a> | <a href="https://justinwu.me/"
-                    target="_blank" class="hover:underline text-[#22d3ee] font-bold">justinwu.me</a></p>
+            <p class="text-sm text-light-secondary dark:text-dark-secondary opacity-60">&copy; 2025 Justin Wu</p>
         </footer>
     </div>
 
     <button id="theme-toggle"
-        class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-card shadow-lg flex items-center justify-center text-2xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-color border border-theme transition-transform duration-300 hover:scale-110 z-50">
+        class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-card shadow-lg flex items-center justify-center text-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-color border border-theme transition-transform duration-300 hover:scale-110 z-50"
+        aria-label="Toggle theme">
         <i id="theme-icon-light" class="fas fa-sun"></i>
         <i id="theme-icon-dark" class="fas fa-moon hidden"></i>
     </button>
 
     <button id="settings-toggle"
-        class="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-card shadow-lg flex items-center justify-center text-2xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-color border border-theme transition-transform duration-300 hover:scale-110 z-50">
+        class="fixed bottom-20 right-6 w-12 h-12 rounded-full bg-card shadow-lg flex items-center justify-center text-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-color border border-theme transition-transform duration-300 hover:scale-110 z-50"
+        aria-label="Starfield settings">
         <i class="fas fa-cog text-light-secondary dark:text-dark-secondary"></i>
+    </button>
+
+    <button id="scroll-top"
+        class="fixed bottom-34 right-6 w-12 h-12 rounded-full bg-card shadow-lg flex items-center justify-center text-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-color border border-theme transition-all duration-300 hover:scale-110 z-50 opacity-0 pointer-events-none translate-y-4"
+        aria-label="Scroll to top">
+        <i class="fas fa-arrow-up text-light-secondary dark:text-dark-secondary"></i>
     </button>
 
     <!-- Settings Modal -->

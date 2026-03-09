@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollReveal();
     initTypingEffect();
     initTiltEffect();
+    initScrollToTop();
     fixBtd6Link();
 });
 
@@ -460,44 +461,18 @@ function initScrollReveal() {
     reveals.forEach(element => observer.observe(element));
 }
 
+// --- Scroll to Top ---
+function initScrollToTop() {
+    const btn = document.getElementById('scroll-top');
+    if (!btn) return;
 
-
-// --- 3D Tilt Effect ---
-function initTiltEffect() {
-    const cards = document.querySelectorAll('.tilt-card');
-
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = ((y - centerY) / centerY) * -5; // Max rotation deg
-            const rotateY = ((x - centerX) / centerX) * 5;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-        });
+    window.addEventListener('scroll', () => {
+        btn.classList.toggle('opacity-0', window.scrollY < 300);
+        btn.classList.toggle('pointer-events-none', window.scrollY < 300);
+        btn.classList.toggle('translate-y-4', window.scrollY < 300);
     });
-}
 
-// --- BTD6 Link Fix ---
-function fixBtd6Link() {
-    const btd6Link = document.getElementById('btd6-link');
-    if (btd6Link) {
-        // Ensure we don't double-stack index.html or get stuck in a loop
-        // If we are at /index.html, we want ./btd6/ which resolves to /btd6/
-        // The default href="btd6/" is usually correct for both / and /index.html
-        // But just in case, let's force an absolute-ish path relative to the current directory
-
-        const pathname = window.location.pathname;
-        const basePath = pathname.substring(0, pathname.lastIndexOf('/') + 1);
-        btd6Link.href = basePath + 'btd6/';
-    }
+    btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 }
