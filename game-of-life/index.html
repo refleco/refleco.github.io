@@ -337,16 +337,23 @@
                 btnPlay.innerHTML = '<i class="fas fa-play"></i> Play';
                 btnPlay.classList.remove('bg-yellow-500');
                 btnPlay.classList.add('bg-[#22d3ee]');
+                cancelAnimationFrame(animationId);
             }
         }
 
         function togglePlay() {
             isPlaying = !isPlaying;
-            btnPlay.innerHTML = isPlaying ? '<i class="fas fa-pause"></i> Pause' : '<i class="fas fa-play"></i> Play';
-            btnPlay.classList.toggle('bg-accent-color');
-            btnPlay.classList.toggle('bg-yellow-500');
-            if (isPlaying) loop(0);
-            else cancelAnimationFrame(animationId);
+            if (isPlaying) {
+                btnPlay.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                btnPlay.classList.remove('bg-[#22d3ee]');
+                btnPlay.classList.add('bg-yellow-500');
+                loop(0);
+            } else {
+                btnPlay.innerHTML = '<i class="fas fa-play"></i> Play';
+                btnPlay.classList.remove('bg-yellow-500');
+                btnPlay.classList.add('bg-[#22d3ee]');
+                cancelAnimationFrame(animationId);
+            }
         }
 
         // Event Listeners

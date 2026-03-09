@@ -215,6 +215,8 @@
         let delay = 100;
         let path = [];
         let startPos = { x: 0, y: 0 }; // Default start
+        let retryCount = 0;
+        const MAX_RETRIES = 10;
 
         // Knight's moves
         const dx = [2, 1, -1, -2, -2, -1, 1, 2];
@@ -340,10 +342,22 @@
             }
 
             if (!solved) {
-                statusText.textContent = 'Failed to find path. Retrying...';
+                retryCount++;
+                if (retryCount > MAX_RETRIES) {
+                    statusText.textContent = 'No solution found. Try a different start.';
+                    statusText.className = 'text-sm font-bold text-red-500';
+                    btnStart.innerHTML = '<i class="fas fa-play"></i> Start Tour';
+                    btnStart.classList.add('bg-[#22d3ee]', 'hover:bg-accent-hover', 'text-gray-900');
+                    btnStart.classList.remove('bg-yellow-500', 'hover:bg-yellow-600', 'text-white');
+                    isRunning = false;
+                    retryCount = 0;
+                    return;
+                }
+                statusText.textContent = `Retrying... (${retryCount}/${MAX_RETRIES})`;
                 setTimeout(animateTour, 100);
                 return;
             }
+            retryCount = 0;
 
             // Animate the path
             for (let i = 0; i < path.length; i++) {
@@ -389,7 +403,6 @@
             if (isRunning) {
                 statusText.textContent = 'Completed!';
                 statusText.className = 'text-sm font-bold text-green-500';
-                statusText.className = 'text-sm font-bold text-green-500';
                 btnStart.innerHTML = '<i class="fas fa-play"></i> Start Tour';
                 btnStart.classList.add('bg-[#22d3ee]', 'hover:bg-accent-hover', 'text-gray-900');
                 btnStart.classList.remove('bg-yellow-500', 'hover:bg-yellow-600', 'text-white');
@@ -415,7 +428,6 @@
         });
 
         btnReset.addEventListener('click', () => {
-            isRunning = false;
             isRunning = false;
             isPaused = false;
             btnStart.innerHTML = '<i class="fas fa-play"></i> Start Tour';
