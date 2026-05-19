@@ -5,8 +5,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Justin Wu | Portfolio</title>
+    <meta name="description"
+        content="Justin Wu's portfolio: computational biology, computer science, mathematics, projects, awards, and leadership.">
+    <meta name="theme-color" content="#0b1120">
+    <script>document.documentElement.classList.add('js');</script>
     <link rel="icon" type="image/jpeg"
         href="https://raw.githubusercontent.com/refleco/refleco.github.io/main/galaxy.jpeg">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'accent-color': 'var(--accent-color)',
+                        'accent-hover': 'var(--accent-hover)',
+                        'light-primary': 'var(--text-light-primary)',
+                        'dark-primary': 'var(--text-dark-primary)',
+                        'light-secondary': 'var(--text-light-secondary)',
+                        'dark-secondary': 'var(--text-dark-secondary)'
+                    }
+                }
+            }
+        }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
@@ -14,6 +35,8 @@
 </head>
 
 <body class="transition-colors duration-300">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
     <!-- Loading Screen -->
     <div id="loader">
         <div class="loader-content"></div>
@@ -22,31 +45,54 @@
     <!-- Background Canvas -->
     <canvas id="starfield"></canvas>
 
-    <div class="main-container max-w-4xl mx-auto my-8 p-6 sm:p-10 rounded-3xl shadow-2xl relative z-10">
-        <header class="text-center mb-16 reveal">
+    <div class="main-container max-w-5xl mx-auto my-5 sm:my-8 p-5 sm:p-8 lg:p-10 rounded-3xl shadow-2xl relative z-10">
+        <nav class="site-nav reveal" aria-label="Primary navigation">
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#honors">Honors</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <header class="hero text-center mb-16 reveal">
             <img src="https://raw.githubusercontent.com/refleco/refleco.github.io/main/galaxy.jpeg" alt="Galaxy Icon"
-                class="w-36 h-36 rounded-full mx-auto mb-5 border-4 border-white dark:border-slate-600 shadow-xl transition-transform duration-300 hover:scale-105">
-            <h1 class="text-6xl font-black tracking-tighter"><a href="https://justinwu.me/"
+                class="hero-avatar w-32 h-32 sm:w-36 sm:h-36 rounded-full mx-auto mb-6 border-4 border-white dark:border-slate-600 shadow-xl transition-transform duration-300 hover:scale-105">
+            <p class="eyebrow">Computational biology • CS • Mathematics</p>
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tighter"><a href="https://justinwu.me/"
                     class="gradient-name">Justin Wu</a></h1>
-            <p class="text-2xl text-light-secondary dark:text-dark-secondary mt-3">
+            <p class="text-xl sm:text-2xl text-light-secondary dark:text-dark-secondary mt-4 max-w-3xl mx-auto">
                 <span id="typing-text" data-text="High School Student | Programmer | Swimmer"></span><span
                     class="typing-cursor"></span>
             </p>
+            <p class="hero-summary text-lg sm:text-xl text-light-secondary dark:text-dark-secondary mt-6 max-w-3xl mx-auto">
+                I build interactive projects, study biology through computation, and bring the same endurance from
+                swimming into research, math, and engineering.
+            </p>
+            <div class="hero-actions mt-8">
+                <a class="button-primary" href="#projects"><i class="fas fa-layer-group"></i>View projects</a>
+                <a class="button-secondary" href="mailto:wujustin20@outlook.com"><i class="fas fa-envelope"></i>Get in touch</a>
+            </div>
+            <div class="highlight-strip" aria-label="Portfolio highlights">
+                <div><strong>USABO</strong><span>Semifinalist</span></div>
+                <div><strong>2x AIME</strong><span>Qualifier</span></div>
+                <div><strong>Top 25</strong><span>Math modeling</span></div>
+            </div>
         </header>
 
-        <main class="space-y-16">
+        <main id="main-content" class="space-y-16">
             <section id="about" class="reveal">
-                <h2 class="text-4xl font-bold pb-3 mb-6">About Me</h2>
-                <p class="text-xl leading-relaxed text-light-secondary dark:text-dark-secondary">I am a dedicated high
+                <p class="section-kicker">About</p>
+                <h2 class="text-3xl sm:text-4xl font-bold pb-3 mb-6">Curious where code meets science.</h2>
+                <p class="text-lg sm:text-xl leading-relaxed text-light-secondary dark:text-dark-secondary">I am a dedicated high
                     school student with a strong passion for computational biology, computer science, and mathematics. I
-                    enjoy applying my problem-solving skills to challenging projects and research. My goal is to
-                    leverage technology and scientific inquiry to make a meaningful impact.</p>
+                    enjoy applying problem-solving skills to challenging projects and research, especially where
+                    technology can turn complicated scientific questions into clearer, testable systems.</p>
             </section>
 
             <section id="skills" class="reveal">
-                <h2 class="text-4xl font-bold pb-3 mb-6">Skills</h2>
+                <p class="section-kicker">Toolkit</p>
+                <h2 class="text-3xl sm:text-4xl font-bold pb-3 mb-6">Skills</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="card tilt-card p-8 rounded-2xl">
+                    <div class="card tilt-card p-8">
                         <h3 class="text-2xl font-bold mb-5 flex items-center"><i
                                 class="fas fa-code icon mr-4 text-3xl"></i>Programming & Tech</h3>
                         <ul class="space-y-4 text-lg text-light-secondary dark:text-dark-secondary">
@@ -56,7 +102,7 @@
                             <li class="flex items-center"><i class="fab fa-html5 icon w-6 mr-4"></i> HTML & CSS</li>
                         </ul>
                     </div>
-                    <div class="card tilt-card p-8 rounded-2xl">
+                    <div class="card tilt-card p-8">
                         <h3 class="text-2xl font-bold mb-5 flex items-center"><i
                                 class="fas fa-flask icon mr-4 text-3xl"></i>Sciences</h3>
                         <ul class="space-y-4 text-lg text-light-secondary dark:text-dark-secondary">
@@ -72,15 +118,16 @@
             </section>
 
             <section id="experience" class="reveal">
-                <h2 class="text-4xl font-bold pb-3 mb-6">Research & Experience</h2>
+                <p class="section-kicker">Experience</p>
+                <h2 class="text-3xl sm:text-4xl font-bold pb-3 mb-6">Research & Experience</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="card tilt-card p-8 rounded-2xl">
+                    <div class="card tilt-card p-8">
                         <h3 class="text-xl font-bold flex items-center"><i class="fas fa-hands-helping icon mr-3"></i>Volunteer | PENN Care</h3>
                         <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">Organized community
                             cleanup and setup for events with the Philadelphia Mayor's Philly Spring Cleanup Initiative.</p>
                         <span class="date-badge">June 2022 – Present</span>
                     </div>
-                    <div class="card tilt-card p-8 rounded-2xl">
+                    <div class="card tilt-card p-8">
                         <h3 class="text-xl font-bold flex items-center"><i class="fas fa-hospital icon mr-3"></i>Volunteer | Penn Medicine Radnor</h3>
                         <p class="text-md text-light-secondary dark:text-dark-secondary mt-2">Greeted and directed
                             patients, providing assistance to enhance their hospital experience.</p>
@@ -90,9 +137,10 @@
             </section>
 
             <section id="projects" class="reveal">
-                <h2 class="text-4xl font-bold pb-3 mb-6">Projects</h2>
+                <p class="section-kicker">Selected work</p>
+                <h2 class="text-3xl sm:text-4xl font-bold pb-3 mb-6">Projects</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <a href="btd6/" class="card tilt-card project-card block p-6 rounded-2xl group" id="btd6-link">
+                    <a href="btd6/" class="card tilt-card project-card block p-6 group" id="btd6-link">
                         <span class="project-icon">🎈</span>
                         <h3
                             class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">
@@ -103,7 +151,7 @@
                             <span>HTML</span><span>CSS</span><span>JavaScript</span>
                         </div>
                     </a>
-                    <a href="knights-tour/" class="card tilt-card project-card block p-6 rounded-2xl group">
+                    <a href="knights-tour/" class="card tilt-card project-card block p-6 group">
                         <span class="project-icon">♞</span>
                         <h3
                             class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">
@@ -114,7 +162,7 @@
                             <span>Java</span><span>Canvas API</span><span>Algorithms</span>
                         </div>
                     </a>
-                    <a href="game-of-life/" class="card tilt-card project-card block p-6 rounded-2xl group">
+                    <a href="game-of-life/" class="card tilt-card project-card block p-6 group">
                         <span class="project-icon">🧬</span>
                         <h3
                             class="text-xl font-bold group-hover:text-accent-color dark:group-hover:text-accent-hover transition-colors">
@@ -129,7 +177,8 @@
             </section>
 
             <section id="honors" class="reveal">
-                <h2 class="text-4xl font-bold pb-3 mb-6">Honors & Awards</h2>
+                <p class="section-kicker">Recognition</p>
+                <h2 class="text-3xl sm:text-4xl font-bold pb-3 mb-6">Honors & Awards</h2>
                 <div class="flex flex-wrap justify-center gap-4">
                     <span class="tag font-semibold px-5 py-2 rounded-full text-md">USA Biology Olympiad (USABO)
                         Semifinalist</span>
@@ -145,8 +194,9 @@
             </section>
 
             <section id="leadership" class="reveal">
-                <h2 class="text-4xl font-bold pb-3 mb-6">Leadership & Activities</h2>
-                <div class="card tilt-card p-8 rounded-2xl">
+                <p class="section-kicker">Beyond class</p>
+                <h2 class="text-3xl sm:text-4xl font-bold pb-3 mb-6">Leadership & Activities</h2>
+                <div class="card tilt-card p-8">
                     <ul
                         class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-lg text-light-secondary dark:text-dark-secondary">
                         <li class="leadership-item flex items-center"><i class="fas fa-crown icon w-6 mr-4"></i>President, Biology Club</li>
@@ -176,7 +226,7 @@
                     class="footer-link text-light-secondary dark:text-dark-secondary hover:text-accent-color dark:hover:text-accent-hover text-2xl"
                     aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
             </div>
-            <p class="text-sm text-light-secondary dark:text-dark-secondary opacity-60">&copy; 2025 Justin Wu</p>
+            <p class="text-sm text-light-secondary dark:text-dark-secondary opacity-60">&copy; 2026 Justin Wu</p>
         </footer>
     </div>
 
@@ -207,7 +257,8 @@
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold border-b-0">Theme Settings</h2>
                 <button id="close-settings"
-                    class="text-light-secondary dark:text-dark-secondary hover:text-accent-color transition-colors">
+                    class="text-light-secondary dark:text-dark-secondary hover:text-accent-color transition-colors"
+                    aria-label="Close settings">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
