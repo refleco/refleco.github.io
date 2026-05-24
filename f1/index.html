@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D F1 Race Replay</title>
+    <meta name="description" content="Watch historical F1 races replayed in 3D with real FastF1 telemetry data." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script type="module" crossorigin src="./assets/index-oRgF-m0b.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DxN6nIHo.css">
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="scene"></canvas>
+      <aside class="control-panel">
+        <header class="event-header">
+          <div>
+            <p class="eyebrow">FastF1 telemetry replay</p>
+            <h1>2021 British Grand Prix</h1>
+          </div>
+          <div class="status-pill" id="dataStatus">sample cache</div>
+        </header>
+
+        <div id="weatherWidget" class="weather-widget">
+          <div class="weather-main"><span class="weather-icon">⛅</span><span class="weather-label">Loading…</span></div>
+        </div>
+
+        <section class="timeline">
+          <div class="time-readout">
+            <span id="clock">Lap 1 · 00:00.0</span>
+            <span id="leader">HAM</span>
+          </div>
+          <input id="scrubber" type="range" min="0" max="1000" value="0" />
+          <div class="transport">
+            <button id="playPause" class="icon-button" title="Play or pause replay" aria-label="Play or pause replay"></button>
+            <button id="reset" class="icon-button" title="Restart replay" aria-label="Restart replay"></button>
+            <button id="muteButton" class="icon-button" title="Mute/Unmute audio" aria-label="Mute/Unmute audio"></button>
+            <label class="speed-control" title="Playback speed">
+              <span>Speed</span>
+              <select id="speed">
+                <option value="0.5">0.5x</option>
+                <option value="1">1x</option>
+                <option value="2">2x</option>
+                <option value="4">4x</option>
+                <option value="8">8x</option>
+                <option value="16" selected>16x</option>
+                <option value="32">32x</option>
+                <option value="64">64x</option>
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <section class="view-controls" aria-label="Race and camera controls">
+          <label class="select-control" title="Race data">
+            <span>Race</span>
+            <select id="raceSelect"></select>
+          </label>
+          <label class="select-control" title="Camera mode">
+            <span>Camera</span>
+            <select id="cameraMode">
+              <option value="free">Free orbit</option>
+              <option value="follow">Follow car</option>
+              <option value="broadcast">TV Chase Cam</option>
+              <option value="tv-towers">TV Action Cams</option>
+            </select>
+          </label>
+          <label class="select-control" title="Car to follow">
+            <span>Car</span>
+            <select id="followDriver"></select>
+          </label>
+          <label class="select-control" title="Camera zoom">
+            <span>Zoom</span>
+            <input type="range" id="zoomSlider" min="0.3" max="2.2" step="0.05" value="1.0" style="width: 100%; accent-color: var(--accent); margin: 0; cursor: pointer;">
+          </label>
+        </section>
+
+        <div class="section-divider"></div>
+        <section class="telemetry-grid" id="driverCards"></section>
+      </aside>
+
+      <!-- FLOATING MINI-MAP -->
+      <div id="miniMapCard" class="mini-map-card glass-panel">
+        <div class="mini-map-header">Circuit Overview</div>
+        <canvas id="miniMapCanvas"></canvas>
+      </div>
+
+      <!-- COCKPIT TELEMETRY HUD -->
+      <div id="cockpitHud" class="cockpit-hud glass-panel hidden">
+        <div class="hud-main">
+          <div class="hud-rpm-bar" id="hudRpmBar">
+            <div class="rpm-light" data-index="0"></div>
+            <div class="rpm-light" data-index="1"></div>
+            <div class="rpm-light" data-index="2"></div>
+            <div class="rpm-light" data-index="3"></div>
+            <div class="rpm-light" data-index="4"></div>
+            <div class="rpm-light" data-index="5"></div>
+            <div class="rpm-light" data-index="6"></div>
+            <div class="rpm-light" data-index="7"></div>
+            <div class="rpm-light" data-index="8"></div>
+            <div class="rpm-light" data-index="9"></div>
+            <div class="rpm-light" data-index="10"></div>
+            <div class="rpm-light" data-index="11"></div>
+            <div class="rpm-light" data-index="12"></div>
+            <div class="rpm-light" data-index="13"></div>
+            <div class="rpm-light" data-index="14"></div>
+          </div>
+          <div class="hud-telemetry-row">
+            <div class="hud-pedal-container">
+              <span class="hud-pedal-label">THR</span>
+              <div class="hud-pedal-track"><div id="hudThrottleFill" class="hud-pedal-fill throttle"></div></div>
+            </div>
+            <div class="hud-stats">
+              <div class="hud-speed-unit">
+                <span id="hudSpeed" class="hud-value font-mono">0</span>
+                <span class="hud-unit">KM/H</span>
+              </div>
+              <div class="hud-gear-container">
+                <span id="hudGear" class="hud-gear-value font-mono">1</span>
+                <span class="hud-gear-label">GEAR</span>
+              </div>
+            </div>
+            <div class="hud-pedal-container">
+              <span class="hud-pedal-label">BRK</span>
+              <div class="hud-pedal-track"><div id="hudBrakeFill" class="hud-pedal-fill brake"></div></div>
+            </div>
+          </div>
+          <div class="hud-footer">
+            <span id="hudDriverName" class="hud-driver-code">--</span>
+            <span id="hudDrsBadge" class="hud-drs-badge">DRS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

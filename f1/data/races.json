@@ -1,0 +1,129 @@
+{
+  "races": [
+    {
+      "id": "2025-01-australia",
+      "label": "2025 Australian GP",
+      "url": "data/races/2025-01-australia.json.gz"
+    },
+    {
+      "id": "2025-02-china",
+      "label": "2025 Chinese GP",
+      "url": "data/races/2025-02-china.json.gz"
+    },
+    {
+      "id": "2025-03-japan",
+      "label": "2025 Japanese GP",
+      "url": "data/races/2025-03-japan.json.gz"
+    },
+    {
+      "id": "2025-04-bahrain",
+      "label": "2025 Bahrain GP",
+      "url": "data/races/2025-04-bahrain.json.gz"
+    },
+    {
+      "id": "2025-05-saudi",
+      "label": "2025 Saudi Arabian GP",
+      "url": "data/races/2025-05-saudi.json.gz"
+    },
+    {
+      "id": "2025-06-miami",
+      "label": "2025 Miami GP",
+      "url": "data/races/2025-06-miami.json.gz"
+    },
+    {
+      "id": "2025-07-emilia-romagna",
+      "label": "2025 Emilia Romagna GP",
+      "url": "data/races/2025-07-emilia-romagna.json.gz"
+    },
+    {
+      "id": "2025-08-monaco",
+      "label": "2025 Monaco GP",
+      "url": "data/races/2025-08-monaco.json.gz"
+    },
+    {
+      "id": "2025-09-spain",
+      "label": "2025 Spanish GP",
+      "url": "data/races/2025-09-spain.json.gz"
+    },
+    {
+      "id": "2025-10-canada",
+      "label": "2025 Canadian GP",
+      "url": "data/races/2025-10-canada.json.gz"
+    },
+    {
+      "id": "2025-11-austria",
+      "label": "2025 Austrian GP",
+      "url": "data/races/2025-11-austria.json.gz"
+    },
+    {
+      "id": "2025-12-britain",
+      "label": "2025 British GP",
+      "url": "data/races/2025-12-britain.json.gz"
+    },
+    {
+      "id": "2025-13-belgium",
+      "label": "2025 Belgian GP",
+      "url": "data/races/2025-13-belgium.json.gz"
+    },
+    {
+      "id": "2025-14-hungary",
+      "label": "2025 Hungarian GP",
+      "url": "data/races/2025-14-hungary.json.gz"
+    },
+    {
+      "id": "2025-15-netherlands",
+      "label": "2025 Dutch GP",
+      "url": "data/races/2025-15-netherlands.json.gz"
+    },
+    {
+      "id": "2025-16-italy",
+      "label": "2025 Italian GP",
+      "url": "data/races/2025-16-italy.json.gz"
+    },
+    {
+      "id": "2025-17-azerbaijan",
+      "label": "2025 Azerbaijan GP",
+      "url": "data/races/2025-17-azerbaijan.json.gz"
+    },
+    {
+      "id": "2025-18-singapore",
+      "label": "2025 Singapore GP",
+      "url": "data/races/2025-18-singapore.json.gz"
+    },
+    {
+      "id": "2025-19-usa",
+      "label": "2025 United States GP",
+      "url": "data/races/2025-19-usa.json.gz"
+    },
+    {
+      "id": "2025-20-mexico",
+      "label": "2025 Mexico City GP",
+      "url": "data/races/2025-20-mexico.json.gz"
+    },
+    {
+      "id": "2025-21-brazil",
+      "label": "2025 São Paulo GP",
+      "url": "data/races/2025-21-brazil.json.gz"
+    },
+    {
+      "id": "2025-22-las-vegas",
+      "label": "2025 Las Vegas GP",
+      "url": "data/races/2025-22-las-vegas.json.gz"
+    },
+    {
+      "id": "2025-23-qatar",
+      "label": "2025 Qatar GP",
+      "url": "data/races/2025-23-qatar.json.gz"
+    },
+    {
+      "id": "2025-24-abu-dhabi",
+      "label": "2025 Abu Dhabi GP",
+      "url": "data/races/2025-24-abu-dhabi.json.gz"
+    },
+    {
+      "id": "sample-silverstone",
+      "label": "Silverstone (demo)",
+      "sample": "silverstone"
+    }
+  ]
+}

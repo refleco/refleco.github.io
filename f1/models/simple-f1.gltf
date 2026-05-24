@@ -1,0 +1,466 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "Codex generated static low-poly F1 glTF asset",
+    "copyright": "Generated for this local prototype."
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Chassis",
+      "mesh": 0,
+      "translation": [
+        0,
+        0.42,
+        0
+      ],
+      "scale": [
+        3,
+        0.65,
+        7.5
+      ]
+    },
+    {
+      "name": "SidepodLeft",
+      "mesh": 0,
+      "translation": [
+        -1.45,
+        0.34,
+        0.35
+      ],
+      "scale": [
+        1,
+        0.46,
+        3.9
+      ]
+    },
+    {
+      "name": "SidepodRight",
+      "mesh": 0,
+      "translation": [
+        1.45,
+        0.34,
+        0.35
+      ],
+      "scale": [
+        1,
+        0.46,
+        3.9
+      ]
+    },
+    {
+      "name": "Nose",
+      "mesh": 0,
+      "translation": [
+        0,
+        0.38,
+        -5.35
+      ],
+      "scale": [
+        0.75,
+        0.38,
+        3.6
+      ]
+    },
+    {
+      "name": "Floor",
+      "mesh": 1,
+      "translation": [
+        0,
+        0.16,
+        -0.05
+      ],
+      "scale": [
+        4.1,
+        0.16,
+        7.3
+      ]
+    },
+    {
+      "name": "Cockpit",
+      "mesh": 1,
+      "translation": [
+        0,
+        0.92,
+        -0.75
+      ],
+      "scale": [
+        1.15,
+        0.72,
+        1.2
+      ]
+    },
+    {
+      "name": "HaloFront",
+      "mesh": 1,
+      "translation": [
+        0,
+        1.34,
+        -1.1
+      ],
+      "scale": [
+        1.5,
+        0.13,
+        0.18
+      ]
+    },
+    {
+      "name": "HaloLeft",
+      "mesh": 1,
+      "translation": [
+        -0.54,
+        1.18,
+        -0.4
+      ],
+      "scale": [
+        0.13,
+        0.13,
+        1.45
+      ]
+    },
+    {
+      "name": "HaloRight",
+      "mesh": 1,
+      "translation": [
+        0.54,
+        1.18,
+        -0.4
+      ],
+      "scale": [
+        0.13,
+        0.13,
+        1.45
+      ]
+    },
+    {
+      "name": "RearWing",
+      "mesh": 3,
+      "translation": [
+        0,
+        1,
+        4.35
+      ],
+      "scale": [
+        4.5,
+        0.23,
+        0.7
+      ]
+    },
+    {
+      "name": "RearWingLower",
+      "mesh": 1,
+      "translation": [
+        0,
+        0.63,
+        4.05
+      ],
+      "scale": [
+        3.9,
+        0.18,
+        0.5
+      ]
+    },
+    {
+      "name": "FrontWing",
+      "mesh": 3,
+      "translation": [
+        0,
+        0.28,
+        -7
+      ],
+      "scale": [
+        4.8,
+        0.18,
+        0.72
+      ]
+    },
+    {
+      "name": "FrontWingFlap",
+      "mesh": 1,
+      "translation": [
+        0,
+        0.52,
+        -6.72
+      ],
+      "scale": [
+        4.15,
+        0.14,
+        0.42
+      ]
+    },
+    {
+      "name": "RearPost",
+      "mesh": 1,
+      "translation": [
+        0,
+        0.77,
+        3.86
+      ],
+      "scale": [
+        0.32,
+        0.75,
+        0.22
+      ]
+    },
+    {
+      "name": "WheelFL",
+      "mesh": 2,
+      "translation": [
+        -2.25,
+        0.35,
+        -3
+      ],
+      "scale": [
+        0.72,
+        0.72,
+        0.42
+      ]
+    },
+    {
+      "name": "WheelFR",
+      "mesh": 2,
+      "translation": [
+        2.25,
+        0.35,
+        -3
+      ],
+      "scale": [
+        0.72,
+        0.72,
+        0.42
+      ]
+    },
+    {
+      "name": "WheelRL",
+      "mesh": 2,
+      "translation": [
+        -2.32,
+        0.38,
+        2.6
+      ],
+      "scale": [
+        0.82,
+        0.82,
+        0.48
+      ]
+    },
+    {
+      "name": "WheelRR",
+      "mesh": 2,
+      "translation": [
+        2.32,
+        0.38,
+        2.6
+      ],
+      "scale": [
+        0.82,
+        0.82,
+        0.48
+      ]
+    }
+  ],
+  "meshes": [
+    {
+      "name": "CubeMaterial0",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 1,
+            "NORMAL": 2
+          },
+          "indices": 0,
+          "material": 0
+        }
+      ]
+    },
+    {
+      "name": "CubeMaterial1",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 1,
+            "NORMAL": 2
+          },
+          "indices": 0,
+          "material": 1
+        }
+      ]
+    },
+    {
+      "name": "CubeMaterial2",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 1,
+            "NORMAL": 2
+          },
+          "indices": 0,
+          "material": 2
+        }
+      ]
+    },
+    {
+      "name": "CubeMaterial3",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 1,
+            "NORMAL": 2
+          },
+          "indices": 0,
+          "material": 3
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "Team paint",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.95,
+          0.02,
+          0.02,
+          1
+        ],
+        "metallicFactor": 0.15,
+        "roughnessFactor": 0.36
+      }
+    },
+    {
+      "name": "Carbon black",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.01,
+          0.012,
+          0.011,
+          1
+        ],
+        "metallicFactor": 0.05,
+        "roughnessFactor": 0.68
+      }
+    },
+    {
+      "name": "Tire rubber",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.004,
+          0.004,
+          0.004,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.88
+      }
+    },
+    {
+      "name": "White wing accent",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.9,
+          0.95,
+          0.92,
+          1
+        ],
+        "metallicFactor": 0.05,
+        "roughnessFactor": 0.42
+      }
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5123,
+      "count": 36,
+      "type": "SCALAR",
+      "min": [
+        0
+      ],
+      "max": [
+        23
+      ]
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "min": [
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      "max": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 24,
+      "type": "VEC3",
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "max": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 72,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 72,
+      "byteLength": 288,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 360,
+      "byteLength": 288,
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 648,
+      "uri": "data:application/octet-stream;base64,AAABAAIAAAACAAMABAAFAAYABAAGAAcACAAJAAoACAAKAAsADAANAA4ADAAOAA8AEAARABIAEAASABMAFAAVABYAFAAWABcAAAAAvwAAAL8AAAA/AAAAPwAAAL8AAAA/AAAAPwAAAD8AAAA/AAAAvwAAAD8AAAA/AAAAPwAAAL8AAAC/AAAAvwAAAL8AAAC/AAAAvwAAAD8AAAC/AAAAPwAAAD8AAAC/AAAAvwAAAD8AAAA/AAAAPwAAAD8AAAA/AAAAPwAAAD8AAAC/AAAAvwAAAD8AAAC/AAAAvwAAAL8AAAC/AAAAPwAAAL8AAAC/AAAAPwAAAL8AAAA/AAAAvwAAAL8AAAA/AAAAPwAAAL8AAAA/AAAAPwAAAL8AAAC/AAAAPwAAAD8AAAC/AAAAPwAAAD8AAAA/AAAAvwAAAL8AAAC/AAAAvwAAAL8AAAA/AAAAvwAAAD8AAAA/AAAAvwAAAD8AAAC/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAIC/AAAAAAAAAAAAAIC/AAAAAAAAAAAAAIC/AAAAAAAAAAAAAIC/AAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAA"
+    }
+  ]
+}
